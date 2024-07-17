@@ -1,0 +1,162 @@
+inherited frmPedido: TfrmPedido
+  ClientWidth = 1010
+  ExplicitWidth = 1010
+  TextHeight = 15
+  inherited pHeader: TPanel
+    Width = 1010
+    ExplicitWidth = 1010
+    inherited Label1: TLabel
+      Width = 103
+      Caption = 'Pedidos'
+      ExplicitWidth = 103
+    end
+    inherited Panel1: TPanel
+      Left = 890
+      ExplicitLeft = 890
+    end
+    inherited Panel2: TPanel
+      Left = 630
+      ExplicitLeft = 630
+    end
+    inherited Panel3: TPanel
+      Left = 760
+      ExplicitLeft = 760
+    end
+    inherited Panel4: TPanel
+      Left = 113
+      Width = 457
+      ExplicitLeft = 113
+      ExplicitWidth = 457
+      inherited Panel7: TPanel
+        Left = 337
+        ExplicitLeft = 337
+      end
+      inherited Edit1: TEdit
+        Width = 337
+        ExplicitWidth = 337
+      end
+    end
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 80
+    Width = 1010
+    Height = 400
+    Align = alClient
+    BorderStyle = bsNone
+    DataSource = DataSource1
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'Nome'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI'
+        Title.Font.Style = [fsBold]
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Empresa'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI'
+        Title.Font.Style = [fsBold]
+        Visible = True
+      end>
+  end
+  object FDMemTable1: TFDMemTable
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'Nome'
+        DataType = ftString
+        Size = 255
+      end
+      item
+        Name = 'Empresa'
+        DataType = ftString
+        Size = 255
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvPersistent, rvSilentMode]
+    ResourceOptions.Persistent = True
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 344
+    Top = 168
+    Content = {
+      41444253100000000F020000FF00010001FF02FF03040016000000460044004D
+      0065006D005400610062006C0065003100050016000000460044004D0065006D
+      005400610062006C0065003100060000000000070000080032000000090000FF
+      0AFF0B0400080000004E006F006D0065000500080000004E006F006D0065000C
+      00010000000E000D000F00FF0000001000011100011200011300011400011500
+      011600080000004E006F006D0065001700FF000000FEFF0B04000E0000004500
+      6D007000720065007300610005000E00000045006D0070007200650073006100
+      0C00020000000E000D000F00FF00000010000111000112000113000114000115
+      000116000E00000045006D00700072006500730061001700FF000000FEFEFF18
+      FEFF19FEFF1AFF1B1C0000000000FF1D0000090000004775696C6865726D6501
+      00090000004D6963726F736F6674FEFEFF1B1C0001000000FF1D000005000000
+      4A756C686F0100060000004F7261636C65FEFEFF1B1C0002000000FF1D000003
+      000000415547010003000000736574FEFEFF1B1C0003000000FF1D0000050000
+      004D616E696E010006000000417175696361FEFEFF1B1C0004000000FF1D0000
+      06000000417175696361010006000000417175696361FEFEFF1B1C0005000000
+      FF1D000006000000417175696361010006000000417175696361FEFEFEFEFEFF
+      1EFEFF1F200007000000FF21FEFEFE0E004D0061006E0061006700650072001E
+      0055007000640061007400650073005200650067006900730074007200790012
+      005400610062006C0065004C006900730074000A005400610062006C00650008
+      004E0061006D006500140053006F0075007200630065004E0061006D0065000A
+      0054006100620049004400240045006E0066006F0072006300650043006F006E
+      00730074007200610069006E00740073001E004D0069006E0069006D0075006D
+      0043006100700061006300690074007900180043006800650063006B004E006F
+      0074004E0075006C006C00140043006F006C0075006D006E004C006900730074
+      000C0043006F006C0075006D006E00100053006F007500720063006500490044
+      0018006400740041006E007300690053007400720069006E0067001000440061
+      007400610054007900700065000800530069007A006500140053006500610072
+      0063006800610062006C006500120041006C006C006F0077004E0075006C006C
+      000800420061007300650014004F0041006C006C006F0077004E0075006C006C
+      0012004F0049006E0055007000640061007400650010004F0049006E00570068
+      006500720065001A004F0072006900670069006E0043006F006C004E0061006D
+      006500140053006F007500720063006500530069007A0065001C0043006F006E
+      00730074007200610069006E0074004C00690073007400100056006900650077
+      004C006900730074000E0052006F0077004C00690073007400060052006F0077
+      000A0052006F0077004900440010004F0072006900670069006E0061006C0018
+      00520065006C006100740069006F006E004C006900730074001C005500700064
+      0061007400650073004A006F00750072006E0061006C00120053006100760065
+      0050006F0069006E0074000E004300680061006E00670065007300}
+    object FDMemTable1Nome: TStringField
+      DisplayWidth = 23
+      FieldName = 'Nome'
+      Size = 255
+    end
+    object FDMemTable1Empresa: TStringField
+      DisplayWidth = 19
+      FieldName = 'Empresa'
+      Size = 255
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = FDMemTable1
+    Left = 536
+    Top = 160
+  end
+end
