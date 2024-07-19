@@ -2,7 +2,7 @@ unit Controllers.Cliente;
 
 interface
 
-uses Horse;
+uses Horse, DataModuleGlobal, system.JSON, System.SysUtils;
 
 procedure listar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 procedure Inserir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
@@ -21,8 +21,22 @@ begin
 end;
 
 procedure listar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+var
+  ldm: tdm;
 begin
-  Res.send('Aqui vou listar os clientes').status(200);
+  try
+    try
+      ldm := TDm.create(nil);
+
+      Res.send<TJSONArray>(ldm.ClienteListar(Req.Query['filtro'])).status(200);
+
+    except
+      on E:Exception do
+        Res.send('erro ao listar clientes,' + E.message).status(500);
+    end;
+  finally
+    freeAndNil(ldm);
+  end;
 end;
 
 procedure Inserir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
