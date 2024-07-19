@@ -126,6 +126,11 @@
             <Form>frmDefaultCadastro</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="DataModules\dataModules.Cliente.pas">
+            <Form>dmCliente</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

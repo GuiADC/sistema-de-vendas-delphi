@@ -19,7 +19,7 @@ type
     Panel4: TPanel;
     Panel7: TPanel;
     btnBuscar: TSpeedButton;
-    Edit1: TEdit;
+    edtBuscar: TEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
