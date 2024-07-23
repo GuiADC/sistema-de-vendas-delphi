@@ -1,0 +1,16 @@
+{
+	"name": "sistema-de-vendas-delphi",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {
+		"github.com/hashload/horse": "^3.1.6",
+		"github.com/hashload/horse-cors": "^1.0.6",
+		"github.com/hashload/jhonson": "^1.1.9",
+		"github.com/viniciussanchez/dataset-serialize": "^v2.5.9",
+		"github.com/viniciussanchez/dataset-serialize-adapter-restrequest4delphi": "^1.0.2",
+		"github.com/viniciussanchez/restrequest4delphi": "^v4.0.18"
+	}
+}

@@ -10,13 +10,16 @@ uses
   unitDefaultListItems in 'unitDefaultListItems.pas' {frmDefault},
   unitPedido in 'unitPedido.pas' {frmPedido},
   unitCliente in 'unitCliente.pas' {frmCliente},
-  unitDefaultCadastro in 'unitDefaultCadastro.pas' {frmDefaultCadastro};
+  unitDefaultCadastro in 'unitDefaultCadastro.pas' {frmDefaultCadastro},
+  dataModules.Cliente in 'DataModules\dataModules.Cliente.pas' {dmCliente: TDataModule};
 
 {$R *.res}
 
 begin
+  ReportMemoryLeaksOnShutdown := true;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmLogin, frmLogin);
+  Application.CreateForm(TdmCliente, dmCliente);
   Application.Run;
 end.

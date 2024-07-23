@@ -224,7 +224,7 @@ object frmDefault: TfrmDefault
           ExplicitHeight = 52
         end
       end
-      object Edit1: TEdit
+      object edtBuscar: TEdit
         AlignWithMargins = True
         Left = 0
         Top = 20
