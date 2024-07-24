@@ -8,7 +8,7 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
   Data.DB, FireDAC.Comp.Client, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
   FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteWrapper.Stat, DataSet.Serialize.Config,
-  system.JSON, Dataset.Serialize, fireDAC.DApt;
+  system.JSON, Dataset.Serialize, fireDAC.DApt,uMD5;
 
 type
   TDM = class(TDataModule)
@@ -18,6 +18,7 @@ type
     procedure connBeforeConnect(Sender: TObject);
   private
     procedure carregarConfiogDB(Connection: TFDConnection);
+
   public
     /////////////////// CLIENTE ////////////////
     function ClienteListar(pfiltro: string): TJsonArray;
@@ -28,6 +29,17 @@ type
 
     /////////////////// PRODUTO ////////////////
     function ProdutoListar(pfiltro: string): TJsonArray;
+
+    /////////////////// USUARIO ////////////////
+function UsuarioLogin(pemail, psenha: string): TJsonObject;
+
+    /////////////////// PEDIDO ////////////////
+    function PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+    function PedidoExcluir(pid_pedido: integer): TJsonObject;
+    function PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+    function PedidoListar(pfiltro: string): TJsonArray;
+    function PedidoListarId(pid_pedido: integer): TJsonObject;
+
   end;
 
 var
@@ -216,6 +228,159 @@ begin
     freeAndNil(qry);
   end;
   //
+end;
+
+function TDM.UsuarioLogin(pemail ,psenha: string): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Select id_usuario, nome, email');
+    qry.SQL.Add('FROM usuario');
+    qry.SQL.Add('Where email = :email AND senha = :senha');
+
+    qry.ParamByName('email').Value := pemail;
+    qry.ParamByName('senha').Value := SaltPassword(psenha);
+
+    qry.Active := true;
+
+    result := qry.ToJSONObject;
+  finally
+    freeAndNil(qry);
+  end;
+end;
+
+
+function TDM.PedidoListarId(pid_pedido: integer): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Select p.*, c.nome, c.cidade');
+    qry.SQL.Add('FROM pedido p');
+    qry.SQL.Add('inner join cliente c on (c.id_cliente = p.id_cliente)');
+    qry.SQL.Add('Where p.id_pedido = :id_pedido');
+    qry.ParamByName('id_pedido').Value := pid_pedido;
+    qry.Active := true;
+
+    result := qry.ToJSONObject;
+
+    qry.Active := false;
+    qry.sql.clear;
+    qry.SQL.Add('Select i.id_item, i.id_produto, p.descricao, i.qtd, i.vl_unitario, i.vl_total ');
+    qry.SQL.Add('FROM pedido_item i');
+    qry.SQL.Add('inner join produto p on (p.id_produto = i.id_produto)');
+    qry.SQL.Add('Where i.id_pedido = :id_pedido');
+    qry.ParamByName('id_pedido').Value := pid_pedido;
+    qry.Active := true;
+
+    result.AddPair('itens', qry.ToJSONArray);
+  finally
+    freeAndNil(qry);
+  end;
+end;
+
+function TDM.PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Insert into pedido(id_usuario, id_cliente, dt_pedido, vl_total)');
+    qry.SQL.Add('values(:id_usuario, :id_cliente, :dt_pedido, :vl_total');
+
+    qry.SQL.Add('select last_insert_rowid() as id_pedido');
+
+    qry.ParamByName('id_usuario').Value := pid_usuario;
+    qry.ParamByName('id_cliente').Value := pid_cliente;
+    qry.ParamByName('dt_pedido').Value := pdt_pedido;
+    qry.ParamByName('vl_total').Value := pvl_total;
+
+    qry.Active := true;
+
+    result := qry.ToJSONObject;
+  finally
+    freeAndNil(qry);
+  end;
+end;
+
+function TDM.PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Update pedido set id_cliente = :id_cliente, dt_pedido = :dt_pedido, vl_total = :vl_total');
+    qry.SQL.Add('where id_pedido = :id_pedido');
+
+    qry.ParamByName('id_pedido').Value := pid_pedido;
+    qry.ParamByName('id_cliente').Value := pid_cliente;
+    qry.ParamByName('dt_pedido').Value := pdt_pedido;
+    qry.ParamByName('vl_total').Value := pvl_total;
+
+    qry.ExecSQL;
+
+    result := TJSONObject.create(TJSONPair.Create('id_pedido', pid_pedido));
+  finally
+    freeAndNil(qry);
+  end;
+end;
+
+function TDM.PedidoExcluir(pid_pedido: integer): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('delete from pedido_item');
+    qry.SQL.Add('where id_pedido = :id_pedido');
+    qry.ParamByName('id_pedido').Value := pid_pedido;
+    qry.ExecSQL;
+
+    qry.sql.Clear;
+    qry.SQL.Add('delete from pedido');
+    qry.SQL.Add('where id_pedido = :id_pedido');
+    qry.ParamByName('id_pedido').Value := pid_pedido;
+
+    qry.ExecSQL;
+
+    result := TJSONObject.create(TJSONPair.Create('id_pedido', pid_pedido));
+  finally
+    freeAndNil(qry);
+  end;
+end;
+
+function TDM.PedidoListar(pfiltro: string): TJsonArray;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Select p.*, c.nome, c.cidade');
+    qry.SQL.Add('FROM pedido p');
+    qry.SQL.Add('inner join cliente c on (c.id_cliente = p.id_cliente)');
+
+    if not(pfiltro.isEmpty) then
+    begin
+      qry.SQL.Add('Where c.nome like :filtro');
+      qry.ParamByName('filtro').Value := '%' + pfiltro + '%';
+    end;
+
+    qry.SQL.Add('order by p.id_pedido desc');
+    qry.Active := true;
+
+    result := qry.ToJSONArray;
+  finally
+    freeAndNil(qry);
+  end;
 end;
 
 end.

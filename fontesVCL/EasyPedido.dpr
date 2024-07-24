@@ -11,7 +11,8 @@ uses
   unitPedido in 'unitPedido.pas' {frmPedido},
   unitCliente in 'unitCliente.pas' {frmCliente},
   unitClienteCad in 'unitClienteCad.pas' {frmDefaultCadastro},
-  dataModules.Cliente in 'DataModules\dataModules.Cliente.pas' {dmCliente: TDataModule};
+  dataModules.Cliente in 'DataModules\dataModules.Cliente.pas' {dmCliente: TDataModule},
+  dataModules.Usuario in 'DataModules\dataModules.Usuario.pas' {dmUsuario: TDataModule};
 
 {$R *.res}
 
@@ -21,5 +22,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TdmCliente, dmCliente);
+  Application.CreateForm(TdmUsuario, dmUsuario);
   Application.Run;
 end.

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, horse, horse.jhonson, horse.CORS, Controllers.Cliente,
-  Controllers.Produto;
+  Controllers.Produto, Controllers.Usuario, Controllers.Pedido;
 
 type
   TfrmPrincipal = class(TForm)
@@ -32,6 +32,8 @@ begin
 
   Controllers.Cliente.RegistrarRotas;
   Controllers.Produto.RegistrarRotas;
+  Controllers.usuario.RegistrarRotas;
+  Controllers.Pedido.RegistrarRotas;
 
   lblServer.Caption := 'Servidor rodando na porta: ' + THorse.port.tostring;
 end;
