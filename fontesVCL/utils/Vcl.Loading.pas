@@ -3,7 +3,7 @@
     Unit Vcl.Loading
     Criação: 99 Coders | Heber Stein Mazutti
     Site: https://www.youtube.com/@99coders
-    Versão: 1.0
+    Versão: 1.1
 }
 /////////////////////////////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@ unit Vcl.Loading;
 interface
 
 uses System.SysUtils, System.UITypes, Vcl.Forms, Vcl.Graphics, Vcl.WinXCtrls,
-  Vcl.StdCtrls, System.Classes;
+  Vcl.StdCtrls, System.Classes, Vcl.Dialogs;
 
 type
   TMyThreadMethod = procedure(Sender: TObject) of object;
@@ -25,16 +25,16 @@ type
         class var Loading: TForm;
         class var Indicator: TActivityIndicator;
     public
-      class procedure Show(Frm: TForm);
+      class procedure Show(Frm: TForm = nil);
       class procedure Hide;
       class procedure ExecuteThread(proc: TProc;
-                                       procTerminate: TMyThreadMethod);
+                                    procTerminate: TMyThreadMethod);
     end;
 
 implementation
 
-{ TLoading }
 
+{ TLoading }
 
 class procedure TLoading.Hide;
 begin
@@ -48,7 +48,7 @@ begin
         FreeAndNil(Fundo);
 end;
 
-class procedure TLoading.Show(Frm: TForm);
+class procedure TLoading.Show(Frm: TForm = nil);
 begin
     // Form de fundo opaco...
     if NOT Assigned(Fundo) then
@@ -57,13 +57,19 @@ begin
     Fundo.AlphaBlend := true;
     Fundo.AlphaBlendValue := 60;
     Fundo.Color := clBlack;
-    //Fundo.WindowState := wsMaximized;
-    Fundo.Position := poDesigned;
     Fundo.BorderStyle := bsNone;
-    Fundo.Width := Frm.Width;
-    Fundo.Height := Frm.Height;
-    Fundo.Left := Frm.Left;
-    Fundo.Top := Frm.Top;
+    Fundo.FormStyle := fsStayOnTop;
+
+    if Frm = nil then
+        Fundo.WindowState := wsMaximized
+    else
+    begin
+        Fundo.Position := poDesigned;
+        Fundo.Width := Frm.Width;
+        Fundo.Height := Frm.Height;
+        Fundo.Left := Frm.Left;
+        Fundo.Top := Frm.Top;
+    end;
 
 
     // Form transparente com o loading...
@@ -73,13 +79,24 @@ begin
     Loading.TransparentColor := true;
     Loading.Color := $00737373;
     Loading.TransparentColorValue := $00737373;
-    //Loading.WindowState := wsMaximized;
     Loading.Position := poDesigned;
     Loading.BorderStyle := bsNone;
-    Loading.Width := Frm.Width - 16;
-    Loading.Height := Frm.Height - 8;
-    Loading.Left := Frm.Left + 8;
-    Loading.Top := Frm.Top;
+    Loading.FormStyle := fsStayOnTop;
+
+    if Frm = nil then
+    begin
+        Loading.Width := Screen.Width;
+        Loading.Height := Screen.Height;
+        Loading.Left := 0;
+        Loading.Top := 0;
+    end
+    else
+    begin
+        Loading.Width := Frm.Width - 16;
+        Loading.Height := Frm.Height - 8;
+        Loading.Left := Frm.Left + 8;
+        Loading.Top := Frm.Top;
+    end;
 
 
 
@@ -91,14 +108,26 @@ begin
     Indicator.IndicatorSize := aisLarge;
     Indicator.IndicatorType := aitRotatingSector;
     Indicator.FrameDelay := 100;
-    Indicator.Left := Trunc(Frm.Width / 2) - Trunc(Indicator.Width / 2);
-    Indicator.Top := Trunc(Frm.Height / 2) - Trunc(Indicator.Height / 2);
+
+    if Frm = nil then
+    begin
+        Indicator.Left := Trunc(Screen.Width / 2) - Trunc(Indicator.Width / 2);
+        Indicator.Top := Trunc(Screen.Height / 2) - Trunc(Indicator.Height / 2);
+    end
+    else
+    begin
+        Indicator.Left := Trunc(Frm.Width / 2) - Trunc(Indicator.Width / 2);
+        Indicator.Top := Trunc(Frm.Height / 2) - Trunc(Indicator.Height / 2);
+    end;
+
     Indicator.Animate := true;
 
 
     // Exibe o loading...
     Fundo.Show;
+    Fundo.BringToFront;
     Loading.Show;
+    Loading.BringToFront;
 end;
 
 class procedure TLoading.ExecuteThread(proc: TProc;
@@ -113,5 +142,6 @@ begin
 
     t.Start;
 end;
+
 
 end.

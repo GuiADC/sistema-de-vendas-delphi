@@ -10,7 +10,7 @@ uses
   unitDefaultListItems in 'unitDefaultListItems.pas' {frmDefault},
   unitPedido in 'unitPedido.pas' {frmPedido},
   unitCliente in 'unitCliente.pas' {frmCliente},
-  unitDefaultCadastro in 'unitDefaultCadastro.pas' {frmDefaultCadastro},
+  unitClienteCad in 'unitClienteCad.pas' {frmDefaultCadastro},
   dataModules.Cliente in 'DataModules\dataModules.Cliente.pas' {dmCliente: TDataModule};
 
 {$R *.res}
