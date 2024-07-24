@@ -3,7 +3,7 @@
     Unit Vcl.Navigation
     Criação: 99 Coders | Heber Stein Mazutti
     Site: https://www.youtube.com/@99coders
-    Versão: 1.0
+    Versão: 1.1
 }
 /////////////////////////////////////////////////////////////////////////////
 
@@ -24,6 +24,7 @@ type
         class var FrmModalFundo: TForm;
     public
         class var ParamInt: integer;
+        class var ParamStr: string;
         class var ExecuteOnClose: procedure of Object;
 
         class procedure Open(FrmClass: TFormClass;
@@ -33,6 +34,7 @@ type
                                   Frm: TForm;
                                   Parent: TForm = nil);
         class procedure Close(Frm: TForm);
+        class procedure CloseAndCancel(Frm: TForm);
     end;
 
 
@@ -124,6 +126,17 @@ begin
     Frm.Close;
 end;
 
+class procedure TNavigation.CloseAndCancel(Frm: TForm);
+begin
+    // Verifica se está fechando um modal...
+    if Frm.Name = FrmModalOpen.Name then
+    begin
+        FrmModalFundo.Free;
+        FrmModalFundo := nil;
+    end;
+
+    Frm.Close;
+end;
 
 
 

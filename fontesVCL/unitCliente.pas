@@ -18,10 +18,16 @@ type
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure gridClientesDblClick(Sender: TObject);
   private
+    fbookmark: TBookmark;
     procedure OpenCadCliente(idCliente: integer);
     procedure refreshClientes;
     procedure terminateBusca(Sender: TObject);
+    procedure editar;
+    procedure terminateDelete(Sender: TObject);
     { Private declarations }
   public
     { Public declarations }
@@ -34,7 +40,7 @@ implementation
 
 {$R *.dfm}
 
-uses unitDefaultCadastro, dataModules.Cliente;
+uses unitClienteCad, dataModules.Cliente;
 
 
 procedure TfrmCliente.FormShow(Sender: TObject);
@@ -42,8 +48,16 @@ begin
   refreshClientes;
 end;
 
+procedure TfrmCliente.gridClientesDblClick(Sender: TObject);
+begin
+  inherited;
+  editar;
+end;
+
 procedure TfrmCliente.OpenCadCliente(idCliente: integer);
 begin
+  TNavigation.ExecuteOnClose := refreshClientes;
+  TNavigation.ParamInt := idCliente;
   TNavigation.OpenModal(TfrmDefaultCadastro, frmDefaultCadastro);
 end;
 
@@ -58,13 +72,22 @@ begin
       ShowMessage(Exception(TThread(sender).FatalException).Message);
       exit;
     end;
+
+  if fbookmark <> nil then
+    try
+      gridClientes.DataSource.DataSet.GotoBookmark(fbookmark);
+      fbookmark := nil;
+    finally
+    end;
+
 end;
 
 procedure tfrmCliente.refreshClientes;
 begin
-  TLoading.Show(self);
+  TLoading.Show;
   Tloading.ExecuteThread(procedure
   begin
+    Sleep(800);
     gridClientes.DataSource := nil;
     dmCliente.ListarClientes(tabCliente, edtBuscar.text);
 
@@ -73,6 +96,15 @@ begin
 
 end;
 
+procedure tfrmCliente.editar;
+begin
+  if tabCliente.RecordCount = 0  then
+    exit;
+
+   fbookmark := gridClientes.DataSource.DataSet.GetBookmark;
+
+   OpenCadCliente(tabCliente.FieldByName('id_cliente').AsInteger);
+end;
 
 procedure TfrmCliente.btnBuscarClick(Sender: TObject);
 begin
@@ -80,10 +112,45 @@ begin
   refreshClientes;
 end;
 
+procedure TfrmCliente.btnEditarClick(Sender: TObject);
+begin
+  inherited;
+  editar;
+end;
+
+procedure tfrmCliente.terminateDelete(Sender: TObject);
+begin
+  TLoading.hide;
+
+  if sender is TThread then
+    if Assigned(TThread(sender).FatalException) then
+    begin
+      ShowMessage(Exception(TThread(sender).FatalException).Message);
+      exit;
+    end;
+
+  refreshClientes;
+end;
+
+procedure TfrmCliente.btnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+  begin
+    TLoading.Show;
+    Tloading.ExecuteThread(procedure
+    begin
+      dmCliente.Excluir(tabCliente.FieldByName('id_cliente').AsInteger);
+    end, terminateDelete);
+  end;
+
+//
+end;
+
 procedure TfrmCliente.btnInserirClick(Sender: TObject);
 begin
   inherited;
-  OpenCadCliente(0)
+  OpenCadCliente(0);
 end;
 
 end.

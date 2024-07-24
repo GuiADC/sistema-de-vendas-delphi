@@ -11,12 +11,16 @@ inherited frmCliente: TfrmCliente
     ExplicitWidth = 912
     inherited Label1: TLabel
       Width = 104
+      Height = 50
       Caption = 'Clientes'
       ExplicitWidth = 104
     end
     inherited Panel1: TPanel
       Left = 792
       ExplicitLeft = 792
+      inherited btnExcluir: TSpeedButton
+        OnClick = btnExcluirClick
+      end
     end
     inherited Panel2: TPanel
       Left = 532
@@ -28,6 +32,9 @@ inherited frmCliente: TfrmCliente
     inherited Panel3: TPanel
       Left = 662
       ExplicitLeft = 662
+      inherited btnEditar: TSpeedButton
+        OnClick = btnEditarClick
+      end
     end
     inherited Panel4: TPanel
       Left = 114
@@ -43,9 +50,7 @@ inherited frmCliente: TfrmCliente
       end
       inherited edtBuscar: TEdit
         Width = 238
-        ExplicitTop = 17
         ExplicitWidth = 238
-        ExplicitHeight = 40
       end
     end
   end
@@ -65,6 +70,7 @@ inherited frmCliente: TfrmCliente
     Font.Name = 'Segoe UI'
     Font.Style = []
     ImeName = 'Portuguese (Brazilian ABNT)'
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
     ParentFont = False
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -72,6 +78,7 @@ inherited frmCliente: TfrmCliente
     TitleFont.Height = -12
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
+    OnDblClick = gridClientesDblClick
     Columns = <
       item
         Expanded = False

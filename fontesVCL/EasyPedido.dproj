@@ -122,7 +122,7 @@
             <Form>frmCliente</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="unitDefaultCadastro.pas">
+        <DCCReference Include="unitClienteCad.pas">
             <Form>frmDefaultCadastro</Form>
             <FormType>dfm</FormType>
         </DCCReference>
