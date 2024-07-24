@@ -5,7 +5,10 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.jpeg,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.Imaging.pngimage, Vcl.Loading, Vcl.Session;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.Imaging.pngimage, Vcl.Loading, Vcl.Session,
+  FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.StorageBin, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TfrmLogin = class(TForm)
@@ -21,6 +24,7 @@ type
     btnAcessar: TSpeedButton;
     Label4: TLabel;
     Label2: TLabel;
+    tabUsuario: TFDMemTable;
     procedure btnAcessarClick(Sender: TObject);
   private
     procedure TerminateLogin(Sender: TObject);
@@ -34,7 +38,7 @@ var
 
 implementation
 
-uses unitPrincipal;
+uses unitPrincipal, dataModules.Usuario;
 
 {$R *.dfm}
 
@@ -50,9 +54,9 @@ begin
     end;
 
   //dados de acesso..
-  TSession.ID_USUARIO := 1;
-  TSession.EMAIL := 'guilherme@outlook.com';
-  TSession.NOME := 'Guilherme Araujo';
+  TSession.ID_USUARIO := tabUsuario.FieldByName('id_usuario').AsInteger;
+  TSession.EMAIL := tabUsuario.FieldByName('email').asString;
+  TSession.NOME := tabUsuario.FieldByName('nome').asString;
 
   if not assigned(frmPrincipal) then
     Application.CreateForm(TfrmPrincipal, frmPrincipal);
@@ -67,7 +71,8 @@ begin
   //criar requisicao para servidor...
   TLoading.ExecuteThread(procedure
   begin
-    sleep(1000);
+    sleep(800);
+    dmUsuario.Login(tabUsuario, edtEmail.text, edtSenha.text);
   end,
   TerminateLogin);
 

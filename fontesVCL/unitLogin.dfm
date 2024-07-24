@@ -57387,7 +57387,7 @@ object frmLogin: TfrmLogin
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        Text = 'gui@outllok.com.brr'
+        Text = 'heber@teste.com.br'
       end
     end
     object Panel3: TPanel
@@ -57435,5 +57435,20 @@ object frmLogin: TfrmLogin
         Text = '12345'
       end
     end
+  end
+  object tabUsuario: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvPersistent, rvSilentMode]
+    ResourceOptions.Persistent = True
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 752
+    Top = 96
   end
 end

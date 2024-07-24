@@ -17,7 +17,7 @@ end;
 procedure Login(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   ldm: tdm;
-  lbody: TJSONObject;
+  lbody, ljson: TJSONObject;
 begin
   try
     try
@@ -25,9 +25,15 @@ begin
 
       lbody := req.Body<TJSONObject>;
 
-      Res.send<TJSONObject>(ldm.ClienteInserir(lbody.GetValue<string>('email', ''),
-                                               lbody.GetValue<string>('senha', '')
-                                               )).Status(201);
+      ljson := ldm.UsuarioLogin(lbody.GetValue<string>('email', ''), lbody.GetValue<string>('senha', ''));
+
+      if ljson.Size = 0 then
+      begin
+        Res.send('E-mail ou senha inválida').Status(401);
+        freeandnil(ljson);
+      end
+      else
+        Res.send<TJSONObject>(ljson);
 
     except
       on E:Exception do

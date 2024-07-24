@@ -7,6 +7,7 @@ inherited frmPedido: TfrmPedido
     ExplicitWidth = 1010
     inherited Label1: TLabel
       Width = 103
+      Height = 50
       Caption = 'Pedidos'
       ExplicitWidth = 103
     end
@@ -31,9 +32,8 @@ inherited frmPedido: TfrmPedido
         Left = 337
         ExplicitLeft = 337
       end
-      inherited Edit1: TEdit
+      inherited edtBuscar: TEdit
         Width = 337
-        ExplicitWidth = 337
       end
     end
   end
