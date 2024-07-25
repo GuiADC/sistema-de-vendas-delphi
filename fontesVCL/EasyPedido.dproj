@@ -123,7 +123,7 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="unitClienteCad.pas">
-            <Form>frmDefaultCadastro</Form>
+            <Form>frmClienteCad</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="DataModules\dataModules.Cliente.pas">
@@ -149,6 +149,7 @@
             <Form>frmProdutoCad</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="utils\Vcl.utils.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

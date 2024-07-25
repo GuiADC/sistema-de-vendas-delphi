@@ -11,6 +11,9 @@ object frmProdutoCad: TfrmProdutoCad
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnShow = FormShow
   TextHeight = 15
   object lblTitulo: TLabel
     AlignWithMargins = True
@@ -68,8 +71,8 @@ object frmProdutoCad: TfrmProdutoCad
   end
   object Panel2: TPanel
     AlignWithMargins = True
-    Left = 361
-    Top = 302
+    Left = 364
+    Top = 333
     Width = 110
     Height = 37
     Margins.Left = 10
@@ -101,14 +104,15 @@ object frmProdutoCad: TfrmProdutoCad
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = -8
-      ExplicitHeight = 36
+      OnClick = btnCancelarClick
+      ExplicitLeft = -2
+      ExplicitTop = 16
     end
   end
   object Panel1: TPanel
     AlignWithMargins = True
-    Left = 236
-    Top = 302
+    Left = 239
+    Top = 333
     Width = 110
     Height = 37
     Margins.Left = 10
@@ -140,14 +144,15 @@ object frmProdutoCad: TfrmProdutoCad
       Font.Name = 'Segoe UI'
       Font.Style = []
       ParentFont = False
+      OnClick = btnSalvarClick
       ExplicitLeft = 2
     end
   end
-  object edtNome: TEdit
+  object edtDescricao: TEdit
     AlignWithMargins = True
     Left = 16
     Top = 100
-    Width = 455
+    Width = 458
     Height = 33
     Margins.Left = 0
     Margins.Top = 20
@@ -161,7 +166,7 @@ object frmProdutoCad: TfrmProdutoCad
     ParentFont = False
     TabOrder = 2
   end
-  object edtEndereco: TEdit
+  object edtValor: TEdit
     AlignWithMargins = True
     Left = 16
     Top = 183
@@ -176,11 +181,12 @@ object frmProdutoCad: TfrmProdutoCad
     Font.Height = -19
     Font.Name = 'Segoe UI'
     Font.Style = []
-    NumbersOnly = True
     ParentFont = False
     TabOrder = 3
+    OnExit = edtValorExit
+    OnKeyPress = edtValorKeyPress
   end
-  object tabClienteCad: TFDMemTable
+  object tabProdutoCad: TFDMemTable
     FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
@@ -192,7 +198,7 @@ object frmProdutoCad: TfrmProdutoCad
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 446
+    Left = 422
     Top = 40
   end
 end

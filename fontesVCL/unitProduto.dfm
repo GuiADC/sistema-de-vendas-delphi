@@ -9,6 +9,21 @@ inherited frmProduto: TfrmProduto
       Caption = 'Produtos'
       ExplicitWidth = 119
     end
+    inherited Panel1: TPanel
+      inherited btnExcluir: TSpeedButton
+        OnClick = btnExcluirClick
+      end
+    end
+    inherited Panel2: TPanel
+      inherited btnInserir: TSpeedButton
+        OnClick = btnInserirClick
+      end
+    end
+    inherited Panel3: TPanel
+      inherited btnEditar: TSpeedButton
+        OnClick = btnEditarClick
+      end
+    end
     inherited Panel4: TPanel
       Left = 129
       Width = 293

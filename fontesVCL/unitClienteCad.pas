@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.StorageBin, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
-  TfrmDefaultCadastro = class(TForm)
+  TfrmClienteCad = class(TForm)
     lblTitulo: TLabel;
     Panel2: TPanel;
     btnCancelar: TSpeedButton;
@@ -42,7 +42,7 @@ type
   end;
 
 var
-  frmDefaultCadastro: TfrmDefaultCadastro;
+  frmClienteCad: TfrmClienteCad;
 
 implementation
 
@@ -50,12 +50,12 @@ implementation
 
 uses dataModules.Cliente;
 
-procedure TfrmDefaultCadastro.btnCancelarClick(Sender: TObject);
+procedure TfrmClienteCad.btnCancelarClick(Sender: TObject);
 begin
   TNavigation.CloseAndCancel(self);
 end;
 
-procedure TfrmDefaultCadastro.TerminateSalvar(Sender: TObject);
+procedure TfrmClienteCad.TerminateSalvar(Sender: TObject);
 begin
   TLoading.hide;
 
@@ -69,10 +69,9 @@ begin
   tnavigation.close(self);
 end;
 
-procedure TfrmDefaultCadastro.btnSalvarClick(Sender: TObject);
+procedure TfrmClienteCad.btnSalvarClick(Sender: TObject);
 begin
   TLoading.Show;
-//
   TLoading.ExecuteThread(procedure
   begin
     if TNavigation.ParamInt = 0 then
@@ -82,15 +81,15 @@ begin
   end, TerminateSalvar);
 end;
 
-procedure TfrmDefaultCadastro.FormClose(Sender: TObject;
+procedure TfrmClienteCad.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   Action := TCloseAction.caFree;
 
-  TfrmDefaultCadastro(sender) := nil;
+  TfrmClienteCad(sender) := nil;
 end;
 
-procedure TfrmDefaultCadastro.TerminateLoad(Sender: TObject);
+procedure TfrmClienteCad.TerminateLoad(Sender: TObject);
 begin
   TLoading.hide;
 
@@ -110,7 +109,7 @@ begin
 
 end;
 
-procedure TfrmDefaultCadastro.FormShow(Sender: TObject);
+procedure TfrmClienteCad.FormShow(Sender: TObject);
 begin
   if TNavigation.ParamInt > 0 then
   begin

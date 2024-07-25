@@ -10,12 +10,13 @@ uses
   unitDefaultListItems in 'unitDefaultListItems.pas' {frmDefault},
   unitPedido in 'unitPedido.pas' {frmPedido},
   unitCliente in 'unitCliente.pas' {frmCliente},
-  unitClienteCad in 'unitClienteCad.pas' {frmDefaultCadastro},
+  unitClienteCad in 'unitClienteCad.pas' {frmClienteCad},
   dataModules.Cliente in 'DataModules\dataModules.Cliente.pas' {dmCliente: TDataModule},
   dataModules.Usuario in 'DataModules\dataModules.Usuario.pas' {dmUsuario: TDataModule},
   unitProduto in 'unitProduto.pas' {frmProduto},
   dataModules.Produto in 'DataModules\dataModules.Produto.pas' {dmProduto: TDataModule},
-  unitProdutoCad in 'unitProdutoCad.pas' {frmProdutoCad};
+  unitProdutoCad in 'unitProdutoCad.pas' {frmProdutoCad},
+  Vcl.utils in 'utils\Vcl.utils.pas';
 
 {$R *.res}
 
@@ -27,6 +28,5 @@ begin
   Application.CreateForm(TdmCliente, dmCliente);
   Application.CreateForm(TdmUsuario, dmUsuario);
   Application.CreateForm(TdmProduto, dmProduto);
-  Application.CreateForm(TfrmProdutoCad, frmProdutoCad);
   Application.Run;
 end.

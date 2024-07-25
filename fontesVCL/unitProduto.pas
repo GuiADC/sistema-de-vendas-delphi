@@ -19,11 +19,15 @@ type
     procedure FormShow(Sender: TObject);
     procedure refreshProdutos;
     procedure terminateBusca(Sender: TObject);
+    procedure btnInserirClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
   private
     { Private declarations }
     fbookmark: TBookmark;
     procedure editar;
     procedure OpenCadProduto(idProduto: integer);
+    procedure terminateDelete(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -33,7 +37,7 @@ var
 
 implementation
 
-uses dataModules.Produto;
+uses dataModules.Produto, unitProdutoCad;
 
 {$R *.dfm}
 
@@ -52,7 +56,7 @@ procedure TfrmProduto.OpenCadProduto(idProduto: integer);
 begin
   TNavigation.ExecuteOnClose := refreshProdutos;
   TNavigation.ParamInt := idProduto;
-//  TNavigation.OpenModal(TfrmDefaultCadastro, frmDefaultCadastro);
+  TNavigation.OpenModal(TfrmProdutoCad, frmProdutoCad);
 end;
 
 procedure TfrmProduto.editar;
@@ -60,9 +64,33 @@ begin
   if tabProduto.RecordCount = 0  then
     exit;
 
-  fbookmark := gridProdutos.DataSource.DataSet.GetBookmark;
+   fbookmark := gridProdutos.DataSource.DataSet.GetBookmark;
 
-  OpenCadProduto(tabProduto.FieldByName('id_produto').AsInteger);
+   OpenCadProduto(tabProduto.FieldByName('id_produto').AsInteger);
+end;
+
+
+procedure TfrmProduto.btnEditarClick(Sender: TObject);
+begin
+  inherited;
+  editar;
+end;
+
+procedure TfrmProduto.btnExcluirClick(Sender: TObject);
+begin
+  if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+  begin
+    TLoading.Show;
+    Tloading.ExecuteThread(procedure
+    begin
+      dmProduto.Excluir(tabProduto.FieldByName('id_produto').AsInteger);
+    end, terminateDelete);
+  end;
+end;
+
+procedure TfrmProduto.btnInserirClick(Sender: TObject);
+begin
+  OpenCadProduto(0);
 end;
 
 procedure TfrmProduto.refreshProdutos;
@@ -75,6 +103,20 @@ begin
     dmProduto.ListarProdutos(tabProduto, edtBuscar.text);
 
   end, terminateBusca);
+end;
+
+procedure TfrmProduto.terminateDelete(Sender: TObject);
+begin
+  TLoading.hide;
+
+  if sender is TThread then
+    if Assigned(TThread(sender).FatalException) then
+    begin
+      ShowMessage(Exception(TThread(sender).FatalException).Message);
+      exit;
+    end;
+
+  refreshProdutos;
 end;
 
 procedure TfrmProduto.terminateBusca(Sender: TObject);
