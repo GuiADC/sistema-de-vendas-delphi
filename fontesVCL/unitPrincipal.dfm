@@ -366,6 +366,7 @@ object frmPrincipal: TfrmPrincipal
             item
               Caption = ' Produtos'
               ImageIndex = 8
+              OnClick = CategorySubMenuButtonsCategories0Items1Click
             end>
           VisibleGutter = False
         end>

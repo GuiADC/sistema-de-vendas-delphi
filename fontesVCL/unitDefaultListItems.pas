@@ -38,7 +38,7 @@ procedure TfrmDefault.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := TCloseAction.caFree;
 
-  TfrmDefault(sender) := nil;
+  TForm(sender) := nil;
 end;
 
 end.

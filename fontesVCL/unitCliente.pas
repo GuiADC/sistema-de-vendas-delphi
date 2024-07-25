@@ -58,7 +58,7 @@ procedure TfrmCliente.OpenCadCliente(idCliente: integer);
 begin
   TNavigation.ExecuteOnClose := refreshClientes;
   TNavigation.ParamInt := idCliente;
-  TNavigation.OpenModal(TfrmDefaultCadastro, frmDefaultCadastro);
+  TNavigation.OpenModal(TfrmClienteCad, frmClienteCad);
 end;
 
 procedure TfrmCliente.terminateBusca(Sender: TObject);
@@ -134,7 +134,6 @@ end;
 
 procedure TfrmCliente.btnExcluirClick(Sender: TObject);
 begin
-  inherited;
   if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
   begin
     TLoading.Show;
@@ -143,8 +142,6 @@ begin
       dmCliente.Excluir(tabCliente.FieldByName('id_cliente').AsInteger);
     end, terminateDelete);
   end;
-
-//
 end;
 
 procedure TfrmCliente.btnInserirClick(Sender: TObject);

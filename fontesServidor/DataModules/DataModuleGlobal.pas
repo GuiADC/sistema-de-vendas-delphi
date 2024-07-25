@@ -29,7 +29,10 @@ type
 
     /////////////////// PRODUTO ////////////////
     function ProdutoListar(pfiltro: string): TJsonArray;
-
+    function ProdutoListarId(pid_produto: integer): TJsonObject;
+    function ProdutoInserir(pdescricao: string; pvalor: double): TJsonObject;
+    function produtoEditar(pid_produto: integer; pdescricao: string; pvalor: double): TJsonObject;
+    function ProdutoExcluir(pid_produto: integer): TJsonObject;
     /////////////////// USUARIO ////////////////
 function UsuarioLogin(pemail, psenha: string): TJsonObject;
 
@@ -101,7 +104,6 @@ begin
   finally
     freeAndNil(qry);
   end;
-  //
 end;
 
 function TDM.ClienteInserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
@@ -201,7 +203,6 @@ begin
   finally
     freeAndNil(qry);
   end;
-  //
 end;
 
 function TDM.ProdutoListar(pfiltro: string): TJsonArray;
@@ -227,7 +228,92 @@ begin
   finally
     freeAndNil(qry);
   end;
-  //
+end;
+
+function TDM.ProdutoListarId(pid_produto: integer): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Select *');
+    qry.SQL.Add('FROM produto');
+    qry.SQL.Add('Where id_produto = :id_produto');
+    qry.ParamByName('id_produto').Value := pid_produto;
+
+    qry.Active := true;
+
+    result := qry.ToJSONObject;
+  finally
+    freeAndNil(qry);
+  end;
+end;
+
+function TDM.ProdutoInserir(pdescricao: string; pvalor: double): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Insert into produto(descricao, preco)');
+    qry.SQL.Add('values(:descricao, :valor);');
+
+    qry.SQL.Add('select last_insert_rowid() as id_produto');
+
+    qry.ParamByName('descricao').Value := pdescricao;
+    qry.ParamByName('valor').Value := pvalor;
+
+    qry.Active := true;
+
+    result := qry.ToJSONObject;
+  finally
+    freeandnil(qry);
+  end;
+end;
+
+function TDM.produtoEditar(pid_produto: integer; pdescricao: string; pvalor: double): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('Update produto set descricao = :descricao, preco = :preco');
+
+    qry.SQL.Add('where id_produto = :id_produto');
+
+    qry.ParamByName('id_produto').Value := pid_produto;
+    qry.ParamByName('descricao').Value := pdescricao;
+    qry.ParamByName('preco').Value := pvalor;
+
+    qry.ExecSQL;
+
+    result := TJSONObject.create(TJSONPair.Create('id_produto', pid_produto));
+  finally
+    freeAndNil(qry);
+  end;
+end;
+
+function TDM.ProdutoExcluir(pid_produto: integer): TJsonObject;
+var
+  qry: TFDQuery;
+begin
+  try
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.Add('delete from produto');
+    qry.SQL.Add('where id_produto = :id_produto');
+
+    qry.ParamByName('id_produto').Value := pid_produto;
+
+    qry.ExecSQL;
+
+    result := TJSONObject.create(TJSONPair.Create('id_produto', pid_produto));
+  finally
+    freeAndNil(qry);
+  end;
 end;
 
 function TDM.UsuarioLogin(pemail ,psenha: string): TJsonObject;

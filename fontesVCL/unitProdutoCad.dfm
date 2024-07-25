@@ -1,8 +1,8 @@
-object frmClienteCad: TfrmClienteCad
+object frmProdutoCad: TfrmProdutoCad
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'Cadastro'
+  Caption = 'frmProdutoCad'
   ClientHeight = 392
   ClientWidth = 496
   Color = clWhite
@@ -17,15 +17,15 @@ object frmClienteCad: TfrmClienteCad
   TextHeight = 15
   object lblTitulo: TLabel
     AlignWithMargins = True
-    Left = 16
-    Top = 20
-    Width = 126
+    Left = 12
+    Top = 12
+    Width = 153
     Height = 32
     Margins.Left = 0
     Margins.Top = 20
     Margins.Right = 10
     Margins.Bottom = 10
-    Caption = 'Novo liente'
+    Caption = 'Novo Produto'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 16477014
     Font.Height = -24
@@ -37,13 +37,13 @@ object frmClienteCad: TfrmClienteCad
     AlignWithMargins = True
     Left = 16
     Top = 66
-    Width = 47
+    Width = 74
     Height = 21
     Margins.Left = 0
     Margins.Top = 20
     Margins.Right = 10
     Margins.Bottom = 10
-    Caption = 'Nome'
+    Caption = 'Descri'#231#227'o'
     Font.Charset = ANSI_CHARSET
     Font.Color = 16477014
     Font.Height = -16
@@ -55,85 +55,13 @@ object frmClienteCad: TfrmClienteCad
     AlignWithMargins = True
     Left = 16
     Top = 149
-    Width = 71
+    Width = 40
     Height = 21
     Margins.Left = 0
     Margins.Top = 20
     Margins.Right = 10
     Margins.Bottom = 10
-    Caption = 'Endere'#231'o'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = 16477014
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label3: TLabel
-    AlignWithMargins = True
-    Left = 321
-    Top = 149
-    Width = 109
-    Height = 21
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 10
-    Margins.Bottom = 10
-    Caption = 'Complemento'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = 16477014
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label4: TLabel
-    AlignWithMargins = True
-    Left = 16
-    Top = 230
-    Width = 46
-    Height = 21
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 10
-    Margins.Bottom = 10
-    Caption = 'Bairro'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = 16477014
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label5: TLabel
-    AlignWithMargins = True
-    Left = 136
-    Top = 230
-    Width = 53
-    Height = 21
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 10
-    Margins.Bottom = 10
-    Caption = 'Cidade'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = 16477014
-    Font.Height = -16
-    Font.Name = 'Segoe UI'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object Label6: TLabel
-    AlignWithMargins = True
-    Left = 377
-    Top = 230
-    Width = 20
-    Height = 21
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 10
-    Margins.Bottom = 10
-    Caption = 'UF'
+    Caption = 'Valor'
     Font.Charset = ANSI_CHARSET
     Font.Color = 16477014
     Font.Height = -16
@@ -160,7 +88,7 @@ object frmClienteCad: TfrmClienteCad
     Font.Style = []
     ParentBackground = False
     ParentFont = False
-    TabOrder = 6
+    TabOrder = 0
     object btnCancelar: TSpeedButton
       Left = 0
       Top = 0
@@ -177,8 +105,8 @@ object frmClienteCad: TfrmClienteCad
       Font.Style = []
       ParentFont = False
       OnClick = btnCancelarClick
-      ExplicitLeft = -8
-      ExplicitHeight = 36
+      ExplicitLeft = -2
+      ExplicitTop = 16
     end
   end
   object Panel1: TPanel
@@ -200,7 +128,7 @@ object frmClienteCad: TfrmClienteCad
     Font.Style = []
     ParentBackground = False
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 1
     object btnSalvar: TSpeedButton
       Left = 0
       Top = 0
@@ -220,7 +148,7 @@ object frmClienteCad: TfrmClienteCad
       ExplicitLeft = 2
     end
   end
-  object edtNome: TEdit
+  object edtDescricao: TEdit
     AlignWithMargins = True
     Left = 16
     Top = 100
@@ -236,9 +164,9 @@ object frmClienteCad: TfrmClienteCad
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
-    TabOrder = 0
+    TabOrder = 2
   end
-  object edtEndereco: TEdit
+  object edtValor: TEdit
     AlignWithMargins = True
     Left = 16
     Top = 183
@@ -254,81 +182,11 @@ object frmClienteCad: TfrmClienteCad
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
-    TabOrder = 1
-  end
-  object edtComplemento: TEdit
-    AlignWithMargins = True
-    Left = 321
-    Top = 183
-    Width = 152
-    Height = 33
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 0
-    Margins.Bottom = 20
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 2
-  end
-  object edtBairro: TEdit
-    AlignWithMargins = True
-    Left = 16
-    Top = 264
-    Width = 97
-    Height = 33
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 0
-    Margins.Bottom = 20
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
     TabOrder = 3
+    OnExit = edtValorExit
+    OnKeyPress = edtValorKeyPress
   end
-  object edtCidade: TEdit
-    AlignWithMargins = True
-    Left = 136
-    Top = 264
-    Width = 224
-    Height = 33
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 0
-    Margins.Bottom = 20
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 4
-  end
-  object edtUF: TEdit
-    AlignWithMargins = True
-    Left = 377
-    Top = 264
-    Width = 97
-    Height = 33
-    Margins.Left = 0
-    Margins.Top = 20
-    Margins.Right = 0
-    Margins.Bottom = 20
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -19
-    Font.Name = 'Segoe UI'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 5
-  end
-  object tabClienteCad: TFDMemTable
+  object tabProdutoCad: TFDMemTable
     FieldDefs = <>
     IndexDefs = <>
     FetchOptions.AssignedValues = [evMode]
@@ -340,7 +198,7 @@ object frmClienteCad: TfrmClienteCad
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
     StoreDefs = True
-    Left = 446
+    Left = 422
     Top = 40
   end
 end
