@@ -1,0 +1,90 @@
+inherited frmProduto: TfrmProduto
+  Caption = 'frmProduto'
+  OnShow = FormShow
+  TextHeight = 15
+  inherited pHeader: TPanel
+    inherited Label1: TLabel
+      Width = 119
+      Height = 50
+      Caption = 'Produtos'
+      ExplicitWidth = 119
+    end
+    inherited Panel4: TPanel
+      Left = 129
+      Width = 293
+      ExplicitLeft = 129
+      ExplicitWidth = 293
+      inherited Panel7: TPanel
+        Left = 173
+        ExplicitLeft = 173
+      end
+      inherited edtBuscar: TEdit
+        Width = 173
+        ExplicitWidth = 173
+      end
+    end
+  end
+  object gridProdutos: TDBGrid
+    Left = 0
+    Top = 80
+    Width = 862
+    Height = 400
+    Align = alClient
+    BorderStyle = bsNone
+    Color = 5716789
+    FixedColor = 5585461
+    Font.Charset = ANSI_CHARSET
+    Font.Color = 5585461
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ImeName = 'Portuguese (Brazilian ABNT)'
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ParentFont = False
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'id_produto'
+        Width = 101
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'descricao'
+        Width = 159
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'preco'
+        Width = 392
+        Visible = True
+      end>
+  end
+  object tabProduto: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvPersistent, rvSilentMode]
+    ResourceOptions.Persistent = True
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 544
+    Top = 120
+  end
+  object dsProduto: TDataSource
+    DataSet = tabProduto
+    Left = 632
+    Top = 120
+  end
+end

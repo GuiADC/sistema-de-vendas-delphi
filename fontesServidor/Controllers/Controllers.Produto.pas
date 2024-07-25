@@ -21,7 +21,6 @@ begin
   try
     try
       ldm := TDm.create(nil);
-
       Res.send<TJSONArray>(ldm.ProdutoListar(Req.Query['filtro'])).status(200);
 
     except

@@ -34,6 +34,7 @@ inherited frmPedido: TfrmPedido
       end
       inherited edtBuscar: TEdit
         Width = 337
+        ExplicitWidth = 337
       end
     end
   end

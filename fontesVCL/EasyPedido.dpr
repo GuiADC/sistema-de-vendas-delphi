@@ -12,7 +12,10 @@ uses
   unitCliente in 'unitCliente.pas' {frmCliente},
   unitClienteCad in 'unitClienteCad.pas' {frmDefaultCadastro},
   dataModules.Cliente in 'DataModules\dataModules.Cliente.pas' {dmCliente: TDataModule},
-  dataModules.Usuario in 'DataModules\dataModules.Usuario.pas' {dmUsuario: TDataModule};
+  dataModules.Usuario in 'DataModules\dataModules.Usuario.pas' {dmUsuario: TDataModule},
+  unitProduto in 'unitProduto.pas' {frmProduto},
+  dataModules.Produto in 'DataModules\dataModules.Produto.pas' {dmProduto: TDataModule},
+  unitProdutoCad in 'unitProdutoCad.pas' {frmProdutoCad};
 
 {$R *.res}
 
@@ -23,5 +26,7 @@ begin
   Application.CreateForm(TfrmLogin, frmLogin);
   Application.CreateForm(TdmCliente, dmCliente);
   Application.CreateForm(TdmUsuario, dmUsuario);
+  Application.CreateForm(TdmProduto, dmProduto);
+  Application.CreateForm(TfrmProdutoCad, frmProdutoCad);
   Application.Run;
 end.
