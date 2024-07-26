@@ -81,7 +81,8 @@ begin
       Res.send<TJSONObject>(ldm.PedidoInserir(lbody.GetValue<integer>('id_usuario', 0),
                                                lbody.GetValue<integer>('id_cliente', 0),
                                                lbody.GetValue<string>('dt_pedido', ''),
-                                               lbody.GetValue<double>('vl_total', 0)
+                                               lbody.GetValue<double>('vl_total', 0),
+                                               lbody.GetValue<TJSONArray>('itens')
                                                )).Status(201);
 
     except
@@ -114,8 +115,9 @@ begin
       Res.send<TJSONObject>(ldm.PedidoEditar(id_pedido,
                                              lbody.GetValue<integer>('id_cliente', 0),
                                              lbody.GetValue<string>('dt_pedido', ''),
-                                             lbody.GetValue<double>('vl_total', 0)
-                                             )).Status(201);
+                                             lbody.GetValue<double>('vl_total', 0),
+                                             lbody.GetValue<TJSONArray>('itens')
+                                             ));
 
     except
       on E:Exception do
