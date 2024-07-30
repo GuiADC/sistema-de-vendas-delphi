@@ -82,7 +82,7 @@ begin
                                                lbody.GetValue<integer>('id_cliente', 0),
                                                lbody.GetValue<string>('dt_pedido', ''),
                                                lbody.GetValue<double>('vl_total', 0),
-                                               lbody.GetValue<TJSONArray>('itens')
+                                               lbody.GetValue<TJsonArray>('itens')
                                                )).Status(201);
 
     except
@@ -117,7 +117,7 @@ begin
                                              lbody.GetValue<string>('dt_pedido', ''),
                                              lbody.GetValue<double>('vl_total', 0),
                                              lbody.GetValue<TJSONArray>('itens')
-                                             ));
+                                             )).Status(201);
 
     except
       on E:Exception do

@@ -16,7 +16,8 @@ uses
   unitProduto in 'unitProduto.pas' {frmProduto},
   dataModules.Produto in 'DataModules\dataModules.Produto.pas' {dmProduto: TDataModule},
   unitProdutoCad in 'unitProdutoCad.pas' {frmProdutoCad},
-  Vcl.utils in 'utils\Vcl.utils.pas';
+  dataModules.Pedido in 'DataModules\dataModules.Pedido.pas' {dmPedido: TDataModule},
+  unitPedidoCad in 'unitPedidoCad.pas' {frmPedidoCad};
 
 {$R *.res}
 
@@ -28,5 +29,6 @@ begin
   Application.CreateForm(TdmCliente, dmCliente);
   Application.CreateForm(TdmUsuario, dmUsuario);
   Application.CreateForm(TdmProduto, dmProduto);
+  Application.CreateForm(TdmPedido, dmPedido);
   Application.Run;
 end.

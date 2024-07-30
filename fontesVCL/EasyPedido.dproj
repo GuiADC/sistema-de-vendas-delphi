@@ -149,7 +149,15 @@
             <Form>frmProdutoCad</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="utils\Vcl.utils.pas"/>
+        <DCCReference Include="DataModules\dataModules.Pedido.pas">
+            <Form>dmPedido</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="unitPedidoCad.pas">
+            <Form>frmPedidoCad</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

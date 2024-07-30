@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,  Vcl.Navigation, Vcl.Loading, Vcl.utils;
+  FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,  Vcl.Navigation, Vcl.Loading;
 
 type
   TfrmProdutoCad = class(TForm)
@@ -71,9 +71,9 @@ begin
   TLoading.ExecuteThread(procedure
   begin
     if TNavigation.ParamInt = 0 then
-      dmProduto.inserir(edtDescricao.text, RemovePontosVirgulasEmStrings(edtValor.Text))
+      dmProduto.inserir(edtDescricao.text,edtValor.Text)
     else
-      dmProduto.editar(TNavigation.ParamInt, edtDescricao.text, RemovePontosVirgulasEmStrings(edtValor.Text));
+      dmProduto.editar(TNavigation.ParamInt, edtDescricao.text, edtValor.Text);
 
   end, TerminateSalvar);
 end;
