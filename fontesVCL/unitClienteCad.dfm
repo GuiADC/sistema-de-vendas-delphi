@@ -18,14 +18,14 @@ object frmClienteCad: TfrmClienteCad
   object lblTitulo: TLabel
     AlignWithMargins = True
     Left = 16
-    Top = 20
-    Width = 126
+    Top = 25
+    Width = 137
     Height = 32
     Margins.Left = 0
     Margins.Top = 20
     Margins.Right = 10
     Margins.Bottom = 10
-    Caption = 'Novo liente'
+    Caption = 'Novo cliente'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = 16477014
     Font.Height = -24

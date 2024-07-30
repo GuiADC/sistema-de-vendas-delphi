@@ -37,9 +37,9 @@ type
 function UsuarioLogin(pemail, psenha: string): TJsonObject;
 
     /////////////////// PEDIDO ////////////////
-    function PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+    function PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
     function PedidoExcluir(pid_pedido: integer): TJsonObject;
-    function PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+    function PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
     function PedidoListar(pfiltro: string): TJsonArray;
     function PedidoListarId(pid_pedido: integer): TJsonObject;
 
@@ -346,9 +346,10 @@ begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('Select p.*, c.nome, c.cidade');
+    qry.SQL.Add('Select p.*, c.nome, c.cidade, u.nome as usuario');
     qry.SQL.Add('FROM pedido p');
     qry.SQL.Add('inner join cliente c on (c.id_cliente = p.id_cliente)');
+    qry.SQL.Add('inner join usuario u on (u.id_usuario = p.id_usuario)');
     qry.SQL.Add('Where p.id_pedido = :id_pedido');
     qry.ParamByName('id_pedido').Value := pid_pedido;
     qry.Active := true;
@@ -370,15 +371,16 @@ begin
   end;
 end;
 
-function TDM.PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+function TDM.PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
 var
   qry: TFDQuery;
+  lintIdPedido: integer;
 begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
     qry.SQL.Add('Insert into pedido(id_usuario, id_cliente, dt_pedido, vl_total)');
-    qry.SQL.Add('values(:id_usuario, :id_cliente, :dt_pedido, :vl_total');
+    qry.SQL.Add('values(:id_usuario, :id_cliente, :dt_pedido, :vl_total);');
 
     qry.SQL.Add('select last_insert_rowid() as id_pedido');
 
@@ -389,13 +391,30 @@ begin
 
     qry.Active := true;
 
-    result := qry.ToJSONObject;
+    lintIdPedido := qry.FieldByName('id_pedido').AsInteger;
+
+    for var lintIndex := 0 to parrItems.size -1 do
+    begin
+      qry.SQL.Clear;
+      qry.SQL.Add('Insert into pedido_item(id_pedido, id_produto, qtd, vl_unitario, vl_total)');
+      qry.SQL.Add('values(:id_pedido, :id_produto, :qtd, :vl_unitario, :vl_total);');
+
+      qry.ParamByName('id_pedido').Value := lintIdPedido;
+      qry.ParamByName('id_produto').Value := parrItems[lintIndex].GetValue<integer>('id_produto', 0);
+      qry.ParamByName('qtd').Value := parrItems[lintIndex].GetValue<integer>('qtd', 0);
+      qry.ParamByName('vl_unitario').Value := parrItems[lintIndex].GetValue<integer>('vl_unitario', 0);
+      qry.ParamByName('vl_total').Value := parrItems[lintIndex].GetValue<integer>('vl_total', 0);
+
+      qry.ExecSQL;
+    end;
+
+    result := TJSONObject.Create(TJSONPair.Create('id_pedido', lintIdPedido));
   finally
     freeAndNil(qry);
   end;
 end;
 
-function TDM.PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double): TJsonObject;
+function TDM.PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
 var
   qry: TFDQuery;
 begin
@@ -409,10 +428,29 @@ begin
     qry.ParamByName('id_cliente').Value := pid_cliente;
     qry.ParamByName('dt_pedido').Value := pdt_pedido;
     qry.ParamByName('vl_total').Value := pvl_total;
+    qry.ExecSQL;
+    qry.SQL.Clear;
 
+    qry.SQL.Add('delete from pedido_item');
+    qry.SQL.Add('where id_pedido = :id_pedido');
+    qry.ParamByName('id_pedido').Value := pid_pedido;
     qry.ExecSQL;
 
-    result := TJSONObject.create(TJSONPair.Create('id_pedido', pid_pedido));
+    for var lintIndex := 0 to parrItems.size -1 do
+    begin
+      qry.SQL.Clear;
+      qry.SQL.Add('Insert into pedido_item(id_pedido, id_produto, qtd, vl_unitario, vl_total)');
+      qry.SQL.Add('values(:id_pedido, :id_produto, :qtd, :vl_unitario, :vl_total)');
+
+      qry.ParamByName('id_pedido').Value := pid_pedido;
+      qry.ParamByName('id_produto').Value := parrItems[lintIndex].GetValue<integer>('id_produto', 0);
+      qry.ParamByName('qtd').Value := parrItems[lintIndex].GetValue<integer>('qtd', 0);
+      qry.ParamByName('vl_unitario').Value := parrItems[lintIndex].GetValue<integer>('vl_unitario', 0);
+      qry.ParamByName('vl_total').Value := parrItems[lintIndex].GetValue<integer>('vl_total', 0);
+      qry.ExecSQL;
+    end;
+
+    result := TJSONObject.Create(TJSONPair.Create('id_pedido', pid_pedido));
   finally
     freeAndNil(qry);
   end;
@@ -450,9 +488,10 @@ begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('Select p.*, c.nome, c.cidade');
+    qry.SQL.Add('Select p.*, c.nome, c.cidade, u.nome as usuario ');
     qry.SQL.Add('FROM pedido p');
     qry.SQL.Add('inner join cliente c on (c.id_cliente = p.id_cliente)');
+    qry.SQL.Add('inner join usuario u on (u.id_usuario = p.id_usuario)');
 
     if not(pfiltro.isEmpty) then
     begin

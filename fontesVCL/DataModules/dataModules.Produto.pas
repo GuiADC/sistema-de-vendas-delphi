@@ -9,6 +9,7 @@ uses
 
 type
   TdmProduto = class(TDataModule)
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,6 +45,12 @@ begin
 
   if lresp.StatusCode <> 200 then
     raise Exception.Create(lresp.content);
+end;
+
+procedure TdmProduto.DataModuleCreate(Sender: TObject);
+begin
+  TDatasetSerializeConfig.getinstance.CaseNameDefinition := cndLower;
+  TDatasetSerializeConfig.getinstance.Import.DecimalSeparator := '.';
 end;
 
 procedure TdmProduto.editar(pid_produto: integer; pdescricao, pvalor: string);
