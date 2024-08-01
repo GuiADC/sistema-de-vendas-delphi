@@ -267,7 +267,7 @@ object frmPedidoCad: TfrmPedidoCad
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Style = []
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
     ParentFont = False
     ReadOnly = True
     TabOrder = 5
@@ -351,9 +351,9 @@ object frmPedidoCad: TfrmPedidoCad
   end
   object pItem: TPanel
     Left = 0
-    Top = -40
+    Top = 8
     Width = 706
-    Height = 459
+    Height = 467
     Color = clWhite
     ParentBackground = False
     TabOrder = 6

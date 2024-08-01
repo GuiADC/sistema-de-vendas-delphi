@@ -64,7 +64,7 @@ inherited frmPedido: TfrmPedido
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Style = []
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
     ParentFont = False
     ReadOnly = True
     TabOrder = 1
@@ -74,6 +74,7 @@ inherited frmPedido: TfrmPedido
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
     OnDblClick = gridPedidosDblClick
+    OnTitleClick = gridPedidosTitleClick
     Columns = <
       item
         Expanded = False

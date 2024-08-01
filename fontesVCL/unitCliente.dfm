@@ -70,7 +70,7 @@ inherited frmCliente: TfrmCliente
     Font.Name = 'Segoe UI'
     Font.Style = []
     ImeName = 'Portuguese (Brazilian ABNT)'
-    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
     ParentFont = False
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
