@@ -31,6 +31,7 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure gridPedidosTitleClick(Column: TColumn);
 
   private
    { Private declarations }
@@ -119,7 +120,6 @@ end;
 
 procedure TfrmPedido.btnExcluirClick(Sender: TObject);
 begin
-begin
   if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
   begin
     TLoading.Show;
@@ -129,7 +129,6 @@ begin
     end, terminateDelete);
   end;
 end;
-end;
 
 procedure TfrmPedido.btnInserirClick(Sender: TObject);
 begin
@@ -138,8 +137,12 @@ end;
 
 procedure TfrmPedido.gridPedidosDblClick(Sender: TObject);
 begin
-  inherited;
   editar;
+end;
+
+procedure TfrmPedido.gridPedidosTitleClick(Column: TColumn);
+begin
+  gridPedidos.Columns[0].Width := 100;
 end;
 
 procedure TfrmPedido.editar;
