@@ -158,6 +158,16 @@
             <Form>frmPedidoCad</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="unitBusca.pas">
+            <Form>frmBusca</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="DataModules\dataModule.Geral.pas">
+            <Form>dmGeral</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="utils\Vcl.constantes.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

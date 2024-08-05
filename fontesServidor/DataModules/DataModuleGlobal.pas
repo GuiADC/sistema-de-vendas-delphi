@@ -43,6 +43,9 @@ function UsuarioLogin(pemail, psenha: string): TJsonObject;
     function PedidoListar(pfiltro: string): TJsonArray;
     function PedidoListarId(pid_pedido: integer): TJsonObject;
 
+    /////////////////// BUSCA GLOBAL ////////////////
+    function pesquisaGlobal(tipo_pesquisa, filtro: string): TJsonArray;
+
   end;
 
 var
@@ -506,6 +509,16 @@ begin
   finally
     freeAndNil(qry);
   end;
+end;
+
+function TDM.pesquisaGlobal(tipo_pesquisa, filtro: string): TJsonArray;
+begin
+  if tipo_pesquisa = 'cliente' then
+    result := ClienteListar(filtro)
+  else if tipo_pesquisa = 'produto' then
+    result := ProdutoListar(filtro)
+  else
+    raise Exception.Create('Tipo de pesquisa inválida');
 end;
 
 end.

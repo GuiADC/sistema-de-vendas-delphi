@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, DataSet.Serialize.Config,
   RESTRequest4D,
-  DataSet.Serialize.Adapter.RESTRequest4D, FireDAC.Comp.Client, System.JSON;
+  DataSet.Serialize.Adapter.RESTRequest4D, FireDAC.Comp.Client, System.JSON, Vcl.constantes;
 
 type
   TdmProduto = class(TDataModule)
@@ -37,7 +37,7 @@ procedure TdmProduto.Excluir(pid_produto: integer);
 var
   lresp: IResponse;
 begin
-  lresp := TRequest.new.BaseURL('http://localhost:3000')
+  lresp := TRequest.new.BaseURL(base_url)
                        .Resource('/produtos')
                        .ResourceSuffix(pid_produto.tostring)
                        .accept('application/json')
@@ -63,7 +63,7 @@ begin
     ljson.AddPair('descricao', pdescricao);
     ljson.AddPair('valor', pvalor);
 
-    lresp := TRequest.New.BaseURL('http://localhost:3000')
+    lresp := TRequest.New.BaseURL(base_url)
                          .Resource('/produtos')
                          .ResourceSuffix(pid_produto.tostring)
                          .addBody(ljson.ToJSON)
@@ -87,7 +87,7 @@ begin
     ljson.AddPair('descricao', pdescricao);
     ljson.AddPair('valor', pvalor);
 
-    lresp := TRequest.New.BaseURL('http://localhost:3000')
+    lresp := TRequest.New.BaseURL(base_url)
                          .Resource('/produtos')
                          .addBody(ljson.ToJSON)
                          .accept('application/json')
@@ -104,7 +104,7 @@ procedure TdmProduto.ListarProdutos(pmenTable: TFDMemTable; filtro: string);
 var
   resp: IResponse;
 begin
-  resp := TRequest.new.BaseURL('http://localhost:3000')
+  resp := TRequest.new.BaseURL(base_url)
                       .Resource('/produtos')
                       .addParam('filtro',filtro)
                       .accept('application/json')
@@ -119,7 +119,7 @@ procedure TdmProduto.ListarProdutoId(pmenTable: TFDMemTable; id_produto: integer
 var
   resp: IResponse;
 begin
-  resp := TRequest.new.BaseURL('http://localhost:3000')
+  resp := TRequest.new.BaseURL(base_url)
                       .Resource('/produtos')
                       .ResourceSuffix(id_produto.ToString)
                       .accept('application/json')

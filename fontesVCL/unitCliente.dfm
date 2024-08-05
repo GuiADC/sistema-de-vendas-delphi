@@ -11,7 +11,6 @@ inherited frmCliente: TfrmCliente
     ExplicitWidth = 912
     inherited Label1: TLabel
       Width = 104
-      Height = 50
       Caption = 'Clientes'
       ExplicitWidth = 104
     end
@@ -83,42 +82,78 @@ inherited frmCliente: TfrmCliente
       item
         Expanded = False
         FieldName = 'id_cliente'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 78
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'nome'
-        Width = 40
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 271
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'endereco'
-        Width = 48
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 149
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'complemento'
-        Width = 54
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 115
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'bairro'
-        Width = 36
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 95
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'cidade'
-        Width = 50
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 111
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'uf'
-        Width = 93
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
+        Width = 283
         Visible = True
       end>
   end
