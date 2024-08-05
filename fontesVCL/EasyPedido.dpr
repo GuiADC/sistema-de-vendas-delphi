@@ -17,7 +17,10 @@ uses
   dataModules.Produto in 'DataModules\dataModules.Produto.pas' {dmProduto: TDataModule},
   unitProdutoCad in 'unitProdutoCad.pas' {frmProdutoCad},
   dataModules.Pedido in 'DataModules\dataModules.Pedido.pas' {dmPedido: TDataModule},
-  unitPedidoCad in 'unitPedidoCad.pas' {frmPedidoCad};
+  unitPedidoCad in 'unitPedidoCad.pas' {frmPedidoCad},
+  unitBusca in 'unitBusca.pas' {frmBusca},
+  dataModule.Geral in 'DataModules\dataModule.Geral.pas' {dmGeral: TDataModule},
+  Vcl.constantes in 'utils\Vcl.constantes.pas';
 
 {$R *.res}
 
@@ -30,5 +33,7 @@ begin
   Application.CreateForm(TdmUsuario, dmUsuario);
   Application.CreateForm(TdmProduto, dmProduto);
   Application.CreateForm(TdmPedido, dmPedido);
+  Application.CreateForm(TfrmBusca, frmBusca);
+  Application.CreateForm(TdmGeral, dmGeral);
   Application.Run;
 end.

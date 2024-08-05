@@ -8,7 +8,8 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Navigation, Vcl.Loading, dataModules.Pedido,
-  Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls, VCL.Session, DataSet.Serialize;
+  Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, Vcl.DBCtrls, VCL.Session, DataSet.Serialize,
+  Vcl.Imaging.pngimage;
 
 type
   TfrmPedidoCad = class(TForm)
@@ -50,9 +51,9 @@ type
     btnSalvarItem: TSpeedButton;
     DBEdit1: TDBEdit;
     DBEdit2: TDBEdit;
-    DBEdit3: TDBEdit;
-    DBEdit4: TDBEdit;
-    DBEdit5: TDBEdit;
+    edtQtd: TDBEdit;
+    edtUnitario: TDBEdit;
+    edtTotal: TDBEdit;
     Panel6: TPanel;
     btnNovo: TSpeedButton;
     Panel3: TPanel;
@@ -65,6 +66,8 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Label10: TLabel;
+    imgBusca: TImage;
+    imgBuscaProd: TImage;
     procedure btnCancelarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -74,6 +77,9 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure btnSalvarItemClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
+    procedure imgBuscaClick(Sender: TObject);
+    procedure imgBuscaProdClick(Sender: TObject);
+    procedure edtQtdExit(Sender: TObject);
   private
     ptotal: double;
     { Private declarations }
@@ -81,6 +87,10 @@ type
     procedure TerminateLoad(Sender: TObject);
     procedure calcularTotal;
     procedure terminateSalvar(Sender: TObject);
+    procedure SelecionarProduto(id_produto: integer; descricao: string; preco: double);
+    procedure SelecionarCliente(id_cliente: integer; nome: string;
+      extra: double);
+    procedure calcularTotalItem;
   public
     { Public declarations }
   end;
@@ -91,6 +101,8 @@ var
 implementation
 
 {$R *.dfm}
+
+uses unitBusca;
 
 procedure TfrmPedidoCad.TerminateLoad(Sender: TObject);
 begin
@@ -120,7 +132,7 @@ end;
 procedure TfrmPedidoCad.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := TCloseAction.caFree;
-  self := nil;
+  frmPedidoCad := nil;
 end;
 
 procedure TfrmPedidoCad.btnCancelarItemClick(Sender: TObject);
@@ -149,8 +161,14 @@ end;
 
 procedure TfrmPedidoCad.btnNovoClick(Sender: TObject);
 begin
+  tabItens.Active := true;
+
   tabItens.Append;
+  tabItens.FieldByName('qtd').AsInteger := 1;
+  tabItens.FieldByName('vl_unitario').asFloat := 0;
+  tabItens.FieldByName('vl_total').asFloat := 0;
   pItem.Visible := true;
+  edtQtd.SetFocus;
 end;
 
 procedure TfrmPedidoCad.terminateSalvar(Sender: TObject);
@@ -226,5 +244,58 @@ begin
     tabItens.Active := true;
 end;
 
+procedure TfrmPedidoCad.SelecionarProduto(id_produto: integer; descricao: string; preco: double);
+begin
+  tabItens.FieldByName('id_produto').asInteger := id_produto;
+  tabItens.FieldByName('descricao').asString := descricao;
+  tabItens.FieldByName('vl_unitario').asFloat := preco;
+
+  calcularTotalItem;
+  edtUnitario.SetFocus;
+end;
+
+procedure TfrmPedidoCad.SelecionarCliente(id_cliente: integer; nome: string; extra: double);
+begin
+  edtIdCliente.text := id_cliente.ToString;
+  edtCliente.text := nome;
+//  tabPedido.FieldByName('vl_unitario').asFloat := preco;
+
+end;
+
+procedure TfrmPedidoCad.calcularTotalItem;
+begin
+ //
+ try
+  tabItens.FieldByName('vl_total').AsFloat := tabItens.FieldByName('qtd').asInteger * tabItens.FieldByName('vl_unitario').asFloat
+
+ except
+  tabItens.FieldByName('vl_total').AsFloat := 0;
+ end;
+end;
+
+procedure TfrmPedidoCad.edtQtdExit(Sender: TObject);
+begin
+  calcularTotalItem;
+end;
+
+procedure TfrmPedidoCad.imgBuscaClick(Sender: TObject);
+begin
+  if not Assigned(frmBusca) then
+    Application.CreateForm(TfrmBusca, frmBusca);
+
+  frmBusca.tipo_pesquisa := 'cliente';
+  frmbusca.executeOnClose :=  SelecionarCliente;
+  frmbusca.show;
+end;
+
+procedure TfrmPedidoCad.imgBuscaProdClick(Sender: TObject);
+begin
+  if not Assigned(frmBusca) then
+    Application.CreateForm(TfrmBusca, frmBusca);
+
+  frmBusca.tipo_pesquisa := 'produto';
+   frmbusca.executeOnClose :=  SelecionarProduto;
+  frmbusca.show;
+end;
 
 end.

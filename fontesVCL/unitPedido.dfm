@@ -82,7 +82,7 @@ inherited frmPedido: TfrmPedido
         Title.Caption = 'id. pedido'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -19
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
         Width = 113
@@ -94,7 +94,7 @@ inherited frmPedido: TfrmPedido
         Title.Caption = 'Cliente'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -19
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
         Width = 245
@@ -106,7 +106,7 @@ inherited frmPedido: TfrmPedido
         Title.Caption = 'Cidade'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -19
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
         Width = 176
@@ -118,7 +118,7 @@ inherited frmPedido: TfrmPedido
         Title.Caption = 'Usu'#225'rio Cad.'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -19
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
         Width = 134
@@ -132,7 +132,7 @@ inherited frmPedido: TfrmPedido
         Title.Caption = 'Dt. pedido'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -19
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
         Width = 132
@@ -146,7 +146,7 @@ inherited frmPedido: TfrmPedido
         Title.Caption = 'Vl. Total'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
-        Title.Font.Height = -19
+        Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
         Width = 170
@@ -184,7 +184,7 @@ inherited frmPedido: TfrmPedido
       item
         Name = 'nome'
         DataType = ftString
-        Size = 20
+        Size = 200
       end
       item
         Name = 'cidade'
@@ -224,6 +224,7 @@ inherited frmPedido: TfrmPedido
     end
     object tabPedidonome: TStringField
       FieldName = 'nome'
+      Size = 200
     end
     object tabPedidocidade: TStringField
       FieldName = 'cidade'

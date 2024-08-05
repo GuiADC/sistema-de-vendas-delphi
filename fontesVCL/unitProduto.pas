@@ -98,7 +98,6 @@ begin
   TLoading.Show;
   Tloading.ExecuteThread(procedure
   begin
-    Sleep(800);
     gridProdutos.DataSource := nil;
     dmProduto.ListarProdutos(tabProduto, edtBuscar.text);
 

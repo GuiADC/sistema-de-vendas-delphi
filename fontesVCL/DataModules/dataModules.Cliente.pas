@@ -5,7 +5,7 @@ interface
 uses
   System.SysUtils, System.Classes, DataSet.Serialize.Config,
   RESTRequest4D,
-  DataSet.Serialize.Adapter.RESTRequest4D, FireDAC.Comp.Client, System.JSON;
+  DataSet.Serialize.Adapter.RESTRequest4D, FireDAC.Comp.Client, System.JSON, Vcl.constantes;
 
 type
   TdmCliente = class(TDataModule)
@@ -36,7 +36,7 @@ procedure  TdmCliente.ListarClientes(pmenTable: TFDMemTable; filtro: string);
 var
   resp: IResponse;
 begin
-  resp := TRequest.new.BaseURL('http://localhost:3000')
+  resp := TRequest.new.BaseURL(base_url)
                       .Resource('/clientes')
                       .addParam('filtro',filtro)
                       .accept('application/json')
@@ -61,7 +61,7 @@ begin
     ljson.AddPair('cidade', pcidade);
     ljson.AddPair('uf', puf);
 
-    lresp := TRequest.new.BaseURL('http://localhost:3000')
+    lresp := TRequest.new.BaseURL(base_url)
                         .Resource('/clientes')
                         .AddBody(ljson.ToJSON)
                         .accept('application/json')
@@ -90,7 +90,7 @@ begin
     ljson.AddPair('cidade', pcidade);
     ljson.AddPair('uf', puf);
 
-    lresp := TRequest.new.BaseURL('http://localhost:3000')
+    lresp := TRequest.new.BaseURL(base_url)
                         .Resource('/clientes')
                         .ResourceSuffix(pid_cliente.tostring)
                         .AddBody(ljson.ToJSON)
@@ -108,7 +108,7 @@ procedure  TdmCliente.Excluir(pid_cliente: integer);
 var
   lresp: IResponse;
 begin
-  lresp := TRequest.new.BaseURL('http://localhost:3000')
+  lresp := TRequest.new.BaseURL(base_url)
                       .Resource('/clientes')
                       .ResourceSuffix(pid_cliente.tostring)
                       .accept('application/json')
@@ -122,7 +122,7 @@ procedure  TdmCliente.ListarClienteId(pmenTable: TFDMemTable; id_cliente: intege
 var
   resp: IResponse;
 begin
-  resp := TRequest.new.BaseURL('http://localhost:3000')
+  resp := TRequest.new.BaseURL(base_url)
                       .Resource('/clientes')
                       .ResourceSuffix(id_cliente.ToString)
                       .accept('application/json')

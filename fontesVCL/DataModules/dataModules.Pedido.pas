@@ -7,7 +7,7 @@ uses
   DataSet.Serialize.Adapter.RESTRequest4D, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, System.JSON, DataSet.Serialize;
+  FireDAC.Comp.Client, System.JSON, DataSet.Serialize, Vcl.constantes;
 
 type
   TdmPedido = class(TDataModule)
@@ -37,7 +37,7 @@ procedure  TdmPedido.ListarPedidos(pmenTable: TFDMemTable; filtro: string);
 var
   resp: IResponse;
 begin
-  resp := TRequest.new.BaseURL('http://localhost:3000')
+  resp := TRequest.new.BaseURL(base_url)
                       .Resource('/pedidos')
                       .addParam('filtro',filtro)
                       .accept('application/json')
@@ -60,7 +60,7 @@ var
   ljson: TJSONObject;
   larrItens: TJSONArray;
 begin
-  resp := TRequest.new.BaseURL('http://localhost:3000')
+  resp := TRequest.new.BaseURL(base_url)
                       .Resource('/pedidos')
                       .ResourceSuffix(id_pedido.ToString)
                       .accept('application/json')
@@ -90,7 +90,7 @@ begin
     ljson.AddPair('vl_total', ptotal);
     ljson.AddPair('itens', parritens);
 
-    lresp := TRequest.new.BaseURL('http://localhost:3000')
+    lresp := TRequest.new.BaseURL(base_url)
                         .Resource('/pedidos')
                         .AddBody(ljson.ToJSON)
                         .accept('application/json')
@@ -116,7 +116,7 @@ begin
     ljson.AddPair('vl_total', ptotal);
     ljson.AddPair('itens', parritens);
 
-    lresp := TRequest.new.BaseURL('http://localhost:3000')
+    lresp := TRequest.new.BaseURL(base_url)
                         .Resource('/pedidos')
                         .ResourceSuffix(pid_pedido.ToString)
                         .AddBody(ljson.ToJSON)
@@ -134,7 +134,7 @@ procedure TdmPedido.excluir(pid_pedido: integer);
 var
   lresp: IResponse;
 begin
-  lresp := TRequest.new.BaseURL('http://localhost:3000')
+  lresp := TRequest.new.BaseURL(base_url)
                       .Resource('/pedidos')
                       .ResourceSuffix(pid_pedido.ToString)
                       .accept('application/json')

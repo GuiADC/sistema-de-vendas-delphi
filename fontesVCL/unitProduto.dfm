@@ -5,7 +5,6 @@ inherited frmProduto: TfrmProduto
   inherited pHeader: TPanel
     inherited Label1: TLabel
       Width = 119
-      Height = 50
       Caption = 'Produtos'
       ExplicitWidth = 119
     end
@@ -66,18 +65,33 @@ inherited frmProduto: TfrmProduto
       item
         Expanded = False
         FieldName = 'id_produto'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
         Width = 101
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'descricao'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
         Width = 159
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'preco'
+        Title.Font.Charset = ANSI_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -16
+        Title.Font.Name = 'Segoe UI Semibold'
+        Title.Font.Style = [fsBold]
         Width = 392
         Visible = True
       end>

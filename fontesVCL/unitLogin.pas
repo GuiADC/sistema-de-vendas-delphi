@@ -71,7 +71,6 @@ begin
   //criar requisicao para servidor...
   TLoading.ExecuteThread(procedure
   begin
-    sleep(800);
     dmUsuario.Login(tabUsuario, edtEmail.text, edtSenha.text);
   end,
   TerminateLogin);

@@ -87,7 +87,6 @@ begin
   TLoading.Show;
   Tloading.ExecuteThread(procedure
   begin
-    Sleep(800);
     gridClientes.DataSource := nil;
     dmCliente.ListarClientes(tabCliente, edtBuscar.text);
 
