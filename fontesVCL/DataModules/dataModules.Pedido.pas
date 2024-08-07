@@ -21,7 +21,7 @@ type
     procedure ListarPedidos(pmenTable: TFDMemTable; filtro: string);
     procedure inserir(pid_usuario, pid_cliente: integer; pdt_pedido: TDate; ptotal: double; parritens: TJSONArray);
     procedure editar(pid_pedido, pid_cliente: integer; pdt_pedido: TDate; ptotal: double; parritens: TJSONArray);
-    procedure excluir(pjsonArrIdPedido: TJSONArray);
+    procedure excluir(pid_pedido: integer);
   end;
 
 var
@@ -130,15 +130,14 @@ begin
   end;
 end;
 
-procedure TdmPedido.excluir(pjsonArrIdPedido: TJSONArray);
+procedure TdmPedido.excluir(pid_pedido: integer);
 var
   lresp: IResponse;
 begin
-
   lresp := TRequest.new.BaseURL(base_url)
                       .Resource('/pedidos')
+                      .ResourceSuffix(pid_pedido.ToString)
                       .accept('application/json')
-                      .AddBody(pjsonArrIdPedido.ToJSON)
                       .Delete;
 
   if lresp.StatusCode <> 200 then

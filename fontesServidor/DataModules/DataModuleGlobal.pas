@@ -1,4 +1,4 @@
-﻿unit DataModuleGlobal;
+unit DataModuleGlobal;
 
 interface
 
@@ -38,7 +38,7 @@ function UsuarioLogin(pemail, psenha: string): TJsonObject;
 
     /////////////////// PEDIDO ////////////////
     function PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
-    function PedidoExcluir(parrJsonIdPedido: TJSONArray): TJSONArray;
+    function PedidoExcluir(pid_pedido: integer): TJsonObject;
     function PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
     function PedidoListar(pfiltro: string): TJsonArray;
     function PedidoListarId(pid_pedido: integer): TJsonObject;
@@ -459,40 +459,28 @@ begin
   end;
 end;
 
-function TDM.PedidoExcluir(parrJsonIdPedido: TJSONArray): TJSONArray;
+function TDM.PedidoExcluir(pid_pedido: integer): TJsonObject;
 var
   qry: TFDQuery;
-  lslIdPedido: TStringList;
-  lJsonObject: TJSONObject;
-  IdPedido: Integer;
 begin
-  lslIdPedido := TStringList.create;
-  lslIdPedido.clear;
-
-  for var lintIndex := 0 to parrJsonIdPedido.Size -1 do
-  begin
-    lJsonObject := parrJsonIdPedido.Items[lintIndex] as TJSONObject;
-
-    if lJsonObject.TryGetValue('id_pedido', IdPedido) then
-      lslIdPedido.add(IdPedido.ToString);
-  end;
-
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
     qry.SQL.Add('delete from pedido_item');
-    qry.SQL.Add('where id_pedido in (' + lslIdPedido.CommaText + ')');
+    qry.SQL.Add('where id_pedido = :id_pedido');
+    qry.ParamByName('id_pedido').Value := pid_pedido;
     qry.ExecSQL;
 
     qry.sql.Clear;
     qry.SQL.Add('delete from pedido');
-    qry.SQL.Add('where id_pedido in (' + lslIdPedido.CommaText + ')');
+    qry.SQL.Add('where id_pedido = :id_pedido');
+    qry.ParamByName('id_pedido').Value := pid_pedido;
+
     qry.ExecSQL;
 
-    result := parrJsonIdPedido;
+    result := TJSONObject.create(TJSONPair.Create('id_pedido', pid_pedido));
   finally
     freeAndNil(qry);
-    freeandnil(lslIdPedido);
   end;
 end;
 

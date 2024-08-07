@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.StorageBin, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Navigation, vcl.Loading, unitPedidoCad, dataModules.Pedido,
-  FireDAC.Stan.Async, FireDAC.DApt, System.JSON;
+  FireDAC.Stan.Async, FireDAC.DApt;
 
 type
   TfrmPedido = class(TfrmDefault)
@@ -36,9 +36,6 @@ type
   private
    { Private declarations }
     fbookmark: TBookmark;
-    fstrItemsDelete: string;
-    fBookmarksList: TBookmarkList;
-    fJSONArrayItemsSelected: TJSONArray;
 
     procedure editar;
     procedure OpenCadPedido(idPedido: integer);
@@ -65,25 +62,15 @@ end;
 
 procedure TfrmPedido.terminateDelete(Sender: TObject);
 begin
-  try
-    TLoading.hide;
+  TLoading.hide;
 
-    if sender is TThread then
-      if Assigned(TThread(sender).FatalException) then
-      begin
-        ShowMessage(Exception(TThread(sender).FatalException).Message);
-        exit;
-      end;
-  finally
-    if fJSONArrayItemsSelected <> nil then
-      freeandnil(fJSONArrayItemsSelected);
+  if sender is TThread then
+    if Assigned(TThread(sender).FatalException) then
+    begin
+      ShowMessage(Exception(TThread(sender).FatalException).Message);
+      exit;
+    end;
 
-    if fBookmarksList <> nil then
-      fBookmarksList := nil;
-
-    if fbookmark <> nil then
-      fbookmark := nil;
-  end;
   refreshPedidos;
 end;
 
@@ -110,7 +97,6 @@ end;
 
 procedure TfrmPedido.refreshPedidos;
 begin
-  fstrItemsDelete := '';
   TLoading.Show;
   Tloading.ExecuteThread(procedure
   begin
@@ -133,39 +119,14 @@ begin
 end;
 
 procedure TfrmPedido.btnExcluirClick(Sender: TObject);
-var
-  lslNomePedidos: TStringList;
 begin
-  fJSONArrayItemsSelected := nil;
-
-  try
-    lslNomePedidos := TStringList.Create;
-    fJSONArrayItemsSelected := TJSONArray.Create;
-    lslNomePedidos.Clear;
-    fBookmarksList := gridPedidos.SelectedRows;
-
-    for var iintCount := 0 to fBookmarksList.Count - 1 do
+  if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+  begin
+    TLoading.Show;
+    Tloading.ExecuteThread(procedure
     begin
-      dsPedido.DataSet.GotoBookmark(fBookmarksList.Items[iintCount]);
-      lslNomePedidos.add(dsPedido.DataSet.FieldByName('Nome').AsString);
-      fJSONArrayItemsSelected.Add(TJSONObject.create(TJSONPair.Create('id_pedido', dsPedido.DataSet.FieldByName('id_pedido').AsInteger)));
-    end;
-
-    if MessageDlg('Deseja excluir o(s) cliente(s) selecionado(s)? ' + sLineBreak + lslNomePedidos.text, TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
-    begin
-      TLoading.Show;
-      Tloading.ExecuteThread(procedure
-      begin
-        dmPedido.Excluir(fJSONArrayItemsSelected);
-      end, terminateDelete);
-    end
-    else
-    begin
-      if fJSONArrayItemsSelected <> nil then
-        freeandnil(fJSONArrayItemsSelected);
-    end;
-  finally
-    freeandnil(lslNomePedidos);
+      dmPedido.Excluir(tabPedido.FieldByName('id_pedido').AsInteger);
+    end, terminateDelete);
   end;
 end;
 
