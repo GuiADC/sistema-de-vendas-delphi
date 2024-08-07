@@ -2,7 +2,7 @@ unit Controllers.Pedido;
 
 interface
 
-uses Horse, DataModuleGlobal, system.JSON, System.SysUtils;
+uses Horse, DataModuleGlobal, system.JSON, System.SysUtils, Horse.Jhonson;
 
 procedure listar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 procedure listarId(Req: THorseRequest; Res: THorseResponse; Next: TProc);
@@ -19,7 +19,7 @@ begin
   THorse.Get('/pedidos/:id_pedido', listarId);
   THorse.Post('/pedidos', Inserir);
   THorse.Put('/pedidos/:id_pedido', Editar);
-  THorse.Delete('/pedidos/:id_pedido', Excluir);
+  THorse.Delete('/pedidos', Excluir);
 end;
 
 procedure listar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
@@ -131,19 +131,17 @@ end;
 procedure Excluir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   ldm: tdm;
-  id_pedido: integer;
+  ljsonArray: TJSONArray;
+  JsonValue: TJSONValue;
 begin
   try
     try
       ldm := TDm.create(nil);
 
-      try
-        id_pedido := req.Params['id_pedido'].ToInteger;
-      except
-        id_pedido := 0;
-      end;
+      JsonValue := TJSONObject.ParseJSONValue(req.Body);
+      ljsonArray := TJSONArray(JsonValue);
 
-      Res.send<TJSONObject>(ldm.PedidoExcluir(id_pedido));
+      Res.Send<TJSONArray>(ldm.PedidoExcluir(ljsonArray));
 
     except
       on E:Exception do
