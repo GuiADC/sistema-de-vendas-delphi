@@ -472,8 +472,8 @@ object frmPedidoCad: TfrmPedidoCad
       end>
   end
   object pItem: TPanel
-    Left = -8
-    Top = -132
+    Left = 50
+    Top = -100
     Width = 778
     Height = 491
     Color = clWhite
