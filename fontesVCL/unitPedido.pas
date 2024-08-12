@@ -32,7 +32,6 @@ type
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormResize(Sender: TObject);
 
   private
    { Private declarations }
@@ -109,6 +108,8 @@ begin
     except
     end;
 
+  ResizeWidthColunGrid(gridPedidos, dsPedido);
+
 end;
 
 procedure TfrmPedido.refreshPedidos;
@@ -122,8 +123,6 @@ begin
 
   end,
   terminateBusca);
-
-  ResizeWidthColunGrid(gridPedidos);
 end;
 
 procedure TfrmPedido.btnBuscarClick(Sender: TObject);
@@ -205,11 +204,6 @@ begin
 
   if fbookmark <> nil then
     fbookmark := nil;
-end;
-
-procedure TfrmPedido.FormResize(Sender: TObject);
-begin
-  ResizeWidthColunGrid(gridPedidos);
 end;
 
 procedure TfrmPedido.FormShow(Sender: TObject);

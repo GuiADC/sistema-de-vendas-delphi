@@ -1,6 +1,5 @@
 inherited frmPedido: TfrmPedido
   ClientWidth = 1010
-  OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 1010
   TextHeight = 15
@@ -56,7 +55,6 @@ inherited frmPedido: TfrmPedido
     end
   end
   object gridPedidos: TDBGrid
-    AlignWithMargins = True
     Left = 0
     Top = 80
     Width = 1010

@@ -1,9 +1,9 @@
 /////////////////////////////////////////////////////////////////////////////
 {
     Unit Vcl.Navigation
-    Criação: 99 Coders | Heber Stein Mazutti
+    Criaï¿½ï¿½o: 99 Coders | Heber Stein Mazutti
     Site: https://www.youtube.com/@99coders
-    Versão: 1.1
+    Versï¿½o: 1.1
 }
 /////////////////////////////////////////////////////////////////////////////
 
@@ -19,10 +19,10 @@ uses System.SysUtils, System.UITypes, Vcl.Forms, Vcl.Graphics, Vcl.WinXCtrls,
 type
   TNavigation = class
     private
-        class var FrmOpen: TForm;
         class var FrmModalOpen: TForm;
         class var FrmModalFundo: TForm;
     public
+        class var FrmOpen: TForm;
         class var ParamInt: integer;
         class var ParamStr: string;
         class var ExecuteOnClose: procedure of Object;
@@ -69,7 +69,7 @@ begin
             Frm.Parent := TForm(Parent);
     end;
 
-    FrmOpen := Frm; // Salva qual é o form aberto
+    FrmOpen := Frm; // Salva qual ï¿½ o form aberto
     Frm.Show;
 end;
 
@@ -104,13 +104,13 @@ begin
 
     FrmModalFundo.Show;
 
-    FrmModalOpen := Frm; // Salva qual é o form modal aberto...
+    FrmModalOpen := Frm; // Salva qual ï¿½ o form modal aberto...
     Frm.ShowModal;
 end;
 
 class procedure TNavigation.Close(Frm: TForm);
 begin
-    // Verifica se está fechando um modal...
+    // Verifica se estï¿½ fechando um modal...
     if Frm.Name = FrmModalOpen.Name then
     begin
         FrmModalFundo.Free;
@@ -128,7 +128,7 @@ end;
 
 class procedure TNavigation.CloseAndCancel(Frm: TForm);
 begin
-    // Verifica se está fechando um modal...
+    // Verifica se estï¿½ fechando um modal...
     if Frm.Name = FrmModalOpen.Name then
     begin
         FrmModalFundo.Free;

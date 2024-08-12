@@ -20,7 +20,8 @@ uses
   unitPedidoCad in 'unitPedidoCad.pas' {frmPedidoCad},
   unitBusca in 'unitBusca.pas' {frmBusca},
   dataModule.Geral in 'DataModules\dataModule.Geral.pas' {dmGeral: TDataModule},
-  Vcl.constantes in 'utils\Vcl.constantes.pas';
+  Vcl.constantes in 'utils\Vcl.constantes.pas',
+  Vcl.easyUtils in 'utils\Vcl.easyUtils.pas';
 
 {$R *.res}
 
