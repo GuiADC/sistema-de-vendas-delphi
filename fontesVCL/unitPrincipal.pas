@@ -48,7 +48,7 @@ type
     { Private declarations }
   public
     { Public declarations }
-    procResizeColunsGrid: procedure of object;
+    procResizeColunsGrid: procedure(pintWidthSmenu: integer) of object;
   end;
 
 var
@@ -96,7 +96,10 @@ begin
   if TNavigation.FrmOpen <> nil then
   begin
    if TNavigation.FrmOpen.name = 'frmCliente' then
-    procResizeColunsGrid;
+    if sSubMenu.Opened then
+      procResizeColunsGrid(sSubMenu.width)
+    else
+      procResizeColunsGrid(0);
   end;
 end;
 
@@ -105,7 +108,10 @@ begin
   if TNavigation.FrmOpen <> nil then
   begin
    if TNavigation.FrmOpen.name = 'frmCliente' then
-    procResizeColunsGrid;
+    if sSubMenu.Opened then
+      procResizeColunsGrid(sSubMenu.width)
+    else
+      procResizeColunsGrid(0);
   end;
 end;
 

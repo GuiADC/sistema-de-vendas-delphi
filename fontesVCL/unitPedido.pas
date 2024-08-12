@@ -108,7 +108,7 @@ begin
     except
     end;
 
-  ResizeWidthColunGrid(gridPedidos, dsPedido);
+  //ResizeWidthColunGrid(gridPedidos, dsPedido, self.width);
 
 end;
 

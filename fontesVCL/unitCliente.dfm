@@ -60,6 +60,10 @@ inherited frmCliente: TfrmCliente
     Top = 80
     Width = 912
     Height = 533
+    Margins.Left = 0
+    Margins.Top = 0
+    Margins.Right = 10
+    Margins.Bottom = 0
     Align = alClient
     BorderStyle = bsNone
     Color = 5585461
