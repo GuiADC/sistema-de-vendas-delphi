@@ -11,6 +11,7 @@ inherited frmCliente: TfrmCliente
     ExplicitWidth = 912
     inherited Label1: TLabel
       Width = 104
+      Height = 50
       Caption = 'Clientes'
       ExplicitWidth = 104
     end

@@ -1,4 +1,4 @@
-unit unitPedido;
+﻿unit unitPedido;
 
 interface
 
@@ -31,7 +31,8 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure gridPedidosTitleClick(Column: TColumn);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormResize(Sender: TObject);
 
   private
    { Private declarations }
@@ -53,6 +54,8 @@ var
   frmPedido: TfrmPedido;
 
 implementation
+
+uses Vcl.easyUtils;
 
 {$R *.dfm}
 
@@ -120,6 +123,7 @@ begin
   end,
   terminateBusca);
 
+  ResizeWidthColunGrid(gridPedidos);
 end;
 
 procedure TfrmPedido.btnBuscarClick(Sender: TObject);
@@ -140,10 +144,9 @@ begin
 
   try
     lslNomePedidos := TStringList.Create;
+    lslNomePedidos.Clear;
 
     fJSONArrayItemsSelected := TJSONArray.Create;
-
-    lslNomePedidos.Clear;
 
     fBookmarksList := gridPedidos.SelectedRows;
 
@@ -182,11 +185,6 @@ begin
   editar;
 end;
 
-procedure TfrmPedido.gridPedidosTitleClick(Column: TColumn);
-begin
-  gridPedidos.Columns[0].Width := 100;
-end;
-
 procedure TfrmPedido.editar;
 begin
   if tabPedido.RecordCount = 0  then
@@ -195,6 +193,23 @@ begin
    fbookmark := gridPedidos.DataSource.DataSet.GetBookmark;
 
    OpenCadPedido(tabPedido.FieldByName('id_pedido').AsInteger);
+end;
+
+procedure TfrmPedido.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if fJSONArrayItemsSelected <> nil then
+    freeandnil(fJSONArrayItemsSelected);
+
+  if fBookmarksList <> nil then
+    fBookmarksList := nil;
+
+  if fbookmark <> nil then
+    fbookmark := nil;
+end;
+
+procedure TfrmPedido.FormResize(Sender: TObject);
+begin
+  ResizeWidthColunGrid(gridPedidos);
 end;
 
 procedure TfrmPedido.FormShow(Sender: TObject);

@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils;
 
 type
   TfrmCliente = class(TfrmDefault)
@@ -93,6 +93,7 @@ begin
   end,
   terminateBusca);
 
+  ResizeWidthColunGrid(gridClientes);
 end;
 
 procedure tfrmCliente.editar;
