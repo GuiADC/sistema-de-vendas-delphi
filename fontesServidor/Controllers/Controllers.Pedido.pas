@@ -132,14 +132,12 @@ procedure Excluir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   ldm: tdm;
   ljsonArray: TJSONArray;
-  JsonValue: TJSONValue;
 begin
   try
     try
       ldm := TDm.create(nil);
 
-      JsonValue := TJSONObject.ParseJSONValue(req.Body);
-      ljsonArray := TJSONArray(JsonValue);
+      ljsonArray := TJSONArray(TJSONObject.ParseJSONValue(req.Body));
 
       Res.Send<TJSONArray>(ldm.PedidoExcluir(ljsonArray));
 

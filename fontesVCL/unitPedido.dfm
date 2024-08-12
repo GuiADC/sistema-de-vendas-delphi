@@ -1,5 +1,6 @@
 inherited frmPedido: TfrmPedido
   ClientWidth = 1010
+  OnResize = FormResize
   OnShow = FormShow
   ExplicitWidth = 1010
   TextHeight = 15
@@ -31,6 +32,9 @@ inherited frmPedido: TfrmPedido
       ExplicitLeft = 760
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
+        ExplicitLeft = -7
+        ExplicitWidth = 110
+        ExplicitHeight = 40
       end
     end
     inherited Panel4: TPanel
@@ -52,10 +56,15 @@ inherited frmPedido: TfrmPedido
     end
   end
   object gridPedidos: TDBGrid
+    AlignWithMargins = True
     Left = 0
     Top = 80
     Width = 1010
     Height = 400
+    Margins.Left = 0
+    Margins.Top = 0
+    Margins.Right = 0
+    Margins.Bottom = 0
     Align = alClient
     BorderStyle = bsNone
     DataSource = dsPedido
@@ -74,7 +83,6 @@ inherited frmPedido: TfrmPedido
     TitleFont.Name = 'Segoe UI'
     TitleFont.Style = []
     OnDblClick = gridPedidosDblClick
-    OnTitleClick = gridPedidosTitleClick
     Columns = <
       item
         Expanded = False
@@ -141,7 +149,6 @@ inherited frmPedido: TfrmPedido
       item
         Expanded = False
         FieldName = 'vl_total'
-        ReadOnly = False
         Title.Alignment = taRightJustify
         Title.Caption = 'Vl. Total'
         Title.Font.Charset = ANSI_CHARSET
