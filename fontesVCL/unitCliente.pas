@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal, system.JSON;
 
 type
   TfrmCliente = class(TfrmDefault)
@@ -22,8 +22,11 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure gridClientesDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
+    fbookmarkList:TBookmarkList;
     fbookmark: TBookmark;
+    fJSONArrayItemsSelected: TJsonArray;
     procedure OpenCadCliente(idCliente: integer);
     procedure refreshClientes;
     procedure terminateBusca(Sender: TObject);
@@ -43,6 +46,15 @@ implementation
 {$R *.dfm}
 
 uses unitClienteCad, dataModules.Cliente;
+
+procedure TfrmCliente.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if fbookmarkList <> nil then
+    fbookmarkList := nil;
+
+  if  (fJSONArrayItemsSelected )<> nil then
+    freeandnil(fJSONArrayItemsSelected);
+end;
 
 procedure TfrmCliente.FormCreate(Sender: TObject);
 begin
@@ -143,14 +155,44 @@ begin
 end;
 
 procedure TfrmCliente.btnExcluirClick(Sender: TObject);
+var
+  slItemsSelecionados: TStringList;
 begin
-  if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
-  begin
-    TLoading.Show;
-    Tloading.ExecuteThread(procedure
+  fJSONArrayItemsSelected := nil;
+  fbookmarkList := gridClientes.SelectedRows;
+
+  slItemsSelecionados := nil;
+  try
+    slItemsSelecionados.create;
+    slItemsSelecionados.Clear;
+
+    fJSONArrayItemsSelected := TJSONArray.Create;
+
+    for var iintCount := 0 to fbookmarkList.Count -1 do
     begin
-      dmCliente.Excluir(tabCliente.FieldByName('id_cliente').AsInteger);
-    end, terminateDelete);
+      dsCliente.DataSet.GotoBookmark(fbookmarkList.items[iintCount]);
+
+      slItemsSelecionados.add(dsCliente.DataSet.FieldByName('Nome').AsString);
+
+      fJSONArrayItemsSelected.add(TJSONObject.Create(TJSONPair.create('id_cliente', dsCliente.DataSet.FieldByName('id_cliente').asInteger)));
+    end;
+
+    if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+    begin
+      TLoading.Show;
+      Tloading.ExecuteThread(procedure
+      begin
+        dmCliente.Excluir(tabCliente.FieldByName('id_cliente').AsInteger);
+      end, terminateDelete);
+    end
+    else
+    begin
+      if (fJSONArrayItemsSelected )<> nil then
+        freeandnil(fJSONArrayItemsSelected);
+    end;
+  finally
+    if (slItemsSelecionados <> nil) then
+      freeandnil(slItemsSelecionados);
   end;
 end;
 
