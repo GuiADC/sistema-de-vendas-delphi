@@ -32,6 +32,7 @@ type
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
 
   private
    { Private declarations }
@@ -45,6 +46,8 @@ type
     procedure refreshPedidos;
     procedure terminateBusca(Sender: TObject);
     procedure terminateDelete(Sender: TObject);
+    procedure ResizeColunsGrid(pintWidthSmenu: integer);
+    procedure setProcResizeGrid;
   public
     { Public declarations }
   end;
@@ -54,7 +57,7 @@ var
 
 implementation
 
-uses Vcl.easyUtils;
+uses Vcl.easyUtils, unitPrincipal;
 
 {$R *.dfm}
 
@@ -63,6 +66,18 @@ begin
   TNavigation.ExecuteOnClose := refreshPedidos;
   TNavigation.ParamInt := idPedido;
   TNavigation.OpenModal(TfrmPedidoCad, frmPedidoCad);
+end;
+
+procedure TfrmPedido.setProcResizeGrid;
+begin
+  frmPrincipal.procResizeColunsGrid := ResizeColunsGrid;
+
+  removeScroll(gridPedidos);
+end;
+
+procedure TfrmPedido.ResizeColunsGrid(pintWidthSmenu: integer);
+begin
+  ResizeWidthColunGrid(gridpedidos, dsPedido, self.width, pintWidthSmenu);
 end;
 
 procedure TfrmPedido.terminateDelete(Sender: TObject);
@@ -204,6 +219,11 @@ begin
 
   if fbookmark <> nil then
     fbookmark := nil;
+end;
+
+procedure TfrmPedido.FormCreate(Sender: TObject);
+begin
+  setProcResizeGrid;
 end;
 
 procedure TfrmPedido.FormShow(Sender: TObject);

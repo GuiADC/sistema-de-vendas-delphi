@@ -1,5 +1,6 @@
 inherited frmPedido: TfrmPedido
   ClientWidth = 1010
+  OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 1010
   TextHeight = 15
@@ -164,6 +165,7 @@ inherited frmPedido: TfrmPedido
     Top = 276
   end
   object tabPedido: TFDMemTable
+    Active = True
     FieldDefs = <
       item
         Name = 'id_pedido'

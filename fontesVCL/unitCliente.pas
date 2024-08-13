@@ -30,7 +30,6 @@ type
     procedure editar;
     procedure terminateDelete(Sender: TObject);
     procedure resizeGrid(pintWidthSmenu: integer);
-    procedure removeScroll;
     { Private declarations }
   public
     { Public declarations }
@@ -54,7 +53,7 @@ procedure TfrmCliente.resizeGrid(pintWidthSmenu: integer);
 begin
   ResizeWidthColunGrid(gridClientes, dsCliente, self.width, pintWidthSmenu);
 
-  removeScroll;
+  removeScroll(gridclientes);
 end;
 
 procedure TfrmCliente.FormShow(Sender: TObject);
@@ -97,7 +96,6 @@ end;
 
 procedure tfrmCliente.refreshClientes;
 begin
- // ResizeWidthColunGrid(gridClientes, dsCliente, self.width);
   TLoading.Show;
   Tloading.ExecuteThread(procedure
   begin
@@ -118,11 +116,6 @@ begin
    OpenCadCliente(tabCliente.FieldByName('id_cliente').AsInteger);
 end;
 
-
-procedure tfrmCliente.removeScroll;
-begin
-  ShowScrollBar(gridClientes.Handle, SB_HORZ, FALSE);
-end;
 
 procedure TfrmCliente.btnBuscarClick(Sender: TObject);
 begin

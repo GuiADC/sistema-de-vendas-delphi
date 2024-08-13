@@ -320,7 +320,7 @@ object frmPrincipal: TfrmPrincipal
   object sSubMenu: TSplitView
     Left = 200
     Top = 0
-    Width = 0
+    Width = 200
     Height = 591
     Cursor = crHandPoint
     Color = 5921367
@@ -330,7 +330,6 @@ object frmPrincipal: TfrmPrincipal
     Font.Height = -21
     Font.Name = 'Segoe UI'
     Font.Style = []
-    Opened = False
     OpenedWidth = 200
     ParentFont = False
     Placement = svpLeft
@@ -341,7 +340,7 @@ object frmPrincipal: TfrmPrincipal
       AlignWithMargins = True
       Left = 0
       Top = 55
-      Width = 0
+      Width = 200
       Height = 536
       Margins.Left = 0
       Margins.Top = 0
@@ -382,17 +381,17 @@ object frmPrincipal: TfrmPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 0
-      ExplicitWidth = 200
+      ExplicitWidth = 0
     end
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 0
+      Width = 200
       Height = 55
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 200
+      ExplicitWidth = 0
       object Label1: TLabel
         Left = 12
         Top = 16
@@ -419,31 +418,31 @@ object frmPrincipal: TfrmPrincipal
     end
   end
   object pTela: TPanel
-    Left = 200
+    Left = 400
     Top = 0
-    Width = 781
+    Width = 581
     Height = 591
     Align = alClient
     BevelOuter = bvNone
     Color = 16051947
     ParentBackground = False
     TabOrder = 2
-    ExplicitLeft = 400
-    ExplicitWidth = 581
+    ExplicitLeft = 200
+    ExplicitWidth = 781
     object pNavbar: TPanel
       Left = 0
       Top = 0
-      Width = 781
+      Width = 581
       Height = 50
       Align = alTop
       BevelOuter = bvNone
       Color = 15458266
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 581
+      ExplicitWidth = 781
       object Image2: TImage
         AlignWithMargins = True
-        Left = 566
+        Left = 366
         Top = 0
         Width = 45
         Height = 47
@@ -486,12 +485,13 @@ object frmPrincipal: TfrmPrincipal
           39F5E6AB0E504A37199B4F19705855E46A3300EC45D27EB257417BE02FDA039E
           310196154BB3AC9C156459FE6D7DD6DB6FBCC5EBF54E89686F144705ECBAD12A
           DF1F13E04597970EF018BFCB8530FBFD43280000000049454E44AE426082}
+        ExplicitLeft = 566
         ExplicitTop = -1
         ExplicitHeight = 50
       end
       object Image3: TImage
         AlignWithMargins = True
-        Left = 511
+        Left = 311
         Top = 0
         Width = 45
         Height = 50
@@ -624,7 +624,7 @@ object frmPrincipal: TfrmPrincipal
         ExplicitLeft = 506
       end
       object pUsuario: TPanel
-        Left = 611
+        Left = 411
         Top = 0
         Width = 170
         Height = 50
@@ -633,7 +633,7 @@ object frmPrincipal: TfrmPrincipal
         Color = 15459290
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 411
+        ExplicitLeft = 611
         object lblEmail: TLabel
           Left = 0
           Top = 25
@@ -679,7 +679,7 @@ object frmPrincipal: TfrmPrincipal
       AlignWithMargins = True
       Left = 30
       Top = 70
-      Width = 721
+      Width = 521
       Height = 521
       Margins.Left = 30
       Margins.Top = 20
@@ -690,7 +690,7 @@ object frmPrincipal: TfrmPrincipal
       Color = 16051947
       ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 521
+      ExplicitWidth = 721
     end
   end
   object ImageList: TImageList

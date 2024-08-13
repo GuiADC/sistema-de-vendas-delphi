@@ -1,10 +1,12 @@
 inherited frmProduto: TfrmProduto
   Caption = 'frmProduto'
+  OnCreate = FormCreate
   OnShow = FormShow
   TextHeight = 15
   inherited pHeader: TPanel
     inherited Label1: TLabel
       Width = 119
+      Height = 50
       Caption = 'Produtos'
       ExplicitWidth = 119
     end
