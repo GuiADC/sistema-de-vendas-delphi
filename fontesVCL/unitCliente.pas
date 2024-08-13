@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal;
 
 type
   TfrmCliente = class(TfrmDefault)
@@ -21,6 +21,7 @@ type
     procedure btnEditarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure gridClientesDblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     fbookmark: TBookmark;
     procedure OpenCadCliente(idCliente: integer);
@@ -28,6 +29,7 @@ type
     procedure terminateBusca(Sender: TObject);
     procedure editar;
     procedure terminateDelete(Sender: TObject);
+    procedure resizeGrid(pintWidthSmenu: integer);
     { Private declarations }
   public
     { Public declarations }
@@ -42,6 +44,17 @@ implementation
 
 uses unitClienteCad, dataModules.Cliente;
 
+procedure TfrmCliente.FormCreate(Sender: TObject);
+begin
+  frmPrincipal.procResizeColunsGrid := resizeGrid;
+end;
+
+procedure TfrmCliente.resizeGrid(pintWidthSmenu: integer);
+begin
+  ResizeWidthColunGrid(gridClientes, dsCliente, self.width, pintWidthSmenu);
+
+  removeScroll(gridclientes);
+end;
 
 procedure TfrmCliente.FormShow(Sender: TObject);
 begin
@@ -79,7 +92,6 @@ begin
       fbookmark := nil;
     finally
     end;
-
 end;
 
 procedure tfrmCliente.refreshClientes;
@@ -92,8 +104,6 @@ begin
 
   end,
   terminateBusca);
-
-  ResizeWidthColunGrid(gridClientes);
 end;
 
 procedure tfrmCliente.editar;
@@ -106,9 +116,9 @@ begin
    OpenCadCliente(tabCliente.FieldByName('id_cliente').AsInteger);
 end;
 
+
 procedure TfrmCliente.btnBuscarClick(Sender: TObject);
 begin
-  inherited;
   refreshClientes;
 end;
 

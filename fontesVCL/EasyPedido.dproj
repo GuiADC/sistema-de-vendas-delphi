@@ -168,6 +168,7 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="utils\Vcl.constantes.pas"/>
+        <DCCReference Include="utils\Vcl.easyUtils.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

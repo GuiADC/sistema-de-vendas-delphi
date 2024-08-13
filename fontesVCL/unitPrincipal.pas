@@ -6,9 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.WinXCtrls, Vcl.Buttons,
   Vcl.Imaging.pngimage, System.ImageList, Vcl.ImgList, Vcl.CategoryButtons,
-  Vcl.StdCtrls, Vcl.Session, Vcl.Navigation, unitPedido;
+  Vcl.StdCtrls, Vcl.Session, Vcl.Navigation, unitPedido, Vcl.easyUtils;
 
 type
+
   TfrmPrincipal = class(TForm)
     sMenu: TSplitView;
     pLogo: TPanel;
@@ -29,6 +30,8 @@ type
     Image2: TImage;
     Image3: TImage;
     pContainer: TPanel;
+
+
     procedure btnMenuClick(Sender: TObject);
     procedure btnCloseSubClick(Sender: TObject);
     procedure CategoryMenuButtonsCategories0Items2Click(Sender: TObject);
@@ -38,11 +41,14 @@ type
     procedure CategorySubMenuButtonsCategories0Items0Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure CategorySubMenuButtonsCategories0Items1Click(Sender: TObject);
+    procedure sSubMenuClosed(Sender: TObject);
+    procedure sSubMenuOpened(Sender: TObject);
   private
     procedure closeSubMenu;
     { Private declarations }
   public
     { Public declarations }
+    procResizeColunsGrid: procedure(pintWidthSmenu: integer) of object;
   end;
 
 var
@@ -85,11 +91,43 @@ begin
   lblEmail.Caption := TSession.EMAIL;
 end;
 
+procedure TfrmPrincipal.sSubMenuClosed(Sender: TObject);
+begin
+  if TNavigation.FrmOpen <> nil then
+  begin
+   if (TNavigation.FrmOpen.name = 'frmCliente') or (TNavigation.FrmOpen.name = 'frmPedido') then
+    if sSubMenu.Opened then
+      procResizeColunsGrid(sSubMenu.width)
+    else
+      procResizeColunsGrid(0);
+  end;
+end;
+
+procedure TfrmPrincipal.sSubMenuOpened(Sender: TObject);
+begin
+  if TNavigation.FrmOpen <> nil then
+  begin
+   if (TNavigation.FrmOpen.name = 'frmCliente') or (TNavigation.FrmOpen.name = 'frmPedido') then
+    if sSubMenu.Opened then
+      procResizeColunsGrid(sSubMenu.width)
+    else
+      procResizeColunsGrid(0);
+  end;
+end;
+
 procedure TfrmPrincipal.CategoryMenuButtonsCategories0Items1Click(
   Sender: TObject);
 begin
   closeSubMenu;
   TNavigation.Open(TfrmPedido, frmPedido, pContainer);
+
+   if TNavigation.FrmOpen.name = 'frmPedido' then
+   begin
+    if sSubMenu.Opened then
+      procResizeColunsGrid(sSubMenu.width)
+    else
+      procResizeColunsGrid(0);
+    end;
 end;
 
 procedure TfrmPrincipal.CategoryMenuButtonsCategories0Items2Click(

@@ -8,7 +8,7 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal;
 
 type
   TfrmProduto = class(TfrmDefault)
@@ -22,12 +22,16 @@ type
     procedure btnInserirClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+
   private
     { Private declarations }
     fbookmark: TBookmark;
     procedure editar;
     procedure OpenCadProduto(idProduto: integer);
     procedure terminateDelete(Sender: TObject);
+    procedure ResizeColunsGrid(pintWidthSmenu: integer);
+    procedure setProcResizeGrid;
   public
     { Public declarations }
   end;
@@ -47,9 +51,24 @@ begin
 //
 end;
 
+procedure TfrmProduto.FormCreate(Sender: TObject);
+begin
+  setProcResizeGrid;
+end;
+
 procedure TfrmProduto.FormShow(Sender: TObject);
 begin
   refreshProdutos;
+end;
+
+procedure TfrmProduto.setProcResizeGrid;
+begin
+  frmPrincipal.procResizeColunsGrid := ResizeColunsGrid;
+end;
+
+procedure TfrmProduto.ResizeColunsGrid(pintWidthSmenu: integer);
+begin
+  ResizeWidthColunGrid(gridProdutos, dsProduto, self.width, pintWidthSmenu);
 end;
 
 procedure TfrmProduto.OpenCadProduto(idProduto: integer);

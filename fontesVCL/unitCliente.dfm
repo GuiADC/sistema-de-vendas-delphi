@@ -2,6 +2,7 @@ inherited frmCliente: TfrmCliente
   Caption = 'frmCliente'
   ClientHeight = 613
   ClientWidth = 912
+  OnCreate = FormCreate
   OnShow = FormShow
   ExplicitWidth = 912
   ExplicitHeight = 613
@@ -59,6 +60,10 @@ inherited frmCliente: TfrmCliente
     Top = 80
     Width = 912
     Height = 533
+    Margins.Left = 0
+    Margins.Top = 0
+    Margins.Right = 10
+    Margins.Bottom = 0
     Align = alClient
     BorderStyle = bsNone
     Color = 5585461
@@ -70,8 +75,9 @@ inherited frmCliente: TfrmCliente
     Font.Name = 'Segoe UI'
     Font.Style = []
     ImeName = 'Portuguese (Brazilian ABNT)'
-    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     ParentFont = False
+    ReadOnly = True
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
