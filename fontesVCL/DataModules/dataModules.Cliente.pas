@@ -16,11 +16,11 @@ type
     { Private declarations }
   public
     { Public declarations }
-    procedure ListarClientes(pmenTable: TFDMemTable; filtro: string);
+    procedure ListarClientes(pmenTable: TFDMemTable; filtro: string; pintTipoPesquisa: integer);
     procedure ListarClienteId(pmenTable: TFDMemTable; id_cliente: integer);
     procedure Inserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string);
     procedure Editar(pid_cliente: integer; pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string);
-    procedure Excluir(pid_cliente: integer);
+    procedure Excluir(parrJson: TJSONArray; pstrTypeClient: string);
   end;
 
 var
@@ -32,13 +32,14 @@ implementation
 
 {$R *.dfm}
 
-procedure  TdmCliente.ListarClientes(pmenTable: TFDMemTable; filtro: string);
+procedure  TdmCliente.ListarClientes(pmenTable: TFDMemTable; filtro: string; pintTipoPesquisa: integer);
 var
   resp: IResponse;
 begin
   resp := TRequest.new.BaseURL(base_url)
                       .Resource('/clientes')
-                      .addParam('filtro',filtro)
+                      .addParam('filtro', filtro)
+                      .addParam('tipoPesquisa', pintTipoPesquisa.tostring)
                       .accept('application/json')
                       .Adapters(TDataSetSerializeAdapter.new(pmenTable))
                       .Get;
@@ -104,13 +105,14 @@ begin
   end;
 end;
 
-procedure  TdmCliente.Excluir(pid_cliente: integer);
+procedure  TdmCliente.Excluir(parrJson: TJSONArray; pstrTypeClient: string);
 var
   lresp: IResponse;
 begin
   lresp := TRequest.new.BaseURL(base_url)
                       .Resource('/clientes')
-                      .ResourceSuffix(pid_cliente.tostring)
+                      .AddParam('Situacao', pstrTypeClient)
+                      .AddBody(parrJson.ToJSON)
                       .accept('application/json')
                       .Delete;
 

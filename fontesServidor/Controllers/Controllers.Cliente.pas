@@ -19,7 +19,7 @@ begin
   THorse.Get('/clientes/:id_cliente', listarId);
   THorse.Post('/clientes', Inserir);
   THorse.Put('/clientes/:id_cliente', Editar);
-  THorse.Delete('/clientes/:id_cliente', Excluir);
+  THorse.Delete('/clientes', Excluir);
 end;
 
 procedure listar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
@@ -30,7 +30,7 @@ begin
     try
       ldm := TDm.create(nil);
 
-      Res.send<TJSONArray>(ldm.ClienteListar(Req.Query['filtro'])).status(200);
+      Res.send<TJSONArray>(ldm.ClienteListar(Req.Query['filtro'], Req.Query['tipoPesquisa'])).status(200);
 
     except
       on E:Exception do
@@ -135,18 +135,18 @@ procedure Excluir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   ldm: tdm;
   id_cliente: integer;
+  larrJson: TJSONArray;
 begin
   try
     try
       ldm := TDm.create(nil);
 
-      try
-        id_cliente := req.Params['id_cliente'].ToInteger;
-      except
-        id_cliente := 0;
-      end;
+      if (req.body = '') then
+        exit;
 
-      Res.send<TJSONObject>(ldm.ClienteExcluir(id_cliente));
+      larrJson := TJSONArray(TJSONObject.ParseJSONValue(req.Body));
+
+      Res.send<TJSONArray>(ldm.ClienteExcluir(larrJson, req.Query['situacao']));
 
     except
       on E:Exception do
