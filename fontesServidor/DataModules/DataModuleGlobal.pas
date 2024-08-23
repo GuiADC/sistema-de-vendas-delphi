@@ -21,11 +21,11 @@ type
 
   public
     /////////////////// CLIENTE ////////////////
-    function ClienteListar(pfiltro: string): TJsonArray;
+    function ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJsonArray;
     function ClienteListarId(pid_cliente: integer): TJsonObject;
     function ClienteInserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
     function ClienteEditar(pid_cliente: integer; pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
-    function ClienteExcluir(pid_cliente: integer): TJsonObject;
+    function ClienteExcluir(parrJson: TJSONArray; pstrTypeSituation: string): TJSONArray;
 
     /////////////////// PRODUTO ////////////////
     function ProdutoListar(pfiltro: string): TJsonArray;
@@ -163,27 +163,42 @@ begin
   end;
 end;
 
-function TDM.ClienteExcluir(pid_cliente: integer): TJsonObject;
+function TDM.ClienteExcluir(parrJson: TJSONArray; pstrTypeSituation: string): TJSONArray;
 var
   qry: TFDQuery;
+  lslIdClientes: TStringList;
 begin
+  lslIdClientes := nil;
+  qry := nil;
   try
+    lslIdClientes := TStringList.create;
+    lslIdClientes.clear;
+
+    for var iintCount := 0 to parrJson.size -1 do
+    begin
+      lslIdClientes.add(parrJson[iintCount].GetValue<string>('id_cliente'));
+    end;
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('delete from cliente');
-    qry.SQL.Add('where id_cliente = :id_cliente');
+    qry.SQL.clear;
 
-    qry.ParamByName('id_cliente').Value := pid_cliente;
+    if (pstrTypeSituation = '0') then
+      qry.SQL.Add('update cliente set ativo = 0')
+    else
+      qry.SQL.Add('update cliente set ativo = 1');
+
+    qry.SQL.Add('where id_cliente in ('+ lslIdClientes.CommaText +')');
 
     qry.ExecSQL;
 
-    result := TJSONObject.create(TJSONPair.Create('id_cliente', pid_cliente));
+    result := parrJson;
   finally
     freeAndNil(qry);
+    freeAndNil(lslIdClientes);
   end;
 end;
 
-function TDM.ClienteListar(pfiltro: string): TJsonArray;
+function TDM.ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJsonArray;
 var
   qry: TFDQuery;
 begin
@@ -192,12 +207,19 @@ begin
     qry.connection := conn;
     qry.SQL.Add('Select *');
     qry.SQL.Add('FROM cliente');
+    qry.SQL.Add('Where id_cliente > 0');
 
     if not(pfiltro.isEmpty) then
     begin
-      qry.SQL.Add('Where nome like :filtro');
+      qry.SQL.Add('AND nome like :filtro');
       qry.ParamByName('filtro').Value := '%' + pfiltro + '%';
     end;
+
+    if (ptipoPesquisa = '0') then
+      qry.SQL.Add('AND ativo = 1')
+    else
+    if (ptipoPesquisa = '1') then
+      qry.SQL.Add('AND ativo = 0');
 
     qry.SQL.Add('order by nome');
     qry.Active := true;
