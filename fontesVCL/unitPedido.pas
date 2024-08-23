@@ -31,8 +31,8 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
    { Private declarations }
@@ -209,8 +209,14 @@ begin
    OpenCadPedido(tabPedido.FieldByName('id_pedido').AsInteger);
 end;
 
-procedure TfrmPedido.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmPedido.FormCreate(Sender: TObject);
 begin
+  setProcResizeGrid;
+end;
+
+procedure TfrmPedido.FormDestroy(Sender: TObject);
+begin
+
   if fJSONArrayItemsSelected <> nil then
     freeandnil(fJSONArrayItemsSelected);
 
@@ -219,11 +225,8 @@ begin
 
   if fbookmark <> nil then
     fbookmark := nil;
-end;
 
-procedure TfrmPedido.FormCreate(Sender: TObject);
-begin
-  setProcResizeGrid;
+  inherited;
 end;
 
 procedure TfrmPedido.FormShow(Sender: TObject);

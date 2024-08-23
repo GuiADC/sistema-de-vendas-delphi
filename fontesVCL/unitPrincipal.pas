@@ -95,7 +95,9 @@ procedure TfrmPrincipal.sSubMenuClosed(Sender: TObject);
 begin
   if TNavigation.FrmOpen <> nil then
   begin
-   if (TNavigation.FrmOpen.name = 'frmCliente') or (TNavigation.FrmOpen.name = 'frmPedido') then
+   if (TNavigation.FrmOpen.name = 'frmCliente') or
+      (TNavigation.FrmOpen.name = 'frmPedido') or
+      (TNavigation.FrmOpen.name = 'frmProduto') then
     if sSubMenu.Opened then
       procResizeColunsGrid(sSubMenu.width)
     else
@@ -107,7 +109,9 @@ procedure TfrmPrincipal.sSubMenuOpened(Sender: TObject);
 begin
   if TNavigation.FrmOpen <> nil then
   begin
-   if (TNavigation.FrmOpen.name = 'frmCliente') or (TNavigation.FrmOpen.name = 'frmPedido') then
+   if (TNavigation.FrmOpen.name = 'frmCliente') or
+      (TNavigation.FrmOpen.name = 'frmPedido') or
+      (TNavigation.FrmOpen.name = 'frmProduto') then
     if sSubMenu.Opened then
       procResizeColunsGrid(sSubMenu.width)
     else

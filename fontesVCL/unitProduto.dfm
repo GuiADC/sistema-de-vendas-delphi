@@ -1,43 +1,61 @@
 inherited frmProduto: TfrmProduto
   Caption = 'frmProduto'
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
+  ExplicitWidth = 862
   TextHeight = 15
   inherited pHeader: TPanel
     inherited Label1: TLabel
       Width = 119
-      Height = 50
       Caption = 'Produtos'
       ExplicitWidth = 119
     end
     inherited Panel1: TPanel
+      ExplicitLeft = 642
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
     end
     inherited Panel2: TPanel
+      ExplicitLeft = 412
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
+      ExplicitLeft = 527
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
       end
     end
     inherited Panel4: TPanel
       Left = 129
-      Width = 293
+      Width = 108
       ExplicitLeft = 129
-      ExplicitWidth = 293
+      ExplicitWidth = 108
       inherited Panel7: TPanel
-        Left = 173
-        ExplicitLeft = 173
+        Left = 3
+        ExplicitLeft = 3
       end
       inherited edtBuscar: TEdit
-        Width = 173
-        ExplicitWidth = 173
+        Width = 3
+        ExplicitWidth = 3
       end
+    end
+    inherited Panel5: TPanel
+      Visible = False
+      ExplicitLeft = 297
+      ExplicitHeight = 45
+    end
+    inherited Panel6: TPanel
+      ExplicitLeft = 757
     end
   end
   object gridProdutos: TDBGrid
@@ -55,7 +73,7 @@ inherited frmProduto: TfrmProduto
     Font.Name = 'Segoe UI'
     Font.Style = []
     ImeName = 'Portuguese (Brazilian ABNT)'
-    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+    Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     ParentFont = False
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET

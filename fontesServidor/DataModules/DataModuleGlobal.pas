@@ -21,18 +21,18 @@ type
 
   public
     /////////////////// CLIENTE ////////////////
-    function ClienteListar(pfiltro: string): TJsonArray;
+    function ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJsonArray;
     function ClienteListarId(pid_cliente: integer): TJsonObject;
     function ClienteInserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
     function ClienteEditar(pid_cliente: integer; pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
-    function ClienteExcluir(pid_cliente: integer): TJsonObject;
+    function ClienteExcluir(parrJson: TJSONArray; pstrTypeSituation: string): TJSONArray;
 
     /////////////////// PRODUTO ////////////////
     function ProdutoListar(pfiltro: string): TJsonArray;
     function ProdutoListarId(pid_produto: integer): TJsonObject;
     function ProdutoInserir(pdescricao: string; pvalor: double): TJsonObject;
     function produtoEditar(pid_produto: integer; pdescricao: string; pvalor: double): TJsonObject;
-    function ProdutoExcluir(pid_produto: integer): TJsonObject;
+    function ProdutoExcluir(parrJson: TJSONArray): TJSONObject;
     /////////////////// USUARIO ////////////////
 function UsuarioLogin(pemail, psenha: string): TJsonObject;
 
@@ -163,27 +163,42 @@ begin
   end;
 end;
 
-function TDM.ClienteExcluir(pid_cliente: integer): TJsonObject;
+function TDM.ClienteExcluir(parrJson: TJSONArray; pstrTypeSituation: string): TJSONArray;
 var
   qry: TFDQuery;
+  lslIdClientes: TStringList;
 begin
+  lslIdClientes := nil;
+  qry := nil;
   try
+    lslIdClientes := TStringList.create;
+    lslIdClientes.clear;
+
+    for var iintCount := 0 to parrJson.size -1 do
+    begin
+      lslIdClientes.add(parrJson[iintCount].GetValue<string>('id_cliente'));
+    end;
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('delete from cliente');
-    qry.SQL.Add('where id_cliente = :id_cliente');
+    qry.SQL.clear;
 
-    qry.ParamByName('id_cliente').Value := pid_cliente;
+    if (pstrTypeSituation = '0') then
+      qry.SQL.Add('update cliente set ativo = 0')
+    else
+      qry.SQL.Add('update cliente set ativo = 1');
+
+    qry.SQL.Add('where id_cliente in ('+ lslIdClientes.CommaText +')');
 
     qry.ExecSQL;
 
-    result := TJSONObject.create(TJSONPair.Create('id_cliente', pid_cliente));
+    result := parrJson;
   finally
     freeAndNil(qry);
+    freeAndNil(lslIdClientes);
   end;
 end;
 
-function TDM.ClienteListar(pfiltro: string): TJsonArray;
+function TDM.ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJsonArray;
 var
   qry: TFDQuery;
 begin
@@ -192,12 +207,19 @@ begin
     qry.connection := conn;
     qry.SQL.Add('Select *');
     qry.SQL.Add('FROM cliente');
+    qry.SQL.Add('Where id_cliente > 0');
 
     if not(pfiltro.isEmpty) then
     begin
-      qry.SQL.Add('Where nome like :filtro');
+      qry.SQL.Add('AND nome like :filtro');
       qry.ParamByName('filtro').Value := '%' + pfiltro + '%';
     end;
+
+    if (ptipoPesquisa = '0') then
+      qry.SQL.Add('AND ativo = 1')
+    else
+    if (ptipoPesquisa = '1') then
+      qry.SQL.Add('AND ativo = 0');
 
     qry.SQL.Add('order by nome');
     qry.Active := true;
@@ -299,23 +321,76 @@ begin
   end;
 end;
 
-function TDM.ProdutoExcluir(pid_produto: integer): TJsonObject;
+function TDM.ProdutoExcluir(parrJson: TJSONArray): TJSONObject;
 var
   qry: TFDQuery;
+  lslIdProdutos, lstrIdProdutosPedido: TStringList;
+  lstrItems: string;
+  lintCount: integer;
+  ljsonObj: TJSONObject;
 begin
   try
+    lstrIdProdutosPedido := nil;
+    lslIdProdutos := nil;
+
+    lstrItems := '';
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('delete from produto');
-    qry.SQL.Add('where id_produto = :id_produto');
+    qry.SQL.clear;
 
-    qry.ParamByName('id_produto').Value := pid_produto;
+    lslIdProdutos := TStringList.create;
+    lslIdProdutos.clear;
+
+    for  lintCount := 0 to parrJson.size -1 do
+    begin
+      lslIdProdutos.add(parrJson[lintCount].GetValue<string>('id_produto'));
+    end;
+
+    // fazer um select na pedidoItems com o in do stringList do produto
+
+    qry.SQL.add(' select distinct pedido_item.id_produto, produto.descricao');
+    qry.SQL.add('from');
+    qry.SQL.add(' pedido_item');
+    qry.SQL.add('inner join produto on pedido_item.id_produto = produto.id_produto');
+    qry.SQL.add('where');
+    qry.SQL.add(' pedido_item.id_produto in (' + lslIdProdutos.CommaText + ')');
+    qry.Open;
+
+    if qry.RecordCount > 0 then
+    begin
+      lstrIdProdutosPedido := TStringList.create;
+      lstrItems := 'os seguintes itens não podem ser excluidos, pois existem pedidos com os mesmos:';
+      while  not qry.Eof do
+      begin
+        lstrIdProdutosPedido.add(qry.FieldByName('id_produto').AsInteger.ToString);
+        lstrItems := lstrItems + sLineBreak + qry.FieldByName('descricao').asString;
+
+        qry.next;
+      end;
+
+     for lintcount := pred(lslIdProdutos.Count) downto 0 do
+      begin
+        if lstrIdProdutosPedido.IndexOf(lslIdProdutos[lintcount]) <> -1 then
+        begin
+          lslIdProdutos.Delete(lintcount);
+        end;
+      end;
+    end
+    else
+      lstrItems := 'Item(s) excluido(s) com sucesso!';
+
+    qry.SQL.clear;
+    qry.Close;
+    qry.SQL.Add('delete from produto');
+    qry.SQL.Add('where id_produto in ( ' + lslIdProdutos.CommaText + ')');
 
     qry.ExecSQL;
 
-    result := TJSONObject.create(TJSONPair.Create('id_produto', pid_produto));
+    result := TJSONObject.Create(TJSONPair.Create('message', lstrItems));
   finally
     freeAndNil(qry);
+    freeandnil(lslIdProdutos);
+    freeandnil(lstrIdProdutosPedido);
   end;
 end;
 
