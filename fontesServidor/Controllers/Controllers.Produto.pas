@@ -127,7 +127,6 @@ procedure excluir(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   ldm: tdm;
   lbody: TJSONObject;
-  id_produto: integer;
   larrJson: tjsonArray;
 begin
   try
@@ -136,13 +135,14 @@ begin
 
       larrJson := (TJSONArray(TJSONObject.ParseJSONValue(req.Body)));
 
-      Res.send<TJSONArray>(ldm.produtoExcluir(larrJson));
+      Res.send<TJSONObject>(ldm.produtoExcluir(larrJson));
     except
       on E:Exception do
         Res.send('erro ao excluir produto:' + E.message).status(500);
     end;
   finally
     freeAndNil(ldm);
+    freeandnil(larrJson);
   end;
 end;
 

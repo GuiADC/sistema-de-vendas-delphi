@@ -128,7 +128,7 @@ begin
 
       larrJson := (TJSONArray(TJSONObject.ParseJSONValue(req.Body)));
 
-      Res.send<TJSONArray>(ldm.produtoExcluir(larrJson));
+      Res.send<TJSONObject>(ldm.produtoExcluir(larrJson));
 
     except
       on E:Exception do

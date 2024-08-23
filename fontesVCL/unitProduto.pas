@@ -29,6 +29,7 @@ type
     fbookmark: TBookmark;
     fJSONArrayItemsSelected: tjsonarray;
     fbookmarkList: TBookmarkList;
+    fstrMessageExclusao: string;
     procedure editar;
     procedure OpenCadProduto(idProduto: integer);
     procedure terminateDelete(Sender: TObject);
@@ -67,7 +68,7 @@ end;
 
 procedure TfrmProduto.FormDestroy(Sender: TObject);
 begin
-  if fJSONArrayItemsSelected <> nil then
+  if (fJSONArrayItemsSelected <> nil) then
     freeandnil(fJSONArrayItemsSelected);
 
   if fbookmarkList <> nil then
@@ -138,12 +139,12 @@ begin
       TLoading.Show;
       Tloading.ExecuteThread(procedure
       begin
-        dmProduto.Excluir(fJSONArrayItemsSelected);
+        fstrMessageExclusao := dmProduto.Excluir(fJSONArrayItemsSelected);
       end, terminateDelete);
     end
     else
     begin
-      if (fJSONArrayItemsSelected )<> nil then
+      if (fJSONArrayItemsSelected <> nil) then
         freeandnil(fJSONArrayItemsSelected);
     end;
   finally
@@ -178,6 +179,8 @@ begin
         ShowMessage(Exception(TThread(sender).FatalException).Message);
         exit;
       end;
+
+   ShowMessage(fstrMessageExclusao);
   finally
     if fJSONArrayItemsSelected <> nil then
       freeandnil(fJSONArrayItemsSelected);

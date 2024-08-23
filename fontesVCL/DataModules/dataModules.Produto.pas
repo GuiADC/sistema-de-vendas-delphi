@@ -5,7 +5,8 @@ interface
 uses
   System.SysUtils, System.Classes, DataSet.Serialize.Config,
   RESTRequest4D,
-  DataSet.Serialize.Adapter.RESTRequest4D, FireDAC.Comp.Client, System.JSON, Vcl.constantes;
+  DataSet.Serialize.Adapter.RESTRequest4D, FireDAC.Comp.Client, System.JSON, Vcl.constantes
+  , unitProduto;
 
 type
   TdmProduto = class(TDataModule)
@@ -19,7 +20,7 @@ type
     procedure ListarProdutoId(pmenTable: TFDMemTable; id_produto: integer);
     procedure inserir(pdescricao, pvalor: string);
     procedure editar(pid_produto: integer; pdescricao, pvalor: string);
-    procedure Excluir(parrItensJson: TJSONArray);
+    function Excluir(parrItensJson: TJSONArray): string;
   end;
 
 var
@@ -33,15 +34,22 @@ implementation
 
 { TdmProduto }
 
-procedure TdmProduto.Excluir(parrItensJson: TJSONArray);
+function TdmProduto.Excluir(parrItensJson: TJSONArray): string;
 var
   lresp: IResponse;
+  ljsonObj: TJSONObject;
 begin
   lresp := TRequest.new.BaseURL(base_url)
                        .Resource('/produtos')
                        .AddBody(parrItensJson.ToJSON)
                        .accept('application/json')
                        .Delete;
+
+  ljsonObj := TJSONObject(TJSONObject.ParseJSONValue(lresp.Content));
+
+  result := ljsonObj.GetValue<string>('message');
+
+  freeandnil(ljsonObj);
 
   if lresp.StatusCode <> 200 then
     raise Exception.Create(lresp.content);

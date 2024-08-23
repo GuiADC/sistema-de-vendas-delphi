@@ -32,7 +32,7 @@ type
     function ProdutoListarId(pid_produto: integer): TJsonObject;
     function ProdutoInserir(pdescricao: string; pvalor: double): TJsonObject;
     function produtoEditar(pid_produto: integer; pdescricao: string; pvalor: double): TJsonObject;
-    function ProdutoExcluir(parrJson: TJSONArray): TJsonArray;
+    function ProdutoExcluir(parrJson: TJSONArray): TJSONObject;
     /////////////////// USUARIO ////////////////
 function UsuarioLogin(pemail, psenha: string): TJsonObject;
 
@@ -321,35 +321,76 @@ begin
   end;
 end;
 
-function TDM.ProdutoExcluir(parrJson: TJSONArray): TJsonArray;
+function TDM.ProdutoExcluir(parrJson: TJSONArray): TJSONObject;
 var
   qry: TFDQuery;
-  lslIdProdutos: TStringList;
+  lslIdProdutos, lstrIdProdutosPedido: TStringList;
+  lstrItems: string;
+  lintCount: integer;
+  ljsonObj: TJSONObject;
 begin
   try
-    qry := TFDQuery.create(nil);
-    qry.connection := conn;
+    lstrIdProdutosPedido := nil;
+    lslIdProdutos := nil;
 
-    lslIdProdutos := TStringList.create;
-    lslIdProdutos.clear;
-
-    for var iintCount := 0 to parrJson.size -1 do
-    begin
-      lslIdProdutos.add(parrJson[iintCount].GetValue<string>('id_produto'));
-    end;
+    lstrItems := '';
     qry := TFDQuery.create(nil);
     qry.connection := conn;
     qry.SQL.clear;
 
+    lslIdProdutos := TStringList.create;
+    lslIdProdutos.clear;
+
+    for  lintCount := 0 to parrJson.size -1 do
+    begin
+      lslIdProdutos.add(parrJson[lintCount].GetValue<string>('id_produto'));
+    end;
+
+    // fazer um select na pedidoItems com o in do stringList do produto
+
+    qry.SQL.add(' select distinct pedido_item.id_produto, produto.descricao');
+    qry.SQL.add('from');
+    qry.SQL.add(' pedido_item');
+    qry.SQL.add('inner join produto on pedido_item.id_produto = produto.id_produto');
+    qry.SQL.add('where');
+    qry.SQL.add(' pedido_item.id_produto in (' + lslIdProdutos.CommaText + ')');
+    qry.Open;
+
+    if qry.RecordCount > 0 then
+    begin
+      lstrIdProdutosPedido := TStringList.create;
+      lstrItems := 'os seguintes itens não podem ser excluidos, pois existem pedidos com os mesmos:';
+      while  not qry.Eof do
+      begin
+        lstrIdProdutosPedido.add(qry.FieldByName('id_produto').AsInteger.ToString);
+        lstrItems := lstrItems + sLineBreak + qry.FieldByName('descricao').asString;
+
+        qry.next;
+      end;
+
+     for lintcount := pred(lslIdProdutos.Count) downto 0 do
+      begin
+        if lstrIdProdutosPedido.IndexOf(lslIdProdutos[lintcount]) <> -1 then
+        begin
+          lslIdProdutos.Delete(lintcount);
+        end;
+      end;
+    end
+    else
+      lstrItems := 'Item(s) excluido(s) com sucesso!';
+
+    qry.SQL.clear;
+    qry.Close;
     qry.SQL.Add('delete from produto');
     qry.SQL.Add('where id_produto in ( ' + lslIdProdutos.CommaText + ')');
 
     qry.ExecSQL;
 
-    result := parrJson;
+    result := TJSONObject.Create(TJSONPair.Create('message', lstrItems));
   finally
     freeAndNil(qry);
     freeandnil(lslIdProdutos);
+    freeandnil(lstrIdProdutosPedido);
   end;
 end;
 
