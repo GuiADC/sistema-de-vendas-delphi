@@ -9,27 +9,26 @@ inherited frmPedido: TfrmPedido
     ExplicitWidth = 1010
     inherited Label1: TLabel
       Width = 103
-      Height = 50
       Caption = 'Pedidos'
       ExplicitWidth = 103
     end
     inherited Panel1: TPanel
-      Left = 890
-      ExplicitLeft = 890
+      Left = 905
+      ExplicitLeft = 905
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
     end
     inherited Panel2: TPanel
-      Left = 630
-      ExplicitLeft = 630
+      Left = 675
+      ExplicitLeft = 675
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
-      Left = 760
-      ExplicitLeft = 760
+      Left = 790
+      ExplicitLeft = 790
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
         ExplicitLeft = -7
@@ -39,20 +38,24 @@ inherited frmPedido: TfrmPedido
     end
     inherited Panel4: TPanel
       Left = 113
-      Width = 457
+      Width = 387
       ExplicitLeft = 113
       ExplicitWidth = 457
       inherited Panel7: TPanel
-        Left = 337
-        ExplicitLeft = 337
+        Left = 282
+        ExplicitLeft = 397
         inherited btnBuscar: TSpeedButton
           OnClick = btnBuscarClick
         end
       end
       inherited edtBuscar: TEdit
-        Width = 337
-        ExplicitWidth = 337
+        Width = 282
+        ExplicitWidth = 397
       end
+    end
+    inherited Panel5: TPanel
+      Left = 560
+      Visible = False
     end
   end
   object gridPedidos: TDBGrid
