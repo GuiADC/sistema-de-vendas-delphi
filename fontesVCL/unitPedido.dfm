@@ -1,6 +1,7 @@
 inherited frmPedido: TfrmPedido
   ClientWidth = 1010
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   ExplicitWidth = 1010
   TextHeight = 15
@@ -15,13 +16,17 @@ inherited frmPedido: TfrmPedido
     inherited Panel1: TPanel
       Left = 905
       ExplicitLeft = 905
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
     end
     inherited Panel2: TPanel
-      Left = 675
-      ExplicitLeft = 675
+      Left = 560
+      ExplicitLeft = 560
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
@@ -29,6 +34,8 @@ inherited frmPedido: TfrmPedido
     inherited Panel3: TPanel
       Left = 790
       ExplicitLeft = 790
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
         ExplicitLeft = -7
@@ -38,24 +45,30 @@ inherited frmPedido: TfrmPedido
     end
     inherited Panel4: TPanel
       Left = 113
-      Width = 387
+      Width = 272
       ExplicitLeft = 113
-      ExplicitWidth = 457
+      ExplicitWidth = 272
       inherited Panel7: TPanel
-        Left = 282
-        ExplicitLeft = 397
+        Left = 167
+        ExplicitLeft = 167
         inherited btnBuscar: TSpeedButton
           OnClick = btnBuscarClick
         end
       end
       inherited edtBuscar: TEdit
-        Width = 282
-        ExplicitWidth = 397
+        Width = 167
+        ExplicitWidth = 167
       end
     end
     inherited Panel5: TPanel
-      Left = 560
+      Left = 445
       Visible = False
+      ExplicitLeft = 445
+      ExplicitHeight = 45
+    end
+    inherited Panel6: TPanel
+      Left = 675
+      ExplicitLeft = 675
     end
   end
   object gridPedidos: TDBGrid

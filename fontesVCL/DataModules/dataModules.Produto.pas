@@ -19,7 +19,7 @@ type
     procedure ListarProdutoId(pmenTable: TFDMemTable; id_produto: integer);
     procedure inserir(pdescricao, pvalor: string);
     procedure editar(pid_produto: integer; pdescricao, pvalor: string);
-    procedure Excluir(pid_produto: integer);
+    procedure Excluir(parrItensJson: TJSONArray);
   end;
 
 var
@@ -33,13 +33,13 @@ implementation
 
 { TdmProduto }
 
-procedure TdmProduto.Excluir(pid_produto: integer);
+procedure TdmProduto.Excluir(parrItensJson: TJSONArray);
 var
   lresp: IResponse;
 begin
   lresp := TRequest.new.BaseURL(base_url)
                        .Resource('/produtos')
-                       .ResourceSuffix(pid_produto.tostring)
+                       .AddBody(parrItensJson.ToJSON)
                        .accept('application/json')
                        .Delete;
 

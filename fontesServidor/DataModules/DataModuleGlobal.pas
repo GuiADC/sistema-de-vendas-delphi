@@ -32,7 +32,7 @@ type
     function ProdutoListarId(pid_produto: integer): TJsonObject;
     function ProdutoInserir(pdescricao: string; pvalor: double): TJsonObject;
     function produtoEditar(pid_produto: integer; pdescricao: string; pvalor: double): TJsonObject;
-    function ProdutoExcluir(pid_produto: integer): TJsonObject;
+    function ProdutoExcluir(parrJson: TJSONArray): TJsonArray;
     /////////////////// USUARIO ////////////////
 function UsuarioLogin(pemail, psenha: string): TJsonObject;
 
@@ -321,23 +321,35 @@ begin
   end;
 end;
 
-function TDM.ProdutoExcluir(pid_produto: integer): TJsonObject;
+function TDM.ProdutoExcluir(parrJson: TJSONArray): TJsonArray;
 var
   qry: TFDQuery;
+  lslIdProdutos: TStringList;
 begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('delete from produto');
-    qry.SQL.Add('where id_produto = :id_produto');
 
-    qry.ParamByName('id_produto').Value := pid_produto;
+    lslIdProdutos := TStringList.create;
+    lslIdProdutos.clear;
+
+    for var iintCount := 0 to parrJson.size -1 do
+    begin
+      lslIdProdutos.add(parrJson[iintCount].GetValue<string>('id_produto'));
+    end;
+    qry := TFDQuery.create(nil);
+    qry.connection := conn;
+    qry.SQL.clear;
+
+    qry.SQL.Add('delete from produto');
+    qry.SQL.Add('where id_produto in ( ' + lslIdProdutos.CommaText + ')');
 
     qry.ExecSQL;
 
-    result := TJSONObject.create(TJSONPair.Create('id_produto', pid_produto));
+    result := parrJson;
   finally
     freeAndNil(qry);
+    freeandnil(lslIdProdutos);
   end;
 end;
 

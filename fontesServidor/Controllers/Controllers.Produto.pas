@@ -19,7 +19,7 @@ begin
   THorse.Get('/produtos/:id_produto', listarid);
   THorse.Post('/produtos', inserir);
   THorse.Put('/produtos/:id_produto', editar);
-  THorse.Delete('/produtos/:id_produto', Excluir);
+  THorse.Delete('/produtos', Excluir);
 end;
 
 procedure listar(Req: THorseRequest; Res: THorseResponse; Next: TProc);
@@ -128,18 +128,15 @@ var
   ldm: tdm;
   lbody: TJSONObject;
   id_produto: integer;
+  larrJson: tjsonArray;
 begin
   try
     try
       ldm := TDm.create(nil);
 
-      try
-        id_produto := req.Params['id_produto'].ToInteger;
-      except
-        id_produto := 0;
-      end;
+      larrJson := (TJSONArray(TJSONObject.ParseJSONValue(req.Body)));
 
-      Res.send<TJSONObject>(ldm.produtoExcluir(id_produto));
+      Res.send<TJSONArray>(ldm.produtoExcluir(larrJson));
     except
       on E:Exception do
         Res.send('erro ao excluir produto:' + E.message).status(500);

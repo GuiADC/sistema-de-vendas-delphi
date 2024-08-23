@@ -637,7 +637,7 @@ object frmPrincipal: TfrmPrincipal
         object lblEmail: TLabel
           Left = 0
           Top = 25
-          Width = 170
+          Width = 84
           Height = 17
           Align = alTop
           Caption = 'asdasdasdasd'
@@ -649,13 +649,12 @@ object frmPrincipal: TfrmPrincipal
           Font.Style = []
           ParentColor = False
           ParentFont = False
-          ExplicitWidth = 84
         end
         object lblNome: TLabel
           AlignWithMargins = True
           Left = 0
           Top = 4
-          Width = 170
+          Width = 76
           Height = 21
           Margins.Left = 0
           Margins.Top = 4
@@ -671,7 +670,6 @@ object frmPrincipal: TfrmPrincipal
           Font.Style = []
           ParentColor = False
           ParentFont = False
-          ExplicitWidth = 76
         end
       end
     end

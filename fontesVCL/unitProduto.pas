@@ -8,14 +8,13 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal, system.JSON;
 
 type
   TfrmProduto = class(TfrmDefault)
     gridProdutos: TDBGrid;
     tabProduto: TFDMemTable;
     dsProduto: TDataSource;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure refreshProdutos;
     procedure terminateBusca(Sender: TObject);
@@ -23,10 +22,13 @@ type
     procedure btnEditarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
 
   private
     { Private declarations }
     fbookmark: TBookmark;
+    fJSONArrayItemsSelected: tjsonarray;
+    fbookmarkList: TBookmarkList;
     procedure editar;
     procedure OpenCadProduto(idProduto: integer);
     procedure terminateDelete(Sender: TObject);
@@ -45,30 +47,40 @@ uses dataModules.Produto, unitProdutoCad;
 
 {$R *.dfm}
 
-procedure TfrmProduto.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TfrmProduto.setProcResizeGrid;
 begin
-  inherited;
-//
+  frmPrincipal.procResizeColunsGrid := ResizeColunsGrid;
+
+  removeScroll(gridProdutos);
 end;
+
+procedure TfrmProduto.ResizeColunsGrid(pintWidthSmenu: integer);
+begin
+  ResizeWidthColunGrid(gridProdutos, dsProduto, self.width, pintWidthSmenu);
+end;
+
 
 procedure TfrmProduto.FormCreate(Sender: TObject);
 begin
   setProcResizeGrid;
 end;
 
+procedure TfrmProduto.FormDestroy(Sender: TObject);
+begin
+  if fJSONArrayItemsSelected <> nil then
+    freeandnil(fJSONArrayItemsSelected);
+
+  if fbookmarkList <> nil then
+    fbookmarkList := nil;
+
+  if fbookmark <> nil then
+    fbookmark := nil;
+
+end;
+
 procedure TfrmProduto.FormShow(Sender: TObject);
 begin
   refreshProdutos;
-end;
-
-procedure TfrmProduto.setProcResizeGrid;
-begin
-  frmPrincipal.procResizeColunsGrid := ResizeColunsGrid;
-end;
-
-procedure TfrmProduto.ResizeColunsGrid(pintWidthSmenu: integer);
-begin
-  ResizeWidthColunGrid(gridProdutos, dsProduto, self.width, pintWidthSmenu);
 end;
 
 procedure TfrmProduto.OpenCadProduto(idProduto: integer);
@@ -96,14 +108,47 @@ begin
 end;
 
 procedure TfrmProduto.btnExcluirClick(Sender: TObject);
+var
+  slItemsSelecionados: TStringList;
 begin
-  if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
-  begin
-    TLoading.Show;
-    Tloading.ExecuteThread(procedure
+  if tabProduto.RecordCount = 0  then
+    exit;
+
+  fJSONArrayItemsSelected := nil;
+  fbookmarkList := gridProdutos.SelectedRows;
+
+  slItemsSelecionados := nil;
+  try
+    slItemsSelecionados := TStringlist.create;
+    slItemsSelecionados.Clear;
+
+    fJSONArrayItemsSelected := TJSONArray.Create;
+
+    for var iintCount := 0 to fbookmarkList.Count -1 do
     begin
-      dmProduto.Excluir(tabProduto.FieldByName('id_produto').AsInteger);
-    end, terminateDelete);
+      dsProduto.DataSet.GotoBookmark(fbookmarkList.items[iintCount]);
+
+      slItemsSelecionados.add(dsProduto.DataSet.FieldByName('descricao').AsString);
+
+      fJSONArrayItemsSelected.add(TJSONObject.Create(TJSONPair.create('id_produto', dsProduto.DataSet.FieldByName('id_produto').asInteger)));
+    end;
+
+    if MessageDlg('Deseja Excluir o(s) produto(s) selecionado(s)?: ' + sLineBreak + slItemsSelecionados.text, TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+    begin
+      TLoading.Show;
+      Tloading.ExecuteThread(procedure
+      begin
+        dmProduto.Excluir(fJSONArrayItemsSelected);
+      end, terminateDelete);
+    end
+    else
+    begin
+      if (fJSONArrayItemsSelected )<> nil then
+        freeandnil(fJSONArrayItemsSelected);
+    end;
+  finally
+    if (slItemsSelecionados <> nil) then
+      freeandnil(slItemsSelecionados);
   end;
 end;
 
@@ -126,14 +171,20 @@ end;
 procedure TfrmProduto.terminateDelete(Sender: TObject);
 begin
   TLoading.hide;
+  try
+    if sender is TThread then
+      if Assigned(TThread(sender).FatalException) then
+      begin
+        ShowMessage(Exception(TThread(sender).FatalException).Message);
+        exit;
+      end;
+  finally
+    if fJSONArrayItemsSelected <> nil then
+      freeandnil(fJSONArrayItemsSelected);
 
-  if sender is TThread then
-    if Assigned(TThread(sender).FatalException) then
-    begin
-      ShowMessage(Exception(TThread(sender).FatalException).Message);
-      exit;
-    end;
-
+    if fbookmarkList <> nil then
+      fbookmarkList := nil;
+  end;
   refreshProdutos;
 end;
 
