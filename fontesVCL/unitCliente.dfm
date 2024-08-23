@@ -2,7 +2,9 @@ inherited frmCliente: TfrmCliente
   Caption = 'frmCliente'
   ClientHeight = 613
   ClientWidth = 912
+  OnClose = nil
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
   ExplicitWidth = 912
   ExplicitHeight = 613
@@ -12,46 +14,87 @@ inherited frmCliente: TfrmCliente
     ExplicitWidth = 912
     inherited Label1: TLabel
       Width = 104
-      Height = 50
       Caption = 'Clientes'
       ExplicitWidth = 104
     end
     inherited Panel1: TPanel
-      Left = 792
-      ExplicitLeft = 792
+      Left = 692
+      ExplicitLeft = 692
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
     end
     inherited Panel2: TPanel
-      Left = 532
-      ExplicitLeft = 532
+      Left = 462
+      ExplicitLeft = 462
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
-      Left = 662
-      ExplicitLeft = 662
+      Left = 577
+      ExplicitLeft = 577
+      ExplicitTop = 20
+      ExplicitHeight = 40
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
       end
     end
     inherited Panel4: TPanel
       Left = 114
-      Width = 358
+      Width = 154
       ExplicitLeft = 114
-      ExplicitWidth = 358
+      ExplicitWidth = 173
       inherited Panel7: TPanel
-        Left = 238
-        ExplicitLeft = 238
+        Left = 49
+        ExplicitLeft = 68
         inherited btnBuscar: TSpeedButton
+          Font.Height = -19
           OnClick = btnBuscarClick
         end
       end
       inherited edtBuscar: TEdit
-        Width = 238
-        ExplicitWidth = 238
+        Width = 49
+        ExplicitWidth = 68
+      end
+    end
+    inherited Panel5: TPanel
+      Left = 328
+      Width = 114
+      Height = 50
+      Margins.Bottom = 10
+      ExplicitLeft = 328
+      ExplicitWidth = 114
+      ExplicitHeight = 50
+      inherited cmbTipoPesquisa: TComboBox
+        Width = 114
+        Height = 44
+        Margins.Left = 0
+        Margins.Top = 0
+        Margins.Right = 0
+        Margins.Bottom = 0
+        Font.Height = -25
+        ItemHeight = 38
+        Text = ' Ativo '
+        OnChange = cmbTipoPesquisaChange
+        OnDrawItem = nil
+        Items.Strings = (
+          ' Ativo '
+          ' Excluido')
+        ExplicitTop = -8
+        ExplicitWidth = 114
+        ExplicitHeight = 44
+      end
+    end
+    inherited Panel6: TPanel
+      Left = 807
+      ExplicitLeft = 807
+      inherited SpeedButton1: TSpeedButton
+        OnClick = SpeedButton1Click
       end
     end
   end
@@ -71,7 +114,7 @@ inherited frmCliente: TfrmCliente
     FixedColor = 5585461
     Font.Charset = ANSI_CHARSET
     Font.Color = 5585461
-    Font.Height = -15
+    Font.Height = -20
     Font.Name = 'Segoe UI'
     Font.Style = []
     ImeName = 'Portuguese (Brazilian ABNT)'

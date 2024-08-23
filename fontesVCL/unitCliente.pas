@@ -22,7 +22,9 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure gridClientesDblClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure cmbTipoPesquisaChange(Sender: TObject);
   private
     fbookmarkList:TBookmarkList;
     fbookmark: TBookmark;
@@ -47,18 +49,19 @@ implementation
 
 uses unitClienteCad, dataModules.Cliente;
 
-procedure TfrmCliente.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  if fbookmarkList <> nil then
-    fbookmarkList := nil;
-
-  if  (fJSONArrayItemsSelected )<> nil then
-    freeandnil(fJSONArrayItemsSelected);
-end;
 
 procedure TfrmCliente.FormCreate(Sender: TObject);
 begin
   frmPrincipal.procResizeColunsGrid := resizeGrid;
+end;
+
+procedure TfrmCliente.FormDestroy(Sender: TObject);
+begin
+  if fbookmarkList <> nil then
+    fbookmarkList := nil;
+
+  if  (fJSONArrayItemsSelected <> nil) then
+    freeandnil(fJSONArrayItemsSelected);
 end;
 
 procedure TfrmCliente.resizeGrid(pintWidthSmenu: integer);
@@ -66,6 +69,13 @@ begin
   ResizeWidthColunGrid(gridClientes, dsCliente, self.width, pintWidthSmenu);
 
   removeScroll(gridclientes);
+end;
+
+procedure TfrmCliente.SpeedButton1Click(Sender: TObject);
+begin
+  inherited;
+  if tabCliente.RecordCount = 0  then
+    exit;
 end;
 
 procedure TfrmCliente.FormShow(Sender: TObject);
@@ -112,7 +122,7 @@ begin
   Tloading.ExecuteThread(procedure
   begin
     gridClientes.DataSource := nil;
-    dmCliente.ListarClientes(tabCliente, edtBuscar.text);
+    dmCliente.ListarClientes(tabCliente, edtBuscar.text, cmbTipoPesquisa.ItemIndex);
 
   end,
   terminateBusca);
@@ -158,12 +168,15 @@ procedure TfrmCliente.btnExcluirClick(Sender: TObject);
 var
   slItemsSelecionados: TStringList;
 begin
+  if tabCliente.RecordCount = 0  then
+    exit;
+
   fJSONArrayItemsSelected := nil;
   fbookmarkList := gridClientes.SelectedRows;
 
   slItemsSelecionados := nil;
   try
-    slItemsSelecionados.create;
+    slItemsSelecionados := TStringlist.create;
     slItemsSelecionados.Clear;
 
     fJSONArrayItemsSelected := TJSONArray.Create;
@@ -177,12 +190,12 @@ begin
       fJSONArrayItemsSelected.add(TJSONObject.Create(TJSONPair.create('id_cliente', dsCliente.DataSet.FieldByName('id_cliente').asInteger)));
     end;
 
-    if MessageDlg('Deseja excluir o cliente selecionado?', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+    if MessageDlg('Deseja ' + btnExcluir.Caption + ' o(s) cliente(s) selecionado(s)?: ' + sLineBreak + slItemsSelecionados.text, TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
     begin
       TLoading.Show;
       Tloading.ExecuteThread(procedure
       begin
-        dmCliente.Excluir(tabCliente.FieldByName('id_cliente').AsInteger);
+        dmCliente.Excluir(fJSONArrayItemsSelected, cmbTipoPesquisa.ItemIndex.tostring);
       end, terminateDelete);
     end
     else
@@ -201,5 +214,16 @@ begin
   inherited;
   OpenCadCliente(0);
 end;
+
+procedure TfrmCliente.cmbTipoPesquisaChange(Sender: TObject);
+begin
+  if cmbTipoPesquisa.ItemIndex = 0 then
+    btnExcluir.Caption := 'Excluir'
+  else
+    btnExcluir.Caption := 'Ativar';
+
+  refreshClientes;
+end;
+
 
 end.
