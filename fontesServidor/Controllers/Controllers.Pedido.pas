@@ -137,7 +137,7 @@ begin
     try
       ldm := TDm.create(nil);
 
-      ljsonArray := TJSONArray(TJSONObject.ParseJSONValue(req.Body));
+      ljsonArray := TJSONArray(TJSONArray.ParseJSONValue(req.Body));
 
       Res.Send<TJSONArray>(ldm.PedidoExcluir(ljsonArray));
 
