@@ -282,7 +282,7 @@ end;
 
 procedure TfrmPedidoCad.edtQtdExit(Sender: TObject);
 begin
-  if (edtUnitario.Text = '') then
+  if (edtQtd.Text = '') then
     tabItens.FieldByName('qtd').asInteger := 0;
 
   calcularTotalItem;
