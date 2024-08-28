@@ -10,7 +10,8 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Stan.StorageBin, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   Vcl.Navigation, vcl.Loading, unitPedidoCad, dataModules.Pedido,
-  FireDAC.Stan.Async, FireDAC.DApt, System.JSON;
+  FireDAC.Stan.Async, FireDAC.DApt, System.JSON, frxSmartMemo, frxClass,
+  frxExportBaseDialog, frxExportPDF, frxDBSet, frCoreClasses;
 
 type
   TfrmPedido = class(TfrmDefault)
@@ -33,6 +34,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
 
   private
    { Private declarations }
@@ -73,6 +75,12 @@ begin
   frmPrincipal.procResizeColunsGrid := ResizeColunsGrid;
 
   removeScroll(gridPedidos);
+end;
+
+procedure TfrmPedido.SpeedButton1Click(Sender: TObject);
+begin
+  if tabPedido.RecordCount > 0 then
+  inherited;
 end;
 
 procedure TfrmPedido.ResizeColunsGrid(pintWidthSmenu: integer);

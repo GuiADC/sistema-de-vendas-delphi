@@ -72,9 +72,6 @@ object frmDefault: TfrmDefault
       ParentBackground = False
       ParentFont = False
       TabOrder = 0
-      ExplicitLeft = 757
-      ExplicitTop = 25
-      ExplicitHeight = 30
       object btnExcluir: TSpeedButton
         Left = 0
         Top = 0
@@ -116,9 +113,6 @@ object frmDefault: TfrmDefault
       ParentBackground = False
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 527
-      ExplicitTop = 25
-      ExplicitHeight = 30
       object btnInserir: TSpeedButton
         Left = 0
         Top = 0
@@ -158,9 +152,6 @@ object frmDefault: TfrmDefault
       ParentBackground = False
       ParentFont = False
       TabOrder = 2
-      ExplicitLeft = 642
-      ExplicitTop = 25
-      ExplicitHeight = 30
       object btnEditar: TSpeedButton
         Left = 0
         Top = 0
@@ -196,7 +187,6 @@ object frmDefault: TfrmDefault
       Color = 16051947
       ParentBackground = False
       TabOrder = 3
-      ExplicitWidth = 316
       object Panel7: TPanel
         AlignWithMargins = True
         Left = 26
@@ -218,7 +208,6 @@ object frmDefault: TfrmDefault
         ParentBackground = False
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = 256
         object btnBuscar: TSpeedButton
           Left = 0
           Top = 0
@@ -257,20 +246,19 @@ object frmDefault: TfrmDefault
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        ExplicitWidth = 196
         ExplicitHeight = 33
       end
     end
     object Panel5: TPanel
       AlignWithMargins = True
       Left = 297
-      Top = 20
+      Top = 27
       Width = 95
-      Height = 45
+      Height = 33
       Margins.Left = 10
-      Margins.Top = 20
+      Margins.Top = 27
       Margins.Right = 10
-      Margins.Bottom = 15
+      Margins.Bottom = 20
       Align = alRight
       BevelOuter = bvNone
       Color = 16051947
@@ -282,22 +270,22 @@ object frmDefault: TfrmDefault
       ParentBackground = False
       ParentFont = False
       TabOrder = 4
-      ExplicitLeft = 412
-      ExplicitHeight = 40
+      ExplicitTop = 30
+      ExplicitHeight = 25
       object cmbTipoPesquisa: TComboBox
         Left = 0
         Top = 0
         Width = 95
-        Height = 40
+        Height = 28
         Align = alClient
         Style = csOwnerDrawFixed
         Color = clWhite
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -16
+        Font.Height = -13
         Font.Name = 'Segoe UI'
         Font.Style = []
-        ItemHeight = 34
+        ItemHeight = 22
         ItemIndex = 0
         ParentFont = False
         TabOrder = 0
@@ -329,7 +317,6 @@ object frmDefault: TfrmDefault
       ParentBackground = False
       ParentFont = False
       TabOrder = 5
-      ExplicitLeft = 32767
       object SpeedButton1: TSpeedButton
         Left = 0
         Top = 0
@@ -345,8 +332,67 @@ object frmDefault: TfrmDefault
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
+        OnClick = SpeedButton1Click
         ExplicitLeft = -7
       end
     end
+  end
+  object frxReport1: TfrxReport
+    Version = '2024.2.7'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick, pbCopy, pbSelection]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Default'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 45532.750449791670000000
+    ReportOptions.LastChange = 45532.750449791670000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    Left = 280
+    Top = 192
+    Datasets = <>
+    Variables = <>
+    Style = <>
+  end
+  object frxDBDataset1: TfrxDBDataset
+    UserName = 'frxDBDataset1'
+    CloseDataSource = False
+    BCDToCurrency = False
+    DataSetOptions = []
+    Left = 576
+    Top = 192
+  end
+  object frxPDFExport1: TfrxPDFExport
+    UseFileCache = True
+    ShowProgress = True
+    OverwritePrompt = False
+    DataOnly = False
+    EmbedFontsIfProtected = False
+    InteractiveFormsFontSubset = 'A-Z,a-z,0-9,#43-#47 '
+    OpenAfterExport = False
+    PrintOptimized = False
+    Outline = False
+    Background = False
+    HTMLTags = True
+    Quality = 95
+    Author = 'FastReport'
+    Subject = 'FastReport PDF export'
+    Creator = 'FastReport'
+    ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
+    HideToolbar = False
+    HideMenubar = False
+    HideWindowUI = False
+    FitWindow = False
+    CenterWindow = False
+    PrintScaling = False
+    PdfA = False
+    PDFStandard = psNone
+    PDFVersion = pv17
+    Left = 408
+    Top = 272
   end
 end
