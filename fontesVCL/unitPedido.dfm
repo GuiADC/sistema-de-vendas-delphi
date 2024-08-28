@@ -1,14 +1,14 @@
 inherited frmPedido: TfrmPedido
-  ClientHeight = 850
-  ClientWidth = 1994
+  ClientHeight = 501
+  ClientWidth = 978
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  ExplicitWidth = 1994
-  ExplicitHeight = 850
+  ExplicitWidth = 978
+  ExplicitHeight = 501
   TextHeight = 15
   inherited pHeader: TPanel
-    Width = 1994
+    Width = 978
     ExplicitWidth = 1994
     inherited Label1: TLabel
       Width = 103
@@ -16,21 +16,21 @@ inherited frmPedido: TfrmPedido
       ExplicitWidth = 103
     end
     inherited Panel1: TPanel
-      Left = 1889
+      Left = 873
       ExplicitLeft = 1889
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
     end
     inherited Panel2: TPanel
-      Left = 1544
+      Left = 528
       ExplicitLeft = 1544
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
-      Left = 1774
+      Left = 758
       ExplicitLeft = 1774
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
@@ -41,36 +41,38 @@ inherited frmPedido: TfrmPedido
     end
     inherited Panel4: TPanel
       Left = 113
-      Width = 1256
+      Width = 240
       ExplicitLeft = 113
       ExplicitWidth = 1256
       inherited Panel7: TPanel
-        Left = 1151
+        Left = 135
         ExplicitLeft = 1151
         inherited btnBuscar: TSpeedButton
           OnClick = btnBuscarClick
         end
       end
       inherited edtBuscar: TEdit
-        Width = 1151
+        Width = 135
         ExplicitWidth = 1151
       end
     end
     inherited Panel5: TPanel
-      Left = 1429
+      Left = 413
       Visible = False
       ExplicitLeft = 1429
+      ExplicitTop = 27
+      ExplicitHeight = 33
     end
     inherited Panel6: TPanel
-      Left = 1659
+      Left = 643
       ExplicitLeft = 1659
     end
   end
   object gridPedidos: TDBGrid [1]
     Left = 0
     Top = 80
-    Width = 1994
-    Height = 770
+    Width = 978
+    Height = 421
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0

@@ -835,7 +835,7 @@ object frmPedidoCad: TfrmPedidoCad
       OnExit = edtQtdExit
     end
     object edtUnitario: TDBEdit
-      Left = 558
+      Left = 563
       Top = 165
       Width = 72
       Height = 29
@@ -848,6 +848,7 @@ object frmPedidoCad: TfrmPedidoCad
       Font.Style = []
       ParentFont = False
       TabOrder = 5
+      OnExit = edtUnitarioExit
     end
     object edtTotal: TDBEdit
       Left = 641
