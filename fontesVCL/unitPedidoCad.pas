@@ -80,8 +80,10 @@ type
     procedure imgBuscaClick(Sender: TObject);
     procedure imgBuscaProdClick(Sender: TObject);
     procedure edtQtdExit(Sender: TObject);
+    procedure edtUnitarioExit(Sender: TObject);
   private
     ptotal: double;
+    fbooPermissionCalcular: boolean;
     { Private declarations }
 
     procedure TerminateLoad(Sender: TObject);
@@ -137,6 +139,7 @@ end;
 
 procedure TfrmPedidoCad.btnCancelarItemClick(Sender: TObject);
 begin
+  edtTotal.SetFocus;
   tabItens.Cancel;
   pItem.Visible := false;
 end;
@@ -148,6 +151,7 @@ begin
 
   tabItens.Edit;
   pItem.Visible := true;
+  fbooPermissionCalcular := true;
 end;
 
 procedure TfrmPedidoCad.btnExcluirClick(Sender: TObject);
@@ -201,6 +205,8 @@ end;
 
 procedure TfrmPedidoCad.btnSalvarItemClick(Sender: TObject);
 begin
+  edtTotal.SetFocus;
+
   if tabItens.State in [dsEdit, dsInsert] then
   begin
     tabItens.post;
@@ -212,6 +218,7 @@ end;
 
 procedure TfrmPedidoCad.calcularTotal;
 begin
+
   ptotal := 0;
 
   if tabItens.RecordCount = 0 then
@@ -266,7 +273,7 @@ procedure TfrmPedidoCad.calcularTotalItem;
 begin
  //
  try
-  tabItens.FieldByName('vl_total').AsFloat := tabItens.FieldByName('qtd').asInteger * tabItens.FieldByName('vl_unitario').asFloat
+  tabItens.FieldByName('vl_total').AsFloat := tabItens.FieldByName('qtd').asInteger * tabItens.FieldByName('vl_unitario').asFloat;
 
  except
   tabItens.FieldByName('vl_total').AsFloat := 0;
@@ -275,6 +282,17 @@ end;
 
 procedure TfrmPedidoCad.edtQtdExit(Sender: TObject);
 begin
+  if (edtUnitario.Text = '') then
+    tabItens.FieldByName('qtd').asInteger := 0;
+
+  calcularTotalItem;
+end;
+
+procedure TfrmPedidoCad.edtUnitarioExit(Sender: TObject);
+begin
+  if (edtUnitario.Text = '') then
+    tabItens.FieldByName('vl_unitario').asFloat := 0;
+
   calcularTotalItem;
 end;
 
