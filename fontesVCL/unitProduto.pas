@@ -8,13 +8,17 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal, system.JSON;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal, system.JSON,
+  frxSmartMemo, frxClass, frxExportBaseDialog, frxExportPDF, frxDBSet,
+  frCoreClasses;
 
 type
   TfrmProduto = class(TfrmDefault)
     gridProdutos: TDBGrid;
     tabProduto: TFDMemTable;
     dsProduto: TDataSource;
+    tabProdutodescricao: TStringField;
+    tabProdutopreco: TCurrencyField;
     procedure FormShow(Sender: TObject);
     procedure refreshProdutos;
     procedure terminateBusca(Sender: TObject);

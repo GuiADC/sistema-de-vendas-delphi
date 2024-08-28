@@ -3,8 +3,8 @@ object frmLogin: TfrmLogin
   Top = 0
   BorderStyle = bsDialog
   Caption = 'login'
-  ClientHeight = 998
-  ClientWidth = 1842
+  ClientHeight = 536
+  ClientWidth = 1114
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object frmLogin: TfrmLogin
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 1842
-    Height = 998
+    Width = 1114
+    Height = 536
     Align = alClient
     Center = True
     Picture.Data = {

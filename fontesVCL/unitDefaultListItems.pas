@@ -4,7 +4,9 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  frxSmartMemo, frxClass, frCoreClasses, frxDBSet, frxExportBaseDialog,
+  frxExportPDF;
 
 type
   TfrmDefault = class(TForm)
@@ -24,9 +26,13 @@ type
     cmbTipoPesquisa: TComboBox;
     Panel6: TPanel;
     SpeedButton1: TSpeedButton;
+    frxReport1: TfrxReport;
+    frxDBDataset1: TfrxDBDataset;
+    frxPDFExport1: TfrxPDFExport;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cmbTipoPesquisaDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
+    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,22 +51,39 @@ procedure TfrmDefault.cmbTipoPesquisaDrawItem(Control: TWinControl; Index: Integ
 begin
   with (Control as TComboBox).Canvas do
   begin
-    // Define o fundo como branco
-    Brush.Color := clWhite;
-    FillRect(Rect);
-
-    // Define a cor do texto como preto
-    Font.Color := clBlack;
-    Font.size := 12;
-    TextOut(Rect.Left + 5, Rect.Top + 5, (Control as TComboBox).Items[Index]);
+  // Verifica se o item está selecionado na lista aberta
+    if (odComboBoxEdit in State) then
+    begin
+      // Item selecionado na caixa de edição (item final)
+      Brush.Color := clWhite;
+      Font.Color := clBlack;
+    end
+    else if (odSelected in State) then
+    begin
+      // Item sobre o qual o mouse está passando na lista aberta
+      Brush.Color := clHighlight;
+      Font.Color := clWhite;
+    end
+    else
+    begin
+      // Itens não selecionados
+      Brush.Color := clWhite;
+      Font.Color := clBlack;
+    end;
   end;
 end;
+
 
 procedure TfrmDefault.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := TCloseAction.caFree;
 
   TForm(sender) := nil;
+end;
+
+procedure TfrmDefault.SpeedButton1Click(Sender: TObject);
+begin
+  frxReport1.ShowReport(true);
 end;
 
 end.

@@ -8,13 +8,22 @@ uses
   Vcl.StdCtrls, Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal, system.JSON;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Navigation, vcl.Loading, Vcl.easyUtils, unitPrincipal, system.JSON,
+  frxSmartMemo, frxClass, frxExportBaseDialog, frxExportPDF, frxDBSet,
+  frCoreClasses;
 
 type
   TfrmCliente = class(TfrmDefault)
     tabCliente: TFDMemTable;
     dsCliente: TDataSource;
     gridClientes: TDBGrid;
+    tabClienteid_cliente: TIntegerField;
+    tabClientenome: TStringField;
+    tabClienteendereco: TStringField;
+    tabClientecomplemento: TStringField;
+    tabClientebairro: TStringField;
+    tabClientecidade: TStringField;
+    tabClienteuf: TStringField;
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
