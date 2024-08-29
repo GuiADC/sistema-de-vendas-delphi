@@ -16,7 +16,7 @@ inherited frmPedido: TfrmPedido
       ExplicitWidth = 103
     end
     inherited Panel1: TPanel
-      Left = 873
+      Left = 758
       ExplicitLeft = 873
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
@@ -30,7 +30,7 @@ inherited frmPedido: TfrmPedido
       end
     end
     inherited Panel3: TPanel
-      Left = 758
+      Left = 643
       ExplicitLeft = 758
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
@@ -60,12 +60,10 @@ inherited frmPedido: TfrmPedido
       Left = 413
       Visible = False
       ExplicitLeft = 413
-      ExplicitTop = 27
-      ExplicitHeight = 33
     end
     inherited Panel6: TPanel
-      Left = 643
-      ExplicitLeft = 643
+      Left = 873
+      ExplicitLeft = 32767
     end
   end
   object gridPedidos: TDBGrid [1]
