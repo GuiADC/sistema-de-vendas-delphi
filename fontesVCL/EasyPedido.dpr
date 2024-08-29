@@ -34,7 +34,6 @@ begin
   Application.CreateForm(TdmUsuario, dmUsuario);
   Application.CreateForm(TdmProduto, dmProduto);
   Application.CreateForm(TdmPedido, dmPedido);
-  Application.CreateForm(TfrmBusca, frmBusca);
   Application.CreateForm(TdmGeral, dmGeral);
   Application.Run;
 end.

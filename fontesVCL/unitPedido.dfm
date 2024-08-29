@@ -9,29 +9,29 @@ inherited frmPedido: TfrmPedido
   TextHeight = 15
   inherited pHeader: TPanel
     Width = 978
-    ExplicitWidth = 1994
+    ExplicitWidth = 978
     inherited Label1: TLabel
       Width = 103
       Caption = 'Pedidos'
       ExplicitWidth = 103
     end
     inherited Panel1: TPanel
-      Left = 873
-      ExplicitLeft = 1889
+      Left = 758
+      ExplicitLeft = 873
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
     end
     inherited Panel2: TPanel
       Left = 528
-      ExplicitLeft = 1544
+      ExplicitLeft = 528
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
-      Left = 758
-      ExplicitLeft = 1774
+      Left = 643
+      ExplicitLeft = 758
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
         ExplicitLeft = -7
@@ -43,29 +43,27 @@ inherited frmPedido: TfrmPedido
       Left = 113
       Width = 240
       ExplicitLeft = 113
-      ExplicitWidth = 1256
+      ExplicitWidth = 240
       inherited Panel7: TPanel
         Left = 135
-        ExplicitLeft = 1151
+        ExplicitLeft = 135
         inherited btnBuscar: TSpeedButton
           OnClick = btnBuscarClick
         end
       end
       inherited edtBuscar: TEdit
         Width = 135
-        ExplicitWidth = 1151
+        ExplicitWidth = 135
       end
     end
     inherited Panel5: TPanel
       Left = 413
       Visible = False
-      ExplicitLeft = 1429
-      ExplicitTop = 27
-      ExplicitHeight = 33
+      ExplicitLeft = 413
     end
     inherited Panel6: TPanel
-      Left = 643
-      ExplicitLeft = 1659
+      Left = 873
+      ExplicitLeft = 32767
     end
   end
   object gridPedidos: TDBGrid [1]
@@ -75,14 +73,15 @@ inherited frmPedido: TfrmPedido
     Height = 421
     Margins.Left = 0
     Margins.Top = 0
-    Margins.Right = 0
+    Margins.Right = 10
     Margins.Bottom = 0
     Align = alClient
     BorderStyle = bsNone
-    DataSource = dsPedido
+    Color = 5585461
+    FixedColor = 5585461
     Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -15
+    Font.Color = 5585461
+    Font.Height = -16
     Font.Name = 'Segoe UI'
     Font.Style = []
     Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
@@ -99,7 +98,7 @@ inherited frmPedido: TfrmPedido
       item
         Expanded = False
         FieldName = 'id_pedido'
-        Title.Caption = 'id. pedido'
+        Title.Caption = 'Id pedido'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -16

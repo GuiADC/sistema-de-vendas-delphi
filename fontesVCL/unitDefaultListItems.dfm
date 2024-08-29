@@ -270,8 +270,6 @@ object frmDefault: TfrmDefault
       ParentBackground = False
       ParentFont = False
       TabOrder = 4
-      ExplicitTop = 30
-      ExplicitHeight = 25
       object cmbTipoPesquisa: TComboBox
         Left = 0
         Top = 0
