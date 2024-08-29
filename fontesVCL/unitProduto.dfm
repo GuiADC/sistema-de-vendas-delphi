@@ -71,6 +71,7 @@ inherited frmProduto: TfrmProduto
       item
         Expanded = False
         FieldName = 'id_produto'
+        Title.Caption = 'Id produto'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -16
@@ -82,6 +83,7 @@ inherited frmProduto: TfrmProduto
       item
         Expanded = False
         FieldName = 'descricao'
+        Title.Caption = 'Descri'#231#227'o'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -16
@@ -93,6 +95,7 @@ inherited frmProduto: TfrmProduto
       item
         Expanded = False
         FieldName = 'preco'
+        Title.Caption = 'Pre'#231'o'
         Title.Font.Charset = ANSI_CHARSET
         Title.Font.Color = clWindowText
         Title.Font.Height = -16
