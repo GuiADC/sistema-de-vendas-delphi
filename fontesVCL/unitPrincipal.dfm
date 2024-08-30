@@ -381,7 +381,6 @@ object frmPrincipal: TfrmPrincipal
       RegularButtonColor = clNone
       SelectedButtonColor = 6969943
       TabOrder = 0
-      ExplicitWidth = 0
     end
     object Panel1: TPanel
       Left = 0
@@ -391,7 +390,6 @@ object frmPrincipal: TfrmPrincipal
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 0
       object Label1: TLabel
         Left = 12
         Top = 16
@@ -427,8 +425,6 @@ object frmPrincipal: TfrmPrincipal
     Color = 16051947
     ParentBackground = False
     TabOrder = 2
-    ExplicitLeft = 200
-    ExplicitWidth = 781
     object pNavbar: TPanel
       Left = 0
       Top = 0
@@ -439,7 +435,6 @@ object frmPrincipal: TfrmPrincipal
       Color = 15458266
       ParentBackground = False
       TabOrder = 0
-      ExplicitWidth = 781
       object Image2: TImage
         AlignWithMargins = True
         Left = 366
@@ -633,11 +628,10 @@ object frmPrincipal: TfrmPrincipal
         Color = 15459290
         ParentBackground = False
         TabOrder = 0
-        ExplicitLeft = 611
         object lblEmail: TLabel
           Left = 0
           Top = 25
-          Width = 84
+          Width = 170
           Height = 17
           Align = alTop
           Caption = 'asdasdasdasd'
@@ -649,12 +643,13 @@ object frmPrincipal: TfrmPrincipal
           Font.Style = []
           ParentColor = False
           ParentFont = False
+          ExplicitWidth = 84
         end
         object lblNome: TLabel
           AlignWithMargins = True
           Left = 0
           Top = 4
-          Width = 76
+          Width = 170
           Height = 21
           Margins.Left = 0
           Margins.Top = 4
@@ -670,6 +665,7 @@ object frmPrincipal: TfrmPrincipal
           Font.Style = []
           ParentColor = False
           ParentFont = False
+          ExplicitWidth = 76
         end
       end
     end
@@ -688,7 +684,6 @@ object frmPrincipal: TfrmPrincipal
       Color = 16051947
       ParentBackground = False
       TabOrder = 1
-      ExplicitWidth = 721
     end
   end
   object ImageList: TImageList

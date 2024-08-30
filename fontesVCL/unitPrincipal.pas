@@ -128,10 +128,10 @@ begin
    if TNavigation.FrmOpen.name = 'frmPedido' then
    begin
     if sSubMenu.Opened then
-      procResizeColunsGrid(sSubMenu.width)
+      procResizeColunsGrid(200)
     else
       procResizeColunsGrid(0);
-    end;
+   end;
 end;
 
 procedure TfrmPrincipal.CategoryMenuButtonsCategories0Items2Click(

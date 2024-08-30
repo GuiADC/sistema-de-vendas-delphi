@@ -19,6 +19,7 @@ type
     dsProduto: TDataSource;
     tabProdutodescricao: TStringField;
     tabProdutopreco: TCurrencyField;
+    tabProdutoid_produto: TIntegerField;
     procedure FormShow(Sender: TObject);
     procedure refreshProdutos;
     procedure terminateBusca(Sender: TObject);
@@ -64,7 +65,6 @@ begin
   ResizeWidthColunGrid(gridProdutos, dsProduto, self.width, pintWidthSmenu);
 end;
 
-
 procedure TfrmProduto.FormCreate(Sender: TObject);
 begin
   setProcResizeGrid;
@@ -104,7 +104,6 @@ begin
 
    OpenCadProduto(tabProduto.FieldByName('id_produto').AsInteger);
 end;
-
 
 procedure TfrmProduto.btnEditarClick(Sender: TObject);
 begin

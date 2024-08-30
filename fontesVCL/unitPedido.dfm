@@ -17,7 +17,7 @@ inherited frmPedido: TfrmPedido
     end
     inherited Panel1: TPanel
       Left = 758
-      ExplicitLeft = 873
+      ExplicitLeft = 758
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
@@ -31,7 +31,7 @@ inherited frmPedido: TfrmPedido
     end
     inherited Panel3: TPanel
       Left = 643
-      ExplicitLeft = 758
+      ExplicitLeft = 643
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
         ExplicitLeft = -7
@@ -63,7 +63,7 @@ inherited frmPedido: TfrmPedido
     end
     inherited Panel6: TPanel
       Left = 873
-      ExplicitLeft = 32767
+      ExplicitLeft = 873
     end
   end
   object gridPedidos: TDBGrid [1]
@@ -104,7 +104,7 @@ inherited frmPedido: TfrmPedido
         Title.Font.Height = -16
         Title.Font.Name = 'Segoe UI Semibold'
         Title.Font.Style = [fsBold]
-        Width = 113
+        Width = 114
         Visible = True
       end
       item
@@ -630,6 +630,7 @@ inherited frmPedido: TfrmPedido
     Left = 616
     Top = 280
     object tabPedidoid_pedido: TIntegerField
+      Alignment = taLeftJustify
       FieldName = 'id_pedido'
     end
     object tabPedidoid_usuario: TIntegerField

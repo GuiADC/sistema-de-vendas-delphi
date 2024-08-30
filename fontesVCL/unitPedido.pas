@@ -85,7 +85,7 @@ end;
 
 procedure TfrmPedido.ResizeColunsGrid(pintWidthSmenu: integer);
 begin
-  ResizeWidthColunGrid(gridpedidos, dsPedido, self.width, pintWidthSmenu);
+  ResizeWidthColunGrid(gridpedidos, dsPedido, self.width - pintWidthSmenu, pintWidthSmenu);
 end;
 
 procedure TfrmPedido.terminateDelete(Sender: TObject);
