@@ -28,6 +28,7 @@ type
     procedure btnExcluirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure dsProdutoDataChange(Sender: TObject; Field: TField);
 
   private
     { Private declarations }
@@ -161,9 +162,19 @@ begin
   OpenCadProduto(0);
 end;
 
+procedure TfrmProduto.dsProdutoDataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  if ((gridProdutos.DataSource <> nil) and (tabProduto.RecordCount > 33) and (tabProduto.RecNo >= tabproduto.RecordCount -2)) then
+  begin
+    ShowMessage('ultimo registro');
+  end;
+end;
+
 procedure TfrmProduto.refreshProdutos;
 begin
   TLoading.Show;
+  tabproduto.packetRecords := 10;
   Tloading.ExecuteThread(procedure
   begin
     gridProdutos.DataSource := nil;

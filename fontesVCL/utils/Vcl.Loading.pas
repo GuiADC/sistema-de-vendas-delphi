@@ -1,9 +1,9 @@
 /////////////////////////////////////////////////////////////////////////////
 {
     Unit Vcl.Loading
-    Criação: 99 Coders | Heber Stein Mazutti
+    Criaï¿½ï¿½o: 99 Coders | Heber Stein Mazutti
     Site: https://www.youtube.com/@99coders
-    Versão: 1.1
+    Versï¿½o: 1.1
 }
 /////////////////////////////////////////////////////////////////////////////
 
@@ -126,12 +126,13 @@ begin
     // Exibe o loading...
     Fundo.Show;
     Fundo.BringToFront;
+
     Loading.Show;
     Loading.BringToFront;
 end;
 
 class procedure TLoading.ExecuteThread(proc: TProc;
-                                       procTerminate: TMyThreadMethod);
+                                        procTerminate: TMyThreadMethod);
 var
     t: TThread;
 begin
@@ -142,6 +143,5 @@ begin
 
     t.Start;
 end;
-
 
 end.
