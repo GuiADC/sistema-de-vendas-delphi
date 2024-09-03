@@ -8,12 +8,14 @@ uses
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
   Data.DB, FireDAC.Comp.Client, FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef,
   FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteWrapper.Stat, DataSet.Serialize.Config,
-  system.JSON, Dataset.Serialize, fireDAC.DApt,uMD5;
+  system.JSON, Dataset.Serialize, fireDAC.DApt,uMD5, FireDAC.Phys.FBDef,
+  FireDAC.Phys.IBBase, FireDAC.Phys.FB;
 
 type
   TDM = class(TDataModule)
     conn: TFDConnection;
     FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
+    FDPhysFBDriverLink1: TFDPhysFBDriverLink;
     procedure DataModuleCreate(Sender: TObject);
     procedure connBeforeConnect(Sender: TObject);
   private
@@ -60,15 +62,15 @@ implementation
 procedure TDM.carregarConfiogDB(Connection: TFDConnection);
 begin
 
-  Connection.DriverName := 'SQLite';
+  Connection.DriverName := 'FB';
   with Connection.Params do
   begin
     Clear;
-    Add('DataBase='+ system.SysUtils.GetCurrentDir + '\DB\banco.db');
-    Add('DriverID=SQLite');
+    Add('DataBase='+ system.SysUtils.GetCurrentDir + '\DBVENDAS.FDB');
+    Add('DriverID=FB');
 
-    Add('User_Name=');
-    Add('Password=');
+    Add('User_Name= SYSDBA');
+    Add('Password= masterkey');
     Add('Port=');
     Add('Server=');
     Add('Protocol=');
