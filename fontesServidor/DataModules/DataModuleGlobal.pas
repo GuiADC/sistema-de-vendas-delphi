@@ -285,9 +285,9 @@ begin
     qry := TFDQuery.create(nil);
     qry.connection := conn;
     qry.SQL.Add('Insert into produto(descricao, preco)');
-    qry.SQL.Add('values(:descricao, :valor);');
+    qry.SQL.Add('values(:descricao, :valor)');
 
-    qry.SQL.Add('select last_insert_rowid() as id_produto');
+    qry.SQL.Add('RETURNING id_produto');
 
     qry.ParamByName('descricao').Value := pdescricao;
     qry.ParamByName('valor').Value := pvalor;
