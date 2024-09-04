@@ -71,9 +71,9 @@ begin
   TLoading.ExecuteThread(procedure
   begin
     if TNavigation.ParamInt = 0 then
-      dmProduto.inserir(edtDescricao.text,edtValor.Text)
+      dmProduto.inserir(edtDescricao.text, strtofloat(edtValor.Text))
     else
-      dmProduto.editar(TNavigation.ParamInt, edtDescricao.text, edtValor.Text);
+      dmProduto.editar(TNavigation.ParamInt, edtDescricao.text, strtofloat(edtValor.Text));
 
   end, TerminateSalvar);
 end;
