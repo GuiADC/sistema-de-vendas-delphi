@@ -119,9 +119,9 @@ begin
     qry := TFDQuery.create(nil);
     qry.connection := conn;
     qry.SQL.Add('Insert into cliente(nome, endereco, complemento, bairro, cidade, uf)');
-    qry.SQL.Add('values(:nome, :endereco, :complemento, :bairro, :cidade, :uf);');
+    qry.SQL.Add('values(:nome, :endereco, :complemento, :bairro, :cidade, :uf)');
 
-    qry.SQL.Add('select last_insert_rowid() as id_cliente');
+    qry.SQL.Add('RETURNING id_cliente');
 
     qry.ParamByName('nome').Value := pnome;
     qry.ParamByName('endereco').Value := pendereco;
@@ -460,9 +460,10 @@ begin
     qry := TFDQuery.create(nil);
     qry.connection := conn;
     qry.SQL.Add('Insert into pedido(id_usuario, id_cliente, dt_pedido, vl_total)');
-    qry.SQL.Add('values(:id_usuario, :id_cliente, :dt_pedido, :vl_total);');
+    qry.SQL.Add('values(:id_usuario, :id_cliente, :dt_pedido, :vl_total)');
 
-    qry.SQL.Add('select last_insert_rowid() as id_pedido');
+    qry.SQL.Add('RETURNING id_pedido');
+
 
     qry.ParamByName('id_usuario').Value := pid_usuario;
     qry.ParamByName('id_cliente').Value := pid_cliente;
@@ -482,8 +483,8 @@ begin
       qry.ParamByName('id_pedido').Value := lintIdPedido;
       qry.ParamByName('id_produto').Value := parrItems[lintIndex].GetValue<integer>('id_produto', 0);
       qry.ParamByName('qtd').Value := parrItems[lintIndex].GetValue<integer>('qtd', 0);
-      qry.ParamByName('vl_unitario').Value := parrItems[lintIndex].GetValue<integer>('vl_unitario', 0);
-      qry.ParamByName('vl_total').Value := parrItems[lintIndex].GetValue<integer>('vl_total', 0);
+      qry.ParamByName('vl_unitario').Value := parrItems[lintIndex].GetValue<double>('vl_unitario', 0);
+      qry.ParamByName('vl_total').Value := parrItems[lintIndex].GetValue<double>('vl_total', 0);
 
       qry.ExecSQL;
     end;
@@ -525,8 +526,8 @@ begin
       qry.ParamByName('id_pedido').Value := pid_pedido;
       qry.ParamByName('id_produto').Value := parrItems[lintIndex].GetValue<integer>('id_produto', 0);
       qry.ParamByName('qtd').Value := parrItems[lintIndex].GetValue<integer>('qtd', 0);
-      qry.ParamByName('vl_unitario').Value := parrItems[lintIndex].GetValue<integer>('vl_unitario', 0);
-      qry.ParamByName('vl_total').Value := parrItems[lintIndex].GetValue<integer>('vl_total', 0);
+      qry.ParamByName('vl_unitario').Value := parrItems[lintIndex].GetValue<double>('vl_unitario', 0);
+      qry.ParamByName('vl_total').Value := parrItems[lintIndex].GetValue<double>('vl_total', 0);
       qry.ExecSQL;
     end;
 

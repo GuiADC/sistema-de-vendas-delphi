@@ -18,8 +18,8 @@ type
 
     procedure ListarProdutos(pmenTable: TFDMemTable; filtro: string);
     procedure ListarProdutoId(pmenTable: TFDMemTable; id_produto: integer);
-    procedure inserir(pdescricao, pvalor: string);
-    procedure editar(pid_produto: integer; pdescricao, pvalor: string);
+    procedure inserir(pdescricao: string; pvalor: double);
+    procedure editar(pid_produto: integer; pdescricao: string; pvalor: double);
     function Excluir(parrItensJson: TJSONArray): string;
   end;
 
@@ -61,7 +61,7 @@ begin
   TDatasetSerializeConfig.getinstance.Import.DecimalSeparator := '.';
 end;
 
-procedure TdmProduto.editar(pid_produto: integer; pdescricao, pvalor: string);
+procedure TdmProduto.editar(pid_produto: integer; pdescricao: string; pvalor: double);
 var
   lresp: IResponse;
   ljson: TJSONobject;
@@ -85,7 +85,7 @@ begin
   end;
 end;
 
-procedure TdmProduto.inserir(pdescricao, pvalor: string);
+procedure TdmProduto.inserir(pdescricao: string; pvalor: double);
 var
   lresp: IResponse;
   ljson: TJSONobject;
