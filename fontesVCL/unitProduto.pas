@@ -1,4 +1,4 @@
-unit unitProduto;
+﻿unit unitProduto;
 
 interface
 
@@ -29,6 +29,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure dsProdutoDataChange(Sender: TObject; Field: TField);
+    procedure btnNextClick(Sender: TObject);
+    procedure btnPreviousClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -36,6 +38,9 @@ type
     fJSONArrayItemsSelected: tjsonarray;
     fbookmarkList: TBookmarkList;
     fstrMessageExclusao: string;
+    fpage: integer;
+
+    procedure setCaptionPag(plbllabelPag: TLabel);
     procedure editar;
     procedure OpenCadProduto(idProduto: integer);
     procedure terminateDelete(Sender: TObject);
@@ -54,6 +59,11 @@ uses dataModules.Produto, unitProdutoCad;
 
 {$R *.dfm}
 
+procedure TfrmProduto.setCaptionPag(plbllabelPag: TLabel);
+begin
+  plbllabelPag.caption := 'Página ' + dmProduto.page.tostring + ' de ' + dmProduto.totalPages.tostring;
+end;
+
 procedure TfrmProduto.setProcResizeGrid;
 begin
   frmPrincipal.procResizeColunsGrid := ResizeColunsGrid;
@@ -68,6 +78,7 @@ end;
 
 procedure TfrmProduto.FormCreate(Sender: TObject);
 begin
+  fpage := 1;
   setProcResizeGrid;
 end;
 
@@ -162,6 +173,28 @@ begin
   OpenCadProduto(0);
 end;
 
+procedure TfrmProduto.btnNextClick(Sender: TObject);
+begin
+  if not (dmProduto.page >= dmProduto.totalPages) then
+  begin
+    dmProduto.page := dmProduto.page + 1;
+    refreshProdutos;
+  end
+  else
+    exit;
+end;
+
+procedure TfrmProduto.btnPreviousClick(Sender: TObject);
+begin
+  if not (dmProduto.page < 2) and not (dmProduto.totalPages < 2) then
+  begin
+    dmProduto.page := dmProduto.page - 1;
+    refreshProdutos;
+  end
+  else
+    exit;
+end;
+
 procedure TfrmProduto.dsProdutoDataChange(Sender: TObject; Field: TField);
 begin
   inherited;
@@ -174,7 +207,6 @@ end;
 procedure TfrmProduto.refreshProdutos;
 begin
   TLoading.Show;
-  tabproduto.packetRecords := 10;
   Tloading.ExecuteThread(procedure
   begin
     gridProdutos.DataSource := nil;
@@ -219,11 +251,12 @@ begin
     end;
   end;
 
+  setCaptionPag(lblPagina);
+
   if fbookmark <> nil then
-  try
+  begin
     gridProdutos.DataSource.DataSet.GotoBookmark(fbookmark);
     fbookmark := nil;
-  finally
   end;
 end;
 

@@ -35,6 +35,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure btnNextClick(Sender: TObject);
 
   private
    { Private declarations }
@@ -42,6 +43,7 @@ type
     fstrItemsDelete: string;
     fBookmarksList: TBookmarkList;
     fJSONArrayItemsSelected: TJSONArray;
+    fpage: integer;
 
     procedure editar;
     procedure OpenCadPedido(idPedido: integer);
@@ -132,7 +134,6 @@ begin
     end;
 
   //ResizeWidthColunGrid(gridPedidos, dsPedido, self.width);
-
 end;
 
 procedure TfrmPedido.refreshPedidos;
@@ -202,10 +203,17 @@ begin
   OpenCadPedido(0);
 end;
 
+procedure TfrmPedido.btnNextClick(Sender: TObject);
+begin
+
+//
+end;
+
 procedure TfrmPedido.gridPedidosDblClick(Sender: TObject);
 begin
   editar;
 end;
+
 
 procedure TfrmPedido.editar;
 begin
@@ -219,6 +227,7 @@ end;
 
 procedure TfrmPedido.FormCreate(Sender: TObject);
 begin
+  fpage := 1;
   setProcResizeGrid;
 end;
 

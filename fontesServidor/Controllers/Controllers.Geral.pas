@@ -22,7 +22,7 @@ begin
   try
     try
       ldm := TDm.create(nil);
-      Res.send<TJSONArray>(ldm.pesquisaGlobal(req.Params['tipo_pesquisa'], req.query['filtro']));
+      Res.send<TJSONObject>(ldm.pesquisaGlobal(req.Params['tipo_pesquisa'], req.query['filtro']));
 
     except
       on E:Exception do

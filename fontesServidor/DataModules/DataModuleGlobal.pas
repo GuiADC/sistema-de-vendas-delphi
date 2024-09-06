@@ -23,14 +23,14 @@ type
 
   public
     /////////////////// CLIENTE ////////////////
-    function ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJsonArray;
+    function ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJSONObject;
     function ClienteListarId(pid_cliente: integer): TJsonObject;
     function ClienteInserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
     function ClienteEditar(pid_cliente: integer; pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
     function ClienteExcluir(parrJson: TJSONArray; pstrTypeSituation: string): TJSONArray;
 
     /////////////////// PRODUTO ////////////////
-    function ProdutoListar(pfiltro: string): TJsonArray;
+    function ProdutoListar(pfiltro: string; pstrPagina: string = ''): TJSONObject;
     function ProdutoListarId(pid_produto: integer): TJsonObject;
     function ProdutoInserir(pdescricao: string; pvalor: double): TJsonObject;
     function produtoEditar(pid_produto: integer; pdescricao: string; pvalor: double): TJsonObject;
@@ -42,11 +42,11 @@ function UsuarioLogin(pemail, psenha: string): TJsonObject;
     function PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
     function PedidoExcluir(parrJsonIdPedido: TJSONArray): TJSONArray;
     function PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
-    function PedidoListar(pfiltro: string): TJsonArray;
+    function PedidoListar(pfiltro: string; pstrPagina: string = ''): TJsonArray;
     function PedidoListarId(pid_pedido: integer): TJsonObject;
 
     /////////////////// BUSCA GLOBAL ////////////////
-    function pesquisaGlobal(tipo_pesquisa, filtro: string): TJsonArray;
+    function pesquisaGlobal(tipo_pesquisa, filtro: string): TJSONObject;
 
   end;
 
@@ -200,7 +200,7 @@ begin
   end;
 end;
 
-function TDM.ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJsonArray;
+function TDM.ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJSONObject;
 var
   qry: TFDQuery;
 begin
@@ -226,21 +226,56 @@ begin
     qry.SQL.Add('order by nome');
     qry.Active := true;
 
-    result := qry.ToJSONArray;
+    result := qry.tojsonobject;
   finally
     freeAndNil(qry);
   end;
 end;
 
-function TDM.ProdutoListar(pfiltro: string): TJsonArray;
+function TDM.ProdutoListar(pfiltro: string; pstrPagina: string = ''): TJSONObject;
 var
   qry: TFDQuery;
+  lintTotalRegistros, lintTotalPaginas, lintRegistrosQuebrados: integer;
 begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('Select *');
-    qry.SQL.Add('FROM produto');
+
+    qry.SQL.clear;
+    qry.SQL.clear;
+    qry.SQL.Add('select count(produto.id_produto) as qtdRegistro from produto');
+    qry.Open;
+
+    lintTotalRegistros :=  qry.FieldByName('qtdRegistro').AsInteger;
+
+    qry.SQL.clear;
+
+    if pstrPagina = '' then
+      pstrPagina := '1';
+
+    if pstrPagina <> '0' then
+    begin
+      lintTotalPaginas := lintTotalRegistros div 32;
+      lintRegistrosQuebrados := lintTotalRegistros - (lintTotalPaginas * 32);
+
+      if lintRegistrosQuebrados > 0 then
+        inc(lintTotalPaginas);
+
+      qry.SQL.Add('select first 32 skip :p2');
+      qry.SQL.Add(' *');
+      qry.SQL.Add(' from produto');
+
+      if (pstrPagina.ToInteger > lintTotalPaginas) then
+        pstrPagina :=  lintTotalPaginas.tostring;
+
+      qry.ParamByName('p2').Value := (pstrPagina.ToInteger -1) * 32;
+    end
+    else
+    begin
+      qry.SQL.Add('Select *');
+      qry.SQL.Add('FROM produto');
+      pstrPagina := '1';
+    end;
 
     if not(pfiltro.isEmpty) then
     begin
@@ -248,10 +283,15 @@ begin
       qry.ParamByName('filtro').Value := '%' + pfiltro + '%';
     end;
 
-    qry.SQL.Add('order by descricao');
+//    qry.SQL.Add('order by descricao');
     qry.Active := true;
+    result := TJSONObject.create.addpair('docs',  qry.ToJSONArray);
 
-    result := qry.ToJSONArray;
+    result.AddPair('total', TJSONNumber.Create(lintTotalRegistros));
+    result.AddPair('limite', TJSONNumber.Create(33));
+    result.AddPair('pageAtual', TJSONNumber.Create(pstrPagina.ToInteger));
+    result.AddPair('totalPages', TJSONNumber.Create(lintTotalPaginas));
+
   finally
     freeAndNil(qry);
   end;
@@ -574,7 +614,7 @@ begin
   end;
 end;
 
-function TDM.PedidoListar(pfiltro: string): TJsonArray;
+function TDM.PedidoListar(pfiltro: string; pstrPagina: string = ''): TJsonArray;
 var
   qry: TFDQuery;
 begin
@@ -601,7 +641,7 @@ begin
   end;
 end;
 
-function TDM.pesquisaGlobal(tipo_pesquisa, filtro: string): TJsonArray;
+function TDM.pesquisaGlobal(tipo_pesquisa, filtro: string): TJSONObject;
 begin
   if tipo_pesquisa = 'cliente' then
     result := ClienteListar(filtro)
