@@ -174,15 +174,27 @@ inherited frmPedido: TfrmPedido
   inherited pnlPaginate: TPanel
     Top = 460
     Width = 978
-    inherited SpeedButton2: TSpeedButton
+    ExplicitTop = 460
+    ExplicitWidth = 978
+    inherited btnNext: TSpeedButton
+      Left = 940
+      OnClick = btnNextClick
+      ExplicitLeft = 960
+    end
+    inherited btnPrevious: TSpeedButton
       Left = 865
+      ExplicitLeft = 795
     end
-    inherited SpeedButton3: TSpeedButton
-      Left = 903
+    inherited lblPagina: TLabel
+      Left = 904
+      Height = 15
+      ExplicitLeft = 904
     end
-    inherited Label2: TLabel
+    object Label2: TLabel
       Left = 942
-      ExplicitLeft = 788
+      Top = 0
+      Width = 3
+      Height = 15
     end
   end
   object dsPedido: TDataSource [3]

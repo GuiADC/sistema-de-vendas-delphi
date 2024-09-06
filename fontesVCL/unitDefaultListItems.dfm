@@ -344,10 +344,7 @@ object frmDefault: TfrmDefault
     BevelOuter = bvNone
     Padding.Left = 15
     TabOrder = 1
-    ExplicitLeft = 336
-    ExplicitTop = 224
-    ExplicitWidth = 185
-    object SpeedButton2: TSpeedButton
+    object btnNext: TSpeedButton
       Left = 824
       Top = 0
       Width = 38
@@ -356,7 +353,7 @@ object frmDefault: TfrmDefault
       Caption = '>>'
       Flat = True
     end
-    object SpeedButton3: TSpeedButton
+    object btnPrevious: TSpeedButton
       Left = 749
       Top = 0
       Width = 39
@@ -366,7 +363,7 @@ object frmDefault: TfrmDefault
       Flat = True
       ExplicitLeft = 757
     end
-    object Label2: TLabel
+    object lblPagina: TLabel
       Left = 788
       Top = 0
       Width = 36
@@ -374,7 +371,6 @@ object frmDefault: TfrmDefault
       Align = alRight
       Caption = 'Pagina'
       Layout = tlCenter
-      ExplicitLeft = 798
       ExplicitHeight = 15
     end
   end

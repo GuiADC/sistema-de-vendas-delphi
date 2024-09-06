@@ -265,13 +265,6 @@ begin
       qry.SQL.Add(' *');
       qry.SQL.Add(' from produto');
 
-     var iintValuePag: integer;
-
-      if pstrPagina.ToInteger > 1 then
-        iintValuePag := 1
-      else
-        iintValuePag := 0;
-
       if (pstrPagina.ToInteger > lintTotalPaginas) then
         pstrPagina :=  lintTotalPaginas.tostring;
 

@@ -35,6 +35,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure btnNextClick(Sender: TObject);
 
   private
    { Private declarations }
@@ -202,10 +203,17 @@ begin
   OpenCadPedido(0);
 end;
 
+procedure TfrmPedido.btnNextClick(Sender: TObject);
+begin
+
+//
+end;
+
 procedure TfrmPedido.gridPedidosDblClick(Sender: TObject);
 begin
   editar;
 end;
+
 
 procedure TfrmPedido.editar;
 begin

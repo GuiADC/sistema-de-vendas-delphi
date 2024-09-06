@@ -26,6 +26,7 @@ type
     property total: integer read Ftotal write Settotal;
     property page: integer read getpage write Setpage;
     property totalPages: integer read FtotalPages write SettotalPages;
+
     procedure ListarProdutos(pmenTable: TFDMemTable; filtro: string);
     procedure ListarProdutoId(pmenTable: TFDMemTable; id_produto: integer);
     procedure inserir(pdescricao: string; pvalor: double);
@@ -142,6 +143,9 @@ begin
     total := lJsonObjResult.GetValue<integer>('total');
     page := lJsonObjResult.GetValue<integer>('pageAtual');
     totalPages := lJsonObjResult.GetValue<integer>('totalPages');
+
+    if pmenTable.Active then
+      pmenTable.EmptyDataSet;
 
     pmenTable.LoadFromJSON(lJsonObjResult.GetValue<TJSONArray>('docs'), false);
 
