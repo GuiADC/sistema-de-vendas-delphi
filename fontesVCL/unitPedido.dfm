@@ -70,7 +70,7 @@ inherited frmPedido: TfrmPedido
     Left = 0
     Top = 80
     Width = 978
-    Height = 421
+    Height = 380
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 10
@@ -87,7 +87,7 @@ inherited frmPedido: TfrmPedido
     Options = [dgTitles, dgIndicator, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     ParentFont = False
     ReadOnly = True
-    TabOrder = 1
+    TabOrder = 2
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -12
@@ -170,6 +170,102 @@ inherited frmPedido: TfrmPedido
         Width = 170
         Visible = True
       end>
+  end
+  inherited pnlPaginate: TPanel
+    Top = 460
+    Width = 978
+    inherited SpeedButton2: TSpeedButton
+      Left = 865
+    end
+    inherited SpeedButton3: TSpeedButton
+      Left = 903
+    end
+    inherited Label2: TLabel
+      Left = 942
+      ExplicitLeft = 788
+    end
+  end
+  object dsPedido: TDataSource [3]
+    DataSet = tabPedido
+    Left = 824
+    Top = 276
+  end
+  object tabPedido: TFDMemTable [4]
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'id_pedido'
+        DataType = ftInteger
+      end
+      item
+        Name = 'id_usuario'
+        DataType = ftInteger
+      end
+      item
+        Name = 'id_cliente'
+        DataType = ftInteger
+      end
+      item
+        Name = 'dt_pedido'
+        DataType = ftDate
+      end
+      item
+        Name = 'vl_total'
+        DataType = ftCurrency
+        Precision = 19
+      end
+      item
+        Name = 'nome'
+        DataType = ftString
+        Size = 200
+      end
+      item
+        Name = 'cidade'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'usuario'
+        DataType = ftString
+        Size = 20
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 616
+    Top = 280
+    object tabPedidoid_pedido: TIntegerField
+      Alignment = taLeftJustify
+      FieldName = 'id_pedido'
+    end
+    object tabPedidoid_usuario: TIntegerField
+      FieldName = 'id_usuario'
+    end
+    object tabPedidoid_cliente: TIntegerField
+      FieldName = 'id_cliente'
+    end
+    object tabPedidodt_pedido: TDateField
+      FieldName = 'dt_pedido'
+    end
+    object tabPedidovl_total: TCurrencyField
+      FieldName = 'vl_total'
+    end
+    object tabPedidonome: TStringField
+      FieldName = 'nome'
+      Size = 200
+    end
+    object tabPedidocidade: TStringField
+      FieldName = 'cidade'
+    end
+    object tabPedidousuario: TStringField
+      FieldName = 'usuario'
+    end
   end
   inherited frxReport1: TfrxReport
     ReportOptions.CreateDate = 45531.021695034700000000
@@ -572,88 +668,6 @@ inherited frmPedido: TfrmPedido
             'Page [Page#]')
         end
       end
-    end
-  end
-  object dsPedido: TDataSource [3]
-    DataSet = tabPedido
-    Left = 824
-    Top = 276
-  end
-  object tabPedido: TFDMemTable [4]
-    Active = True
-    FieldDefs = <
-      item
-        Name = 'id_pedido'
-        DataType = ftInteger
-      end
-      item
-        Name = 'id_usuario'
-        DataType = ftInteger
-      end
-      item
-        Name = 'id_cliente'
-        DataType = ftInteger
-      end
-      item
-        Name = 'dt_pedido'
-        DataType = ftDate
-      end
-      item
-        Name = 'vl_total'
-        DataType = ftCurrency
-        Precision = 19
-      end
-      item
-        Name = 'nome'
-        DataType = ftString
-        Size = 200
-      end
-      item
-        Name = 'cidade'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'usuario'
-        DataType = ftString
-        Size = 20
-      end>
-    IndexDefs = <>
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    StoreDefs = True
-    Left = 616
-    Top = 280
-    object tabPedidoid_pedido: TIntegerField
-      Alignment = taLeftJustify
-      FieldName = 'id_pedido'
-    end
-    object tabPedidoid_usuario: TIntegerField
-      FieldName = 'id_usuario'
-    end
-    object tabPedidoid_cliente: TIntegerField
-      FieldName = 'id_cliente'
-    end
-    object tabPedidodt_pedido: TDateField
-      FieldName = 'dt_pedido'
-    end
-    object tabPedidovl_total: TCurrencyField
-      FieldName = 'vl_total'
-    end
-    object tabPedidonome: TStringField
-      FieldName = 'nome'
-      Size = 200
-    end
-    object tabPedidocidade: TStringField
-      FieldName = 'cidade'
-    end
-    object tabPedidousuario: TStringField
-      FieldName = 'usuario'
     end
   end
   inherited frxDBDataset1: TfrxDBDataset

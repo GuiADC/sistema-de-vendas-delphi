@@ -29,6 +29,10 @@ type
     frxReport1: TfrxReport;
     frxDBDataset1: TfrxDBDataset;
     frxPDFExport1: TfrxPDFExport;
+    pnlPaginate: TPanel;
+    SpeedButton2: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    Label2: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cmbTipoPesquisaDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
@@ -80,6 +84,8 @@ begin
 
   TForm(sender) := nil;
 end;
+
+
 
 procedure TfrmDefault.SpeedButton1Click(Sender: TObject);
 begin

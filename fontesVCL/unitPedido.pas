@@ -42,6 +42,7 @@ type
     fstrItemsDelete: string;
     fBookmarksList: TBookmarkList;
     fJSONArrayItemsSelected: TJSONArray;
+    fpage: integer;
 
     procedure editar;
     procedure OpenCadPedido(idPedido: integer);
@@ -132,7 +133,6 @@ begin
     end;
 
   //ResizeWidthColunGrid(gridPedidos, dsPedido, self.width);
-
 end;
 
 procedure TfrmPedido.refreshPedidos;
@@ -219,6 +219,7 @@ end;
 
 procedure TfrmPedido.FormCreate(Sender: TObject);
 begin
+  fpage := 1;
   setProcResizeGrid;
 end;
 

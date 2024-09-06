@@ -335,6 +335,49 @@ object frmDefault: TfrmDefault
       end
     end
   end
+  object pnlPaginate: TPanel
+    Left = 0
+    Top = 439
+    Width = 862
+    Height = 41
+    Align = alBottom
+    BevelOuter = bvNone
+    Padding.Left = 15
+    TabOrder = 1
+    ExplicitLeft = 336
+    ExplicitTop = 224
+    ExplicitWidth = 185
+    object SpeedButton2: TSpeedButton
+      Left = 824
+      Top = 0
+      Width = 38
+      Height = 41
+      Align = alRight
+      Caption = '>>'
+      Flat = True
+    end
+    object SpeedButton3: TSpeedButton
+      Left = 749
+      Top = 0
+      Width = 39
+      Height = 41
+      Align = alRight
+      Caption = '<<'
+      Flat = True
+      ExplicitLeft = 757
+    end
+    object Label2: TLabel
+      Left = 788
+      Top = 0
+      Width = 36
+      Height = 41
+      Align = alRight
+      Caption = 'Pagina'
+      Layout = tlCenter
+      ExplicitLeft = 798
+      ExplicitHeight = 15
+    end
+  end
   object frxReport1: TfrxReport
     Version = '2024.2.7'
     DotMatrixReport = False

@@ -36,6 +36,8 @@ type
     fJSONArrayItemsSelected: tjsonarray;
     fbookmarkList: TBookmarkList;
     fstrMessageExclusao: string;
+    fpage: integer;
+
     procedure editar;
     procedure OpenCadProduto(idProduto: integer);
     procedure terminateDelete(Sender: TObject);
@@ -68,6 +70,7 @@ end;
 
 procedure TfrmProduto.FormCreate(Sender: TObject);
 begin
+  fpage := 1;
   setProcResizeGrid;
 end;
 
