@@ -315,7 +315,7 @@ object frmDefault: TfrmDefault
       ParentBackground = False
       ParentFont = False
       TabOrder = 5
-      object SpeedButton1: TSpeedButton
+      object btnImprimir: TSpeedButton
         Left = 0
         Top = 0
         Width = 95
@@ -330,7 +330,6 @@ object frmDefault: TfrmDefault
         Font.Name = 'Segoe UI'
         Font.Style = []
         ParentFont = False
-        OnClick = SpeedButton1Click
         ExplicitLeft = -7
       end
     end

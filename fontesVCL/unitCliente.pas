@@ -1,4 +1,4 @@
-unit unitCliente;
+﻿unit unitCliente;
 
 interface
 
@@ -24,6 +24,14 @@ type
     tabClientebairro: TStringField;
     tabClientecidade: TStringField;
     tabClienteuf: TStringField;
+    tabClienteImpressao: TFDMemTable;
+    IntegerField1: TIntegerField;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
+    StringField4: TStringField;
+    StringField5: TStringField;
+    StringField6: TStringField;
     procedure btnInserirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
@@ -36,6 +44,7 @@ type
     procedure cmbTipoPesquisaChange(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
     procedure btnPreviousClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
   private
     fbookmarkList:TBookmarkList;
     fbookmark: TBookmark;
@@ -141,8 +150,7 @@ begin
   Tloading.ExecuteThread(procedure
   begin
     gridClientes.DataSource := nil;
-    dmCliente.ListarClientes(tabCliente, edtBuscar.text, cmbTipoPesquisa.ItemIndex);
-
+    dmCliente.ListarClientes(tabCliente, edtBuscar.text, cmbTipoPesquisa.ItemIndex, true);
   end,
   terminateBusca);
 end;
@@ -229,6 +237,22 @@ begin
     if (slItemsSelecionados <> nil) then
       freeandnil(slItemsSelecionados);
   end;
+end;
+
+
+procedure TfrmCliente.btnImprimirClick(Sender: TObject);
+begin
+  if MessageDlg('Deseja imprimir somente a página atual? ', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+  begin
+    frxDBDataset1.DataSet := tabCliente;
+  end
+  else
+  begin
+    frxDBDataset1.DataSet := tabClienteImpressao;
+    dmCliente.ListarClientes(tabClienteImpressao, edtBuscar.text, cmbTipoPesquisa.ItemIndex, false);
+  end;
+
+  frxReport1.ShowReport(true);
 end;
 
 procedure TfrmCliente.btnInserirClick(Sender: TObject);
