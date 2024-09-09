@@ -27,7 +27,7 @@ type
     property page: integer read getpage write Setpage;
     property totalPages: integer read FtotalPages write SettotalPages;
 
-    procedure ListarProdutos(pmenTable: TFDMemTable; filtro: string);
+    procedure ListarProdutos(pmenTable: TFDMemTable; filtro: string; ppaginate: boolean);
     procedure ListarProdutoId(pmenTable: TFDMemTable; id_produto: integer);
     procedure inserir(pdescricao: string; pvalor: double);
     procedure editar(pid_produto: integer; pdescricao: string; pvalor: double);
@@ -126,7 +126,7 @@ begin
   end;
 end;
 
-procedure TdmProduto.ListarProdutos(pmenTable: TFDMemTable; filtro: string);
+procedure TdmProduto.ListarProdutos(pmenTable: TFDMemTable; filtro: string; ppaginate: boolean);
 var
   resp: IResponse;
   lJsonObjResult: tjsonObject;
@@ -134,15 +134,19 @@ begin
   try
     resp := TRequest.new.BaseURL(base_url)
                         .Resource('/produtos')
-                        .addParam('filtro',filtro)
-                        .addParam('pagina',getpage.tostring)
+                        .addParam('filtro', filtro)
+                        .addParam('pagina', getpage.tostring)
+                        .addParam('x-paginate', ppaginate.tostring)
                         .accept('application/json')
                         .Get;
     lJsonObjResult := TJSONObject(TJSONObject.ParseJSONValue(resp.Content));
 
-    total := lJsonObjResult.GetValue<integer>('total');
-    page := lJsonObjResult.GetValue<integer>('pageAtual');
-    totalPages := lJsonObjResult.GetValue<integer>('totalPages');
+    if ppaginate then
+    begin
+      total := lJsonObjResult.GetValue<integer>('total');
+      page := lJsonObjResult.GetValue<integer>('pageAtual');
+      totalPages := lJsonObjResult.GetValue<integer>('totalPages');
+    end;
 
     if pmenTable.Active then
       pmenTable.EmptyDataSet;

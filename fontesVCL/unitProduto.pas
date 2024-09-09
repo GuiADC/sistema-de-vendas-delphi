@@ -20,6 +20,10 @@ type
     tabProdutodescricao: TStringField;
     tabProdutopreco: TCurrencyField;
     tabProdutoid_produto: TIntegerField;
+    tabProdutoImpressao: TFDMemTable;
+    StringField1: TStringField;
+    CurrencyField1: TCurrencyField;
+    IntegerField1: TIntegerField;
     procedure FormShow(Sender: TObject);
     procedure refreshProdutos;
     procedure terminateBusca(Sender: TObject);
@@ -31,6 +35,7 @@ type
     procedure dsProdutoDataChange(Sender: TObject; Field: TField);
     procedure btnNextClick(Sender: TObject);
     procedure btnPreviousClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -166,6 +171,21 @@ begin
   end;
 end;
 
+procedure TfrmProduto.btnImprimirClick(Sender: TObject);
+begin
+  if MessageDlg('Deseja imprimir somente a página atual? ', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+  begin
+    frxDBDataset1.DataSet := tabProduto;
+  end
+  else
+  begin
+    frxDBDataset1.DataSet := tabProdutoImpressao;
+    dmproduto.ListarProdutos(tabProdutoImpressao, edtBuscar.text, false);
+  end;
+
+  frxReport1.ShowReport(true);
+end;
+
 procedure TfrmProduto.btnInserirClick(Sender: TObject);
 begin
   OpenCadProduto(0);
@@ -208,7 +228,7 @@ begin
   Tloading.ExecuteThread(procedure
   begin
     gridProdutos.DataSource := nil;
-    dmProduto.ListarProdutos(tabProduto, edtBuscar.text);
+    dmProduto.ListarProdutos(tabProduto, edtBuscar.text, true);
 
   end, terminateBusca);
 end;
