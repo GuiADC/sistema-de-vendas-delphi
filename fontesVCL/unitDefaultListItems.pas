@@ -25,7 +25,7 @@ type
     Panel5: TPanel;
     cmbTipoPesquisa: TComboBox;
     Panel6: TPanel;
-    SpeedButton1: TSpeedButton;
+    btnImprimir: TSpeedButton;
     frxReport1: TfrxReport;
     frxDBDataset1: TfrxDBDataset;
     frxPDFExport1: TfrxPDFExport;
@@ -36,7 +36,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cmbTipoPesquisaDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
-    procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -86,10 +85,5 @@ begin
 end;
 
 
-
-procedure TfrmDefault.SpeedButton1Click(Sender: TObject);
-begin
-  frxReport1.ShowReport(true);
-end;
 
 end.
