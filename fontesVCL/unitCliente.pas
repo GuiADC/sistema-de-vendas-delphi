@@ -34,6 +34,8 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cmbTipoPesquisaChange(Sender: TObject);
+    procedure btnNextClick(Sender: TObject);
+    procedure btnPreviousClick(Sender: TObject);
   private
     fbookmarkList:TBookmarkList;
     fbookmark: TBookmark;
@@ -44,6 +46,7 @@ type
     procedure editar;
     procedure terminateDelete(Sender: TObject);
     procedure resizeGrid(pintWidthSmenu: integer);
+    procedure setCaptionPag(plbllabelPag: TLabel);
     { Private declarations }
   public
     { Public declarations }
@@ -116,6 +119,8 @@ begin
       ShowMessage(Exception(TThread(sender).FatalException).Message);
       exit;
     end;
+
+  setCaptionPag(lblPagina);
 
   if fbookmark <> nil then
     try
@@ -222,6 +227,33 @@ procedure TfrmCliente.btnInserirClick(Sender: TObject);
 begin
   inherited;
   OpenCadCliente(0);
+end;
+
+procedure TfrmCliente.btnNextClick(Sender: TObject);
+begin
+  if not (dmCliente.page >= dmCliente.totalPages) then
+  begin
+    dmCliente.page := dmCliente.page + 1;
+    refreshClientes;
+  end
+  else
+    exit;
+end;
+
+procedure TfrmCliente.setCaptionPag(plbllabelPag: TLabel);
+begin
+  plbllabelPag.caption := 'Página ' + dmCliente.page.tostring + ' de ' + dmCliente.totalPages.tostring;
+end;
+
+procedure TfrmCliente.btnPreviousClick(Sender: TObject);
+begin
+  if not (dmCliente.page < 2) and not (dmCliente.totalPages < 2) then
+  begin
+    dmCliente.page := dmCliente.page - 1;
+    refreshClientes;
+  end
+  else
+    exit;
 end;
 
 procedure TfrmCliente.cmbTipoPesquisaChange(Sender: TObject);

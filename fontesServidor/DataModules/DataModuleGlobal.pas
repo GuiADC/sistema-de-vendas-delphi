@@ -23,7 +23,7 @@ type
 
   public
     /////////////////// CLIENTE ////////////////
-    function ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJSONObject;
+    function ClienteListar(pfiltro: string; ptipoPesquisa: string = ''; pstrPagina: string = ''): TJSONObject;
     function ClienteListarId(pid_cliente: integer): TJsonObject;
     function ClienteInserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
     function ClienteEditar(pid_cliente: integer; pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string): TJsonObject;
@@ -200,16 +200,47 @@ begin
   end;
 end;
 
-function TDM.ClienteListar(pfiltro: string; ptipoPesquisa: string = ''): TJSONObject;
+function TDM.ClienteListar(pfiltro: string; ptipoPesquisa: string = ''; pstrPagina: string = ''): TJSONObject;
 var
   qry: TFDQuery;
+  lintTotalRegistros, lintTotalPaginas, lintRegistrosQuebrados: integer;
 begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('Select *');
-    qry.SQL.Add('FROM cliente');
+
+    qry.SQL.clear;
+    qry.SQL.Add('select count(cliente.id_cliente) as qtdRegistro from cliente');
+    qry.Open;
+
+    lintTotalRegistros :=  qry.FieldByName('qtdRegistro').AsInteger;
+
+    qry.SQL.clear;
+
+    if pstrPagina = '' then
+      pstrPagina := '1';
+
+
+    lintTotalPaginas := lintTotalRegistros div 32;
+    lintRegistrosQuebrados := lintTotalRegistros - (lintTotalPaginas * 32);
+
+    if lintRegistrosQuebrados > 0 then
+      inc(lintTotalPaginas);
+
+    qry.SQL.Add('select first 32 skip :p2');
+    qry.SQL.Add(' *');
+    qry.SQL.Add(' from cliente');
     qry.SQL.Add('Where id_cliente > 0');
+
+    if pstrPagina <> '0' then
+    begin
+      if (pstrPagina.ToInteger > lintTotalPaginas) then
+        pstrPagina :=  lintTotalPaginas.tostring;
+    end
+    else
+      pstrPagina := '1';
+
+    qry.ParamByName('p2').Value := (pstrPagina.ToInteger -1) * 32;
 
     if not(pfiltro.isEmpty) then
     begin
@@ -226,7 +257,13 @@ begin
     qry.SQL.Add('order by nome');
     qry.Active := true;
 
-    result := qry.tojsonobject;
+    result := TJSONObject.create.addpair('docs', qry.ToJSONArray);
+
+    result.AddPair('total', TJSONNumber.Create(lintTotalRegistros));
+    result.AddPair('limite', TJSONNumber.Create(33));
+    result.AddPair('pageAtual', TJSONNumber.Create(pstrPagina.ToInteger));
+    result.AddPair('totalPages', TJSONNumber.Create(lintTotalPaginas));
+
   finally
     freeAndNil(qry);
   end;
@@ -241,7 +278,6 @@ begin
     qry := TFDQuery.create(nil);
     qry.connection := conn;
 
-    qry.SQL.clear;
     qry.SQL.clear;
     qry.SQL.Add('select count(produto.id_produto) as qtdRegistro from produto');
     qry.Open;
