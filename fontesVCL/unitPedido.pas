@@ -36,6 +36,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
+    procedure btnPreviousClick(Sender: TObject);
 
   private
    { Private declarations }
@@ -52,6 +53,7 @@ type
     procedure terminateDelete(Sender: TObject);
     procedure ResizeColunsGrid(pintWidthSmenu: integer);
     procedure setProcResizeGrid;
+    procedure setCaptionPag(plbllabelPag: TLabel);
   public
     { Public declarations }
   end;
@@ -114,6 +116,11 @@ begin
   refreshPedidos;
 end;
 
+procedure TfrmPedido.setCaptionPag(plbllabelPag: TLabel);
+begin
+  plbllabelPag.caption := 'Página ' + dmPedido.page.tostring + ' de ' + dmPedido.totalPages.tostring;
+end;
+
 procedure TfrmPedido.terminateBusca(Sender: TObject);
 begin
   TLoading.hide;
@@ -125,6 +132,8 @@ begin
       ShowMessage(Exception(TThread(sender).FatalException).Message);
       exit;
     end;
+
+  setCaptionPag(lblPagina);
 
   if fbookmark <> nil then
     try
@@ -205,8 +214,24 @@ end;
 
 procedure TfrmPedido.btnNextClick(Sender: TObject);
 begin
+  if not (dmPedido.page >= dmPedido.totalPages) then
+  begin
+    dmPedido.page := dmPedido.page + 1;
+    refreshPedidos;
+  end
+  else
+    exit;
+end;
 
-//
+procedure TfrmPedido.btnPreviousClick(Sender: TObject);
+begin
+  if not (dmPedido.page < 2) and not (dmPedido.totalPages < 2) then
+  begin
+    dmPedido.page := dmPedido.page - 1;
+    refreshPedidos;
+  end
+  else
+    exit;
 end;
 
 procedure TfrmPedido.gridPedidosDblClick(Sender: TObject);

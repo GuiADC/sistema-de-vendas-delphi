@@ -38,7 +38,6 @@ type
     fJSONArrayItemsSelected: tjsonarray;
     fbookmarkList: TBookmarkList;
     fstrMessageExclusao: string;
-    fpage: integer;
 
     procedure setCaptionPag(plbllabelPag: TLabel);
     procedure editar;
@@ -78,7 +77,6 @@ end;
 
 procedure TfrmProduto.FormCreate(Sender: TObject);
 begin
-  fpage := 1;
   setProcResizeGrid;
 end;
 

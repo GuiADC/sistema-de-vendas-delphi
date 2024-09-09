@@ -13,9 +13,21 @@ type
   TdmPedido = class(TDataModule)
     procedure DataModuleCreate(Sender: TObject);
   private
+    FtotalPages: integer;
+    Ftotal: integer;
+    Fpage: integer;
+
+    function getpage: integer;
+    procedure Setpage(const Value: integer);
+    procedure Settotal(const Value: integer);
+    procedure SettotalPages(const Value: integer);
     { Private declarations }
   public
     { Public declarations }
+
+    property total: integer read Ftotal write Settotal;
+    property page: integer read getpage write Setpage;
+    property totalPages: integer read FtotalPages write SettotalPages;
 
     procedure ListarPedidoId(pmenTable, pmenItens: TFDMemTable; id_pedido: integer);
     procedure ListarPedidos(pmenTable: TFDMemTable; filtro: string);
@@ -36,22 +48,55 @@ implementation
 procedure  TdmPedido.ListarPedidos(pmenTable: TFDMemTable; filtro: string);
 var
   resp: IResponse;
+  lJsonObjResult: tjsonObject;
 begin
-  resp := TRequest.new.BaseURL(base_url)
-                      .Resource('/pedidos')
-                      .addParam('filtro',filtro)
-                      .accept('application/json')
-                      .Adapters(TDataSetSerializeAdapter.new(pmenTable))
-                      .Get;
+  try
+    resp := TRequest.new.BaseURL(base_url)
+                        .Resource('/pedidos')
+                        .addParam('filtro',filtro)
+                        .addParam('pagina',getpage.tostring)
+                        .accept('application/json')
+                        .Get;
 
-  if resp.StatusCode <> 200 then
-    raise Exception.Create(resp.content);
+      lJsonObjResult := TJSONObject(TJSONObject.ParseJSONValue(resp.Content));
+
+      total := lJsonObjResult.GetValue<integer>('total');
+      page := lJsonObjResult.GetValue<integer>('pageAtual');
+      totalPages := lJsonObjResult.GetValue<integer>('totalPages');
+
+      if pmenTable.Active then
+        pmenTable.EmptyDataSet;
+
+      pmenTable.LoadFromJSON(lJsonObjResult.GetValue<TJSONArray>('docs'), false);
+
+    if resp.StatusCode <> 200 then
+      raise Exception.Create(resp.content);
+  finally
+      lJsonObjResult.free;
+  end;
+end;
+
+procedure TdmPedido.Setpage(const Value: integer);
+begin
+  Fpage := value;
+end;
+
+procedure TdmPedido.Settotal(const Value: integer);
+begin
+  Ftotal := Value;
+end;
+
+procedure TdmPedido.SettotalPages(const Value: integer);
+begin
+  FtotalPages := Value;
 end;
 
 procedure TdmPedido.DataModuleCreate(Sender: TObject);
 begin
   TDatasetSerializeConfig.getinstance.CaseNameDefinition := cndLower;
   TDatasetSerializeConfig.getinstance.Import.DecimalSeparator := '.';
+
+  Fpage := 1;
 end;
 
 procedure  TdmPedido.ListarPedidoId(pmenTable, pmenItens: TFDMemTable; id_pedido: integer);
@@ -143,6 +188,11 @@ begin
   if lresp.StatusCode <> 200 then
     raise Exception.Create(lresp.content);
 
+end;
+
+function TdmPedido.getpage: integer;
+begin
+  result := Fpage;
 end;
 
 end.
