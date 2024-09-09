@@ -30,7 +30,7 @@ type
     property totalPages: integer read FtotalPages write SettotalPages;
 
     procedure ListarPedidoId(pmenTable, pmenItens: TFDMemTable; id_pedido: integer);
-    procedure ListarPedidos(pmenTable: TFDMemTable; filtro: string);
+    procedure ListarPedidos(pmenTable: TFDMemTable; filtro: string; ppaginate: boolean);
     procedure inserir(pid_usuario, pid_cliente: integer; pdt_pedido: TDate; ptotal: double; parritens: TJSONArray);
     procedure editar(pid_pedido, pid_cliente: integer; pdt_pedido: TDate; ptotal: double; parritens: TJSONArray);
     procedure excluir(pjsonArrIdPedido: TJSONArray);
@@ -45,7 +45,7 @@ implementation
 
 {$R *.dfm}
 
-procedure  TdmPedido.ListarPedidos(pmenTable: TFDMemTable; filtro: string);
+procedure  TdmPedido.ListarPedidos(pmenTable: TFDMemTable; filtro: string; ppaginate: boolean);
 var
   resp: IResponse;
   lJsonObjResult: tjsonObject;
@@ -54,20 +54,24 @@ begin
     resp := TRequest.new.BaseURL(base_url)
                         .Resource('/pedidos')
                         .addParam('filtro',filtro)
-                        .addParam('pagina',getpage.tostring)
+                        .addParam('pagina', getpage.tostring)
+                        .addParam('x-paginate',ppaginate.tostring)
                         .accept('application/json')
                         .Get;
 
-      lJsonObjResult := TJSONObject(TJSONObject.ParseJSONValue(resp.Content));
+    lJsonObjResult := TJSONObject(TJSONObject.ParseJSONValue(resp.Content));
 
+    if ppaginate then
+    begin
       total := lJsonObjResult.GetValue<integer>('total');
       page := lJsonObjResult.GetValue<integer>('pageAtual');
       totalPages := lJsonObjResult.GetValue<integer>('totalPages');
+    end;
 
-      if pmenTable.Active then
-        pmenTable.EmptyDataSet;
+    if pmenTable.Active then
+      pmenTable.EmptyDataSet;
 
-      pmenTable.LoadFromJSON(lJsonObjResult.GetValue<TJSONArray>('docs'), false);
+    pmenTable.LoadFromJSON(lJsonObjResult.GetValue<TJSONArray>('docs'), false);
 
     if resp.StatusCode <> 200 then
       raise Exception.Create(resp.content);
