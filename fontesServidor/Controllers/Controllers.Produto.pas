@@ -29,7 +29,7 @@ begin
   try
     try
       ldm := TDm.create(nil);
-      Res.send<TJSONObject>(ldm.ProdutoListar(Req.Query['filtro'], Req.Query['pagina'])).status(200);
+      Res.send<TJSONObject>(ldm.ProdutoListar(Req.Query['filtro'], Req.Query['pagina'], Req.Query['x-paginate'].ToBoolean)).status(200);
 
     except
       on E:Exception do

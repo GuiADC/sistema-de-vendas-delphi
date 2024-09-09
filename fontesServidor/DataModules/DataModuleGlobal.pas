@@ -30,7 +30,7 @@ type
     function ClienteExcluir(parrJson: TJSONArray; pstrTypeSituation: string): TJSONArray;
 
     /////////////////// PRODUTO ////////////////
-    function ProdutoListar(pfiltro: string; pstrPagina: string = ''): TJSONObject;
+    function ProdutoListar(pfiltro: string; pstrPagina: string = ''; ppaginate: boolean = false): TJSONObject;
     function ProdutoListarId(pid_produto: integer): TJsonObject;
     function ProdutoInserir(pdescricao: string; pvalor: double): TJsonObject;
     function produtoEditar(pid_produto: integer; pdescricao: string; pvalor: double): TJsonObject;
@@ -279,7 +279,7 @@ begin
   end;
 end;
 
-function TDM.ProdutoListar(pfiltro: string; pstrPagina: string = ''): TJSONObject;
+function TDM.ProdutoListar(pfiltro: string; pstrPagina: string = ''; ppaginate: boolean = false): TJSONObject;
 var
   qry: TFDQuery;
   lintTotalRegistros, lintTotalPaginas, lintRegistrosQuebrados: integer;
@@ -289,6 +289,9 @@ begin
     qry.connection := conn;
 
     qry.SQL.clear;
+
+    if ppaginate then
+    begin
     qry.SQL.Add('select count(produto.id_produto) as qtdRegistro from produto');
     qry.Open;
 
@@ -299,8 +302,6 @@ begin
     if pstrPagina = '' then
       pstrPagina := '1';
 
-    if pstrPagina <> '0' then
-    begin
       lintTotalPaginas := lintTotalRegistros div 32;
       lintRegistrosQuebrados := lintTotalRegistros - (lintTotalPaginas * 32);
 
@@ -308,20 +309,22 @@ begin
         inc(lintTotalPaginas);
 
       qry.SQL.Add('select first 32 skip :p2');
-      qry.SQL.Add(' *');
-      qry.SQL.Add(' from produto');
 
+      if pstrPagina <> '0' then
+      begin
       if (pstrPagina.ToInteger > lintTotalPaginas) then
         pstrPagina :=  lintTotalPaginas.tostring;
+      end
+      else
+        pstrPagina := '1';
 
       qry.ParamByName('p2').Value := (pstrPagina.ToInteger -1) * 32;
     end
     else
-    begin
-      qry.SQL.Add('Select *');
-      qry.SQL.Add('FROM produto');
-      pstrPagina := '1';
-    end;
+      qry.SQL.Add('select');
+
+    qry.SQL.Add(' *');
+    qry.SQL.Add(' from produto');
 
     if not(pfiltro.isEmpty) then
     begin
@@ -333,10 +336,13 @@ begin
     qry.Active := true;
     result := TJSONObject.create.addpair('docs', qry.ToJSONArray);
 
-    result.AddPair('total', TJSONNumber.Create(lintTotalRegistros));
-    result.AddPair('limite', TJSONNumber.Create(33));
-    result.AddPair('pageAtual', TJSONNumber.Create(pstrPagina.ToInteger));
-    result.AddPair('totalPages', TJSONNumber.Create(lintTotalPaginas));
+    if ppaginate then
+    begin
+      result.AddPair('total', TJSONNumber.Create(lintTotalRegistros));
+      result.AddPair('limite', TJSONNumber.Create(33));
+      result.AddPair('pageAtual', TJSONNumber.Create(pstrPagina.ToInteger));
+      result.AddPair('totalPages', TJSONNumber.Create(lintTotalPaginas));
+    end;
 
   finally
     freeAndNil(qry);
