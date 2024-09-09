@@ -11,11 +11,23 @@ type
   TdmCliente = class(TDataModule)
     procedure DataModuleCreate(Sender: TObject);
   private
+    Fpage: integer;
+    FtotalPages: integer;
+    Ftotal: integer;
+    function getpage: integer;
+    procedure Setpage(const Value: integer);
+    procedure Settotal(const Value: integer);
+    procedure SettotalPages(const Value: integer);
 
 
     { Private declarations }
   public
     { Public declarations }
+
+    property total: integer read Ftotal write Settotal;
+    property page: integer read getpage write Setpage;
+    property totalPages: integer read FtotalPages write SettotalPages;
+
     procedure ListarClientes(pmenTable: TFDMemTable; filtro: string; pintTipoPesquisa: integer);
     procedure ListarClienteId(pmenTable: TFDMemTable; id_cliente: integer);
     procedure Inserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string);
@@ -46,6 +58,21 @@ begin
 
   if resp.StatusCode <> 200 then
     raise Exception.Create(resp.content);
+end;
+
+procedure TdmCliente.Setpage(const Value: integer);
+begin
+  Fpage := Value;
+end;
+
+procedure TdmCliente.Settotal(const Value: integer);
+begin
+  Ftotal := Value;
+end;
+
+procedure TdmCliente.SettotalPages(const Value: integer);
+begin
+  FtotalPages := Value;
 end;
 
 procedure  TdmCliente.Inserir(pnome, pendereco, pcomplemento, pbairro, pcidade, puf: string);
@@ -120,6 +147,11 @@ begin
     raise Exception.Create(lresp.content);
 end;
 
+function TdmCliente.getpage: integer;
+begin
+  Result := Fpage;
+end;
+
 procedure  TdmCliente.ListarClienteId(pmenTable: TFDMemTable; id_cliente: integer);
 var
   resp: IResponse;
@@ -139,6 +171,8 @@ procedure TdmCliente.DataModuleCreate(Sender: TObject);
 begin
   TDatasetSerializeConfig.getinstance.CaseNameDefinition := cndLower;
   TDatasetSerializeConfig.getinstance.Import.DecimalSeparator := '.';
+
+  Fpage := 1;
 end;
 
 end.
