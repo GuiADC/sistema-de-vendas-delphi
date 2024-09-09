@@ -42,7 +42,7 @@ function UsuarioLogin(pemail, psenha: string): TJsonObject;
     function PedidoEditar(pid_pedido, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
     function PedidoExcluir(parrJsonIdPedido: TJSONArray): TJSONArray;
     function PedidoInserir(pid_usuario, pid_cliente: integer; pdt_pedido: string; pvl_total: double; parrItems: TJSONArray): TJsonObject;
-    function PedidoListar(pfiltro: string; pstrPagina: string = ''): TJsonArray;
+    function PedidoListar(pfiltro: string; pstrPagina: string = ''): TJSONObject;
     function PedidoListarId(pid_pedido: integer): TJsonObject;
 
     /////////////////// BUSCA GLOBAL ////////////////
@@ -283,9 +283,9 @@ begin
       qry.ParamByName('filtro').Value := '%' + pfiltro + '%';
     end;
 
-//    qry.SQL.Add('order by descricao');
+    qry.SQL.Add('order by descricao');
     qry.Active := true;
-    result := TJSONObject.create.addpair('docs',  qry.ToJSONArray);
+    result := TJSONObject.create.addpair('docs', qry.ToJSONArray);
 
     result.AddPair('total', TJSONNumber.Create(lintTotalRegistros));
     result.AddPair('limite', TJSONNumber.Create(33));
@@ -614,17 +614,46 @@ begin
   end;
 end;
 
-function TDM.PedidoListar(pfiltro: string; pstrPagina: string = ''): TJsonArray;
+function TDM.PedidoListar(pfiltro: string; pstrPagina: string = ''): TJSONObject;
 var
   qry: TFDQuery;
+  lintTotalRegistros, lintTotalPaginas, lintRegistrosQuebrados: integer;
 begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('Select p.*, c.nome, c.cidade, u.nome as usuario ');
+
+    qry.SQL.clear;
+    qry.SQL.Add('select count(pedido.id_pedido) as qtdRegistro from pedido');
+    qry.Open;
+
+    lintTotalRegistros :=  qry.FieldByName('qtdRegistro').AsInteger;
+
+    if pstrPagina = '' then
+      pstrPagina := '1';
+
+    lintTotalPaginas := lintTotalRegistros div 32;
+    lintRegistrosQuebrados := lintTotalRegistros - (lintTotalPaginas * 32);
+
+    if lintRegistrosQuebrados > 0 then
+      inc(lintTotalPaginas);
+
+    qry.SQL.clear;
+    qry.SQL.Add('select first 32 skip :p2');
+    qry.SQL.Add('p.*, c.nome, c.cidade, u.nome as usuario ');
     qry.SQL.Add('FROM pedido p');
     qry.SQL.Add('inner join cliente c on (c.id_cliente = p.id_cliente)');
     qry.SQL.Add('inner join usuario u on (u.id_usuario = p.id_usuario)');
+
+    if pstrPagina <> '0' then
+    begin
+      if (pstrPagina.ToInteger > lintTotalPaginas) then
+        pstrPagina :=  lintTotalPaginas.tostring;
+
+      qry.ParamByName('p2').Value := (pstrPagina.ToInteger -1) * 32;
+    end
+    else
+      pstrPagina := '1';
 
     if not(pfiltro.isEmpty) then
     begin
@@ -635,7 +664,13 @@ begin
     qry.SQL.Add('order by p.id_pedido desc');
     qry.Active := true;
 
-    result := qry.ToJSONArray;
+    result := TJSONObject.create.addpair('docs', qry.ToJSONArray);
+
+    result.AddPair('total', TJSONNumber.Create(lintTotalRegistros));
+    result.AddPair('limite', TJSONNumber.Create(33));
+    result.AddPair('pageAtual', TJSONNumber.Create(pstrPagina.ToInteger));
+    result.AddPair('totalPages', TJSONNumber.Create(lintTotalPaginas));
+
   finally
     freeAndNil(qry);
   end;

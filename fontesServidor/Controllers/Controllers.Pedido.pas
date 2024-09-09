@@ -30,7 +30,7 @@ begin
     try
       ldm := TDm.create(nil);
 
-      Res.send<TJSONArray>(ldm.PedidoListar(Req.Query['filtro'], Req.Query['pagina'])).status(200);
+      Res.send<TJSONObject>(ldm.PedidoListar(Req.Query['filtro'], Req.Query['pagina'])).status(200);
 
     except
       on E:Exception do
