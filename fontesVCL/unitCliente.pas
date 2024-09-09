@@ -69,11 +69,16 @@ end;
 
 procedure TfrmCliente.FormDestroy(Sender: TObject);
 begin
+  if fbookmark <> nil then
+    fbookmark := nil;
+
   if fbookmarkList <> nil then
     fbookmarkList := nil;
 
-  if  (fJSONArrayItemsSelected <> nil) then
+  if (fJSONArrayItemsSelected <> nil) then
     freeandnil(fJSONArrayItemsSelected);
+
+  inherited;
 end;
 
 procedure TfrmCliente.resizeGrid(pintWidthSmenu: integer);
@@ -185,10 +190,13 @@ begin
   if tabCliente.RecordCount = 0  then
     exit;
 
-  fJSONArrayItemsSelected := nil;
+  if (fJSONArrayItemsSelected <> nil) then
+    freeandnil(fJSONArrayItemsSelected);
+
   fbookmarkList := gridClientes.SelectedRows;
 
   slItemsSelecionados := nil;
+
   try
     slItemsSelecionados := TStringlist.create;
     slItemsSelecionados.Clear;
@@ -214,7 +222,7 @@ begin
     end
     else
     begin
-      if (fJSONArrayItemsSelected )<> nil then
+      if (fJSONArrayItemsSelected <> nil) then
         freeandnil(fJSONArrayItemsSelected);
     end;
   finally

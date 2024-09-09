@@ -188,7 +188,6 @@ inherited frmPedido: TfrmPedido
     end
     inherited lblPagina: TLabel
       Left = 904
-      Height = 41
       ExplicitLeft = 904
     end
     object Label2: TLabel
