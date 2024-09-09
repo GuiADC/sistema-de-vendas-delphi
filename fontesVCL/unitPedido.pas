@@ -26,6 +26,15 @@ type
     tabPedidonome: TStringField;
     tabPedidocidade: TStringField;
     tabPedidousuario: TStringField;
+    tabPedidoImpressao: TFDMemTable;
+    IntegerField1: TIntegerField;
+    IntegerField2: TIntegerField;
+    IntegerField3: TIntegerField;
+    DateField1: TDateField;
+    CurrencyField1: TCurrencyField;
+    StringField1: TStringField;
+    StringField2: TStringField;
+    StringField3: TStringField;
     procedure gridPedidosDblClick(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);
@@ -37,6 +46,7 @@ type
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
     procedure btnPreviousClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
 
   private
    { Private declarations }
@@ -152,7 +162,7 @@ begin
   Tloading.ExecuteThread(procedure
   begin
     gridPedidos.DataSource := nil;
-    dmPedido.ListarPedidos(tabPedido, edtBuscar.text);
+    dmPedido.ListarPedidos(tabPedido, edtBuscar.text, true);
 
   end,
   terminateBusca);
@@ -205,6 +215,21 @@ begin
   finally
     freeandnil(lslNomePedidos);
   end;
+end;
+
+procedure TfrmPedido.btnImprimirClick(Sender: TObject);
+begin
+  if MessageDlg('Deseja imprimir somente a página atual? ', TMsgDlgType.mtConfirmation,[TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], 0) = mrYes then
+  begin
+    frxDBDataset1.DataSet := tabPedido;
+  end
+  else
+  begin
+    frxDBDataset1.DataSet := tabPedidoImpressao;
+    dmpedido.ListarPedidos(tabPedidoImpressao, edtBuscar.text, false);
+  end;
+
+  frxReport1.ShowReport(true);
 end;
 
 procedure TfrmPedido.btnInserirClick(Sender: TObject);

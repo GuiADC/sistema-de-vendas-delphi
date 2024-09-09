@@ -64,6 +64,9 @@ inherited frmPedido: TfrmPedido
     inherited Panel6: TPanel
       Left = 873
       ExplicitLeft = 873
+      inherited btnImprimir: TSpeedButton
+        OnClick = btnImprimirClick
+      end
     end
   end
   object gridPedidos: TDBGrid [1]
@@ -718,5 +721,82 @@ inherited frmPedido: TfrmPedido
         FieldType = fftString
         Size = 20
       end>
+  end
+  object tabPedidoImpressao: TFDMemTable
+    Active = True
+    FieldDefs = <
+      item
+        Name = 'id_pedido'
+        DataType = ftInteger
+      end
+      item
+        Name = 'id_usuario'
+        DataType = ftInteger
+      end
+      item
+        Name = 'id_cliente'
+        DataType = ftInteger
+      end
+      item
+        Name = 'dt_pedido'
+        DataType = ftDate
+      end
+      item
+        Name = 'vl_total'
+        DataType = ftCurrency
+        Precision = 19
+      end
+      item
+        Name = 'nome'
+        DataType = ftString
+        Size = 200
+      end
+      item
+        Name = 'cidade'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'usuario'
+        DataType = ftString
+        Size = 20
+      end>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 640
+    Top = 208
+    object IntegerField1: TIntegerField
+      Alignment = taLeftJustify
+      FieldName = 'id_pedido'
+    end
+    object IntegerField2: TIntegerField
+      FieldName = 'id_usuario'
+    end
+    object IntegerField3: TIntegerField
+      FieldName = 'id_cliente'
+    end
+    object DateField1: TDateField
+      FieldName = 'dt_pedido'
+    end
+    object CurrencyField1: TCurrencyField
+      FieldName = 'vl_total'
+    end
+    object StringField1: TStringField
+      FieldName = 'nome'
+      Size = 200
+    end
+    object StringField2: TStringField
+      FieldName = 'cidade'
+    end
+    object StringField3: TStringField
+      FieldName = 'usuario'
+    end
   end
 end
