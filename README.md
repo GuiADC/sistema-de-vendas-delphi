@@ -31,31 +31,19 @@
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Delphi](https://www.embarcadero.com/br/products/delphi/starter), [Boss](https://github.com/HashLoad/boss).
+[Git](https://git-scm.com), [Delphi](https://www.embarcadero.com/br/products/delphi/starter), [Boss](https://github.com/HashLoad/boss), [FastReport](https://www.fast-report.com/downloads/fast-report-vcl).
 
 ### 🎲 Rodando nossa aplicação
 
 ```bash
 # Clone este repositório
-$ git clone git@github.com:juniorwmr/botwhatsapp-venom.git
+$ git clone https://github.com/GuiADC/sistema-de-vendas-delphi.git
 
 # Acesse a pasta do projeto no terminal/cmd
-$ cd botwhatsapp-venom
+$ cd sistema-de-vendas-delphi
 
 # Instale as dependências
-$ npm install
-
-# Execute a aplicação em modo de desenvolvimento
-$ yarn dev
-
-## Pronto, escaneie o código QR do Whatsapp e Voilà, aproveite!
-```
-
-### 🛠 Tecnologias
-
-As seguintes ferramentas foram usadas na construção do projeto:
-
-- [Node.js](https://nodejs.org/en/)
+$ boss install
 
 ### Autor
 
