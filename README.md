@@ -49,5 +49,5 @@ $ boss install
 
 Done with ❤️ by Washington Muniz 👋🏽 !
 
-[![Linkedin Badge](https://img.shields.io/badge/-Washington-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/juniorwmr/)](https://www.linkedin.com/in/guilhermeadc/)
+[![Linkedin Badge](https://img.shields.io/badge/-GuilhermeAraujo-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/juniorwmr/)](https://www.linkedin.com/in/guilhermeadc/)
 [![Gmail Badge](https://img.shields.io/badge/-juniorwmr@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:juniorripardo@gmail.com)](mailto:juniorripardo@gmail.com)
