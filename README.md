@@ -9,6 +9,7 @@
     <a> Fast reports |</a>    
 </h1>
 <p align="center">🚀 Projeto criado com o intuito de auxiliar e gerenciar as vendas da sua empresa.</p>
+<p align="center">Módulos "Meu perfil" e "Configurações" a serem desenvolvidos.</p>
 <br>
 <h1 align="center">
 
