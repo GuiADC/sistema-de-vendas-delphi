@@ -15,8 +15,8 @@
   <img alt="Welcome" title="Welcome" src="./assets/pedidos.png" />
   <p>Clientes</p>
   <img alt="Menu" title="Menu" src="./assets/clientes.png" />
-  Order
-  <img alt="Order" title="Order" src="./assets/order.png" />
+  <p>Produtos</p>
+  <img alt="Order" title="Order" src="./assets/produtos.png" />
   Address
   <img alt="Address" title="Address" src="./assets/address.png" />
   Bill
