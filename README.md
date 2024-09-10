@@ -1,4 +1,4 @@
-# Mini-ERP de gestão de vendas
+# Mini-ERP para gestão de vendas
 
 ## Descrição do Projeto
 
