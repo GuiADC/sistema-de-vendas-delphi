@@ -11,7 +11,7 @@
 <p align="center">🚀 Projeto criado com o intuito de auxiliar e gerenciar as vendas da sua empresa.</p>
 <br>
 <h1 align="center">
-  <pWelcomep/p>
+  <p>Welcomep/p>
   <img alt="Welcome" title="Welcome" src="./assets/welcome.png" />
   Menu
   <img alt="Menu" title="Menu" src="./assets/menu.png" />
