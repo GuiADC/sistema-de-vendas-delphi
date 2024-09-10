@@ -8,7 +8,7 @@
     <a> Delphi VCL |</a>
     <a> Fast reports |</a>    
 </h1>
-<p align="center">🚀 Projeto criado com o intuito de auxiliar nas demandas de pedidos da empresa "Delícias da Neide" via WhatsApp.</p>
+<p align="center">🚀 Projeto criado com o intuito de auxiliar e gerenciar as vendas da sua empresa.</p>
 <br>
 <h1 align="center">
   Welcome
