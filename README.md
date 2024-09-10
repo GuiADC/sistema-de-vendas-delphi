@@ -11,10 +11,10 @@
 <p align="center">🚀 Projeto criado com o intuito de auxiliar e gerenciar as vendas da sua empresa.</p>
 <br>
 <h1 align="center">
-  <p>Welcome</p>
-  <img alt="Welcome" title="Welcome" src="./assets/welcome.png" />
-  Menu
-  <img alt="Menu" title="Menu" src="./assets/menu.png" />
+  <p>Pedidos</p>
+  <img alt="Welcome" title="Welcome" src="./assets/pedidos.png" />
+  <p>Clientes</p>
+  <img alt="Menu" title="Menu" src="./assets/clientes.png" />
   Order
   <img alt="Order" title="Order" src="./assets/order.png" />
   Address
