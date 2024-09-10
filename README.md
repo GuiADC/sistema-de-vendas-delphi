@@ -33,7 +33,7 @@
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Delphi](https://www.embarcadero.com/br/products/delphi/starter), [Boss](https://github.com/HashLoad/boss), [FastReport](https://www.fast-report.com/downloads/fast-report-vcl).
 
-### 🎲 Rodando nossa aplicação
+### 🎲 Rodando a aplicação
 
 ```bash
 # Clone este repositório
