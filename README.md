@@ -31,7 +31,7 @@
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
-[Git](https://git-scm.com), [Delphi]([https://nodejs.org/en/](https://www.embarcadero.com/br/products/delphi/starter)).
+[Git](https://git-scm.com), [Delphi](https://www.embarcadero.com/br/products/delphi/starter).
 
 ### 🎲 Rodando nossa aplicação
 
