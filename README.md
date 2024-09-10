@@ -12,7 +12,7 @@
 <br>
 <h1 align="center">
   <p>Welcome</p>
-  <img alt="Welcome" title="Welcome" src="./assets/welcome.png" />
+  <img alt="Welcome" title="Welcome" src="./assets/pedidos.png" />
   Menu
   <img alt="Menu" title="Menu" src="./assets/menu.png" />
   Order
