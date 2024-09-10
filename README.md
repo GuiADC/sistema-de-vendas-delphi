@@ -17,8 +17,8 @@
   <img alt="Menu" title="Menu" src="./assets/clientes.png" />
   <p>Produtos</p>
   <img alt="Order" title="Order" src="./assets/produtos.png" />
-  Address
-  <img alt="Address" title="Address" src="./assets/address.png" />
+  <p>Impressão</p>
+  <img alt="Address" title="Address" src="./assets/impressao.png" />
   Bill
   <img alt="Bill" title="Bill" src="./assets/bill.png" />
   Assistant
