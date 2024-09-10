@@ -13,8 +13,8 @@
 <h1 align="center">
   <p>Pedidos</p>
   <img alt="Welcome" title="Welcome" src="./assets/pedidos.png" />
-  Menu
-  <img alt="Menu" title="Menu" src="./assets/menu.png" />
+  <p>Clientes</p>
+  <img alt="Menu" title="Menu" src="./assets/clientes.png" />
   Order
   <img alt="Order" title="Order" src="./assets/order.png" />
   Address
