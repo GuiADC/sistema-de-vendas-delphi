@@ -11,18 +11,21 @@
 <p align="center">🚀 Projeto criado com o intuito de auxiliar e gerenciar as vendas da sua empresa.</p>
 <br>
 <h1 align="center">
+
+  <p>Login</p>
+  <img alt="Welcome" title="Welcome" src="./assets/login.png" />    
+  
   <p>Pedidos</p>
   <img alt="Welcome" title="Welcome" src="./assets/pedidos.png" />
-  <p>Clientes</p>
+  
+  <p>Clientes</p>  
   <img alt="Menu" title="Menu" src="./assets/clientes.png" />
-  <p>Produtos</p>
+  
+  <p>Produtos</p>  
   <img alt="Order" title="Order" src="./assets/produtos.png" />
+  
   <p>Impressão</p>
   <img alt="Address" title="Address" src="./assets/impressao.png" />
-  Bill
-  <img alt="Bill" title="Bill" src="./assets/bill.png" />
-  Assistant
-  <img alt="Assistant" title="Assistant" src="./assets/assistant.png" />
 </h1>
 
 ### Pré-requisitos
