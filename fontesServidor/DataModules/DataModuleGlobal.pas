@@ -495,7 +495,7 @@ begin
   try
     qry := TFDQuery.create(nil);
     qry.connection := conn;
-    qry.SQL.Add('Select id_usuario, nome, email');
+    qry.SQL.Add('Select *');
     qry.SQL.Add('FROM usuario');
     qry.SQL.Add('Where email = :email AND senha = :senha');
 

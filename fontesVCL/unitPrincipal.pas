@@ -1,4 +1,4 @@
-unit unitPrincipal;
+﻿unit unitPrincipal;
 
 interface
 
@@ -44,11 +44,16 @@ type
     procedure sSubMenuClosed(Sender: TObject);
     procedure sSubMenuOpened(Sender: TObject);
   private
+    FCargoUsuario: string;
     procedure closeSubMenu;
+    procedure SetCargoUsuario(const Value: string);
+
     { Private declarations }
   public
     { Public declarations }
     procResizeColunsGrid: procedure(pintWidthSmenu: integer) of object;
+
+    procedure getCargoUsuario;
   end;
 
 var
@@ -87,8 +92,16 @@ end;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
+  getCargoUsuario;
+
   lblNome.Caption := TSession.NOME;
   lblEmail.Caption := TSession.EMAIL;
+end;
+
+
+procedure TfrmPrincipal.SetCargoUsuario(const Value: string);
+begin
+  FCargoUsuario := Value;
 end;
 
 procedure TfrmPrincipal.sSubMenuClosed(Sender: TObject);
@@ -116,6 +129,15 @@ begin
       procResizeColunsGrid(sSubMenu.width)
     else
       procResizeColunsGrid(0);
+  end;
+end;
+
+procedure TfrmPrincipal.getCargoUsuario;
+begin
+  if not (TSession.CARGO = 'admin') and not (TSession.CARGO = 'gerente') then
+  begin
+    if CategoryMenuButtons.Categories[0].Items[4].Caption = ' Configurações' then
+      CategoryMenuButtons.Categories[0].Items.Delete(4)
   end;
 end;
 

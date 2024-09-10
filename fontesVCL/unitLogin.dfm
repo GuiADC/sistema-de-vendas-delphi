@@ -57380,7 +57380,7 @@ object frmLogin: TfrmLogin
         Margins.Bottom = 10
         Align = alClient
         BorderStyle = bsNone
-        Color = 5127481
+        Color = 5193274
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Height = -19
@@ -57388,7 +57388,7 @@ object frmLogin: TfrmLogin
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        Text = 'heber@teste.com.br'
+        Text = 'gui@araujo.com.br'
       end
     end
     object Panel3: TPanel
