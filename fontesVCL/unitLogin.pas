@@ -53,16 +53,16 @@ begin
       exit;
     end;
 
+  if not assigned(frmPrincipal) then
+    Application.CreateForm(TfrmPrincipal, frmPrincipal);
+
   //dados de acesso..
   TSession.ID_USUARIO := tabUsuario.FieldByName('id_usuario').AsInteger;
   TSession.EMAIL := tabUsuario.FieldByName('email').asString;
   TSession.NOME := tabUsuario.FieldByName('nome').asString;
-//  TSession.CARGO := tabUsuario.FieldByName('cargo').asString;
-//  TSession.dataNasc := tabUsuario.FieldByName('datanasc').asString;
-//  TSession.ENDERECO := tabUsuario.FieldByName('endereco').asString;
-
-  if not assigned(frmPrincipal) then
-    Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  TSession.cargo := tabUsuario.FieldByName('cargo').asString;
+  TSession.dataNasc := tabUsuario.FieldByName('datanasc').asString;
+  TSession.ENDERECO := tabUsuario.FieldByName('endereco').asString;
 
   frmPrincipal.Show;
 end;
