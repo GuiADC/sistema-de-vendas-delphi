@@ -6,6 +6,7 @@
 <h1 align="center">
     <a> Horse |</a> 
     <a> Delphi VCL |</a>
+    <a> Firebird |</a>       
     <a> Fast reports |</a>    
 </h1>
 <p align="center">🚀 Projeto criado com o intuito de auxiliar e gerenciar as vendas da sua empresa.</p>
