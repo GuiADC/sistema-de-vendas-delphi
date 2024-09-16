@@ -16,21 +16,21 @@ inherited frmPedido: TfrmPedido
       ExplicitWidth = 103
     end
     inherited Panel1: TPanel
-      Left = 758
+      Left = 643
       ExplicitLeft = 758
       inherited btnExcluir: TSpeedButton
         OnClick = btnExcluirClick
       end
     end
     inherited Panel2: TPanel
-      Left = 528
+      Left = 413
       ExplicitLeft = 528
       inherited btnInserir: TSpeedButton
         OnClick = btnInserirClick
       end
     end
     inherited Panel3: TPanel
-      Left = 643
+      Left = 528
       ExplicitLeft = 643
       inherited btnEditar: TSpeedButton
         OnClick = btnEditarClick
@@ -41,31 +41,72 @@ inherited frmPedido: TfrmPedido
     end
     inherited Panel4: TPanel
       Left = 113
-      Width = 240
+      Width = 125
       ExplicitLeft = 113
       ExplicitWidth = 240
       inherited Panel7: TPanel
-        Left = 135
+        Left = 20
         ExplicitLeft = 135
         inherited btnBuscar: TSpeedButton
           OnClick = btnBuscarClick
         end
       end
       inherited edtBuscar: TEdit
-        Width = 135
+        Width = 20
         ExplicitWidth = 135
       end
     end
     inherited Panel5: TPanel
-      Left = 413
+      Left = 298
       Visible = False
       ExplicitLeft = 413
     end
     inherited Panel6: TPanel
-      Left = 873
+      Left = 758
       ExplicitLeft = 873
       inherited btnImprimir: TSpeedButton
         OnClick = btnImprimirClick
+      end
+    end
+    object Panel8: TPanel
+      AlignWithMargins = True
+      Left = 873
+      Top = 20
+      Width = 95
+      Height = 40
+      Margins.Left = 10
+      Margins.Top = 20
+      Margins.Right = 10
+      Margins.Bottom = 20
+      Align = alRight
+      BevelOuter = bvNone
+      Color = 16492887
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGrayText
+      Font.Height = -12
+      Font.Name = 'Segoe UI'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 6
+      ExplicitLeft = 32767
+      object SpeedButton1: TSpeedButton
+        Left = 0
+        Top = 0
+        Width = 95
+        Height = 40
+        Cursor = crHandPoint
+        Align = alClient
+        Caption = 'Gerar NFe'
+        Flat = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -19
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
+        OnClick = btnImprimirClick
+        ExplicitLeft = -7
       end
     end
   end
@@ -191,6 +232,7 @@ inherited frmPedido: TfrmPedido
     end
     inherited lblPagina: TLabel
       Left = 904
+      Height = 41
       ExplicitLeft = 904
     end
     object Label2: TLabel

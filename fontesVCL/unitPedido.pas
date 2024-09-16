@@ -35,6 +35,8 @@ type
     StringField1: TStringField;
     StringField2: TStringField;
     StringField3: TStringField;
+    Panel8: TPanel;
+    SpeedButton1: TSpeedButton;
     procedure gridPedidosDblClick(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     procedure btnEditarClick(Sender: TObject);

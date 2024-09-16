@@ -1,5 +1,7 @@
 program EasyPedido;
 
+
+
 uses
   Vcl.Forms,
   unitLogin in 'unitLogin.pas' {frmLogin},
@@ -21,7 +23,8 @@ uses
   unitBusca in 'unitBusca.pas' {frmBusca},
   dataModule.Geral in 'DataModules\dataModule.Geral.pas' {dmGeral: TDataModule},
   Vcl.constantes in 'utils\Vcl.constantes.pas',
-  Vcl.easyUtils in 'utils\Vcl.easyUtils.pas';
+  Vcl.easyUtils in 'utils\Vcl.easyUtils.pas',
+  DataModuleNFe in 'DataModules\DataModuleNFe.pas' {DmNFe: TDataModule};
 
 {$R *.res}
 
